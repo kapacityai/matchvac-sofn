@@ -70,6 +70,14 @@ export const SERVICE_LOCATIONS = [
   { city: 'San Clemente', state: 'CA', techs: 2, new: true },
 ]
 
+export const MOCK_CONTRACTORS = [
+  { id: 'con-1', company: 'Pacific Air Pro', contact: 'Ray Gutierrez', email: 'ray@pacificairpro.com', tier: 'Featured', trades: ['HVAC', 'Refrigeration'], location: 'Irvine, CA', status: 'active', joinDate: '2025-11-01', monthlyFee: 499, referralRate: 0.05, jobsReferred: 38, referralRevenue: 4210, adImpressions: 12400, leads: 91 },
+  { id: 'con-2', company: 'SoCal Comfort Systems', contact: 'Maria Chen', email: 'maria@socalcomfort.com', tier: 'Verified', trades: ['HVAC', 'Plumbing'], location: 'Anaheim, CA', status: 'active', joinDate: '2026-01-15', monthlyFee: 99, referralRate: 0.07, jobsReferred: 24, referralRevenue: 1890, adImpressions: 4200, leads: 47 },
+  { id: 'con-3', company: 'HeatRight Services', contact: 'Devon Okafor', email: 'devon@heatright.com', tier: 'Free', trades: ['Heating'], location: 'Fullerton, CA', status: 'active', joinDate: '2026-03-20', monthlyFee: 0, referralRate: 0.10, jobsReferred: 9, referralRevenue: 630, adImpressions: 0, leads: 12 },
+  { id: 'con-4', company: 'Orange County HVAC Elite', contact: 'Kim Nakamura', email: 'kim@oc-hvac.com', tier: 'Featured', trades: ['HVAC', 'Electrical', 'Ductwork'], location: 'Costa Mesa, CA', status: 'active', joinDate: '2025-09-05', monthlyFee: 499, referralRate: 0.05, jobsReferred: 61, referralRevenue: 7850, adImpressions: 19600, leads: 138 },
+  { id: 'con-5', company: 'Breeze Air & Heat', contact: 'Tommy Walsh', email: 'tommy@breezeairheat.com', tier: 'Verified', trades: ['HVAC', 'Air Quality'], location: 'Mission Viejo, CA', status: 'pending', joinDate: '2026-04-30', monthlyFee: 99, referralRate: 0.07, jobsReferred: 0, referralRevenue: 0, adImpressions: 0, leads: 0 },
+]
+
 export const AD_SLOTS = [
   { id: 'ad1', partner: 'Comfort Connect Premier', type: 'homepage_banner', active: true, impressions: 14200, clicks: 892 },
   { id: 'ad2', partner: 'GreenLeaf Financing', type: 'service_page', active: true, impressions: 6800, clicks: 341 },
