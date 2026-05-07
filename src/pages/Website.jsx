@@ -149,17 +149,28 @@ export default function Website() {
 
       {/* ── COMFORT CONNECT HERO AD ── */}
       <section className="max-w-5xl mx-auto px-6 mb-12">
-        <div className="rounded-2xl border border-brand-500/30 bg-gradient-to-r from-brand-900/50 to-accent-900/30 p-6 flex flex-col sm:flex-row items-center gap-5">
-          <div className="text-5xl flex-shrink-0">❄️</div>
-          <div className="flex-1 text-center sm:text-left">
-            <div className="flex items-center gap-2 justify-center sm:justify-start mb-1">
-              <span className="badge badge-blue">Featured Partner</span>
-              <span className="text-surface-500 text-xs">Comfort Connect Premier</span>
+        <div
+          onClick={() => navigate('/comfort-connect')}
+          className="cursor-pointer rounded-2xl border-2 border-[#003478] bg-gradient-to-r from-[#003478]/50 to-[#001a3d]/70 overflow-hidden hover:border-[#4da6ff] transition-all group"
+        >
+          <div className="bg-[#003478] px-5 py-2 flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 40 40" fill="none"><path d="M20 4L4 16v20h10V24h12v12h10V16L20 4z" fill="white" opacity="0.9"/></svg>
+              <span className="text-white font-bold text-sm tracking-wide">Comfort Connect</span>
+              <span className="badge bg-[#4da6ff]/30 text-[#4da6ff] border-0 text-xs">Premier Program®</span>
             </div>
-            <h3 className="text-white font-bold text-xl mb-1">0% APR Financing — Up to $15,000</h3>
-            <p className="text-surface-400 text-sm">Finance your new HVAC system with easy monthly payments. Approved in 60 seconds. <span className="text-brand-400">www.comfortconnect.com</span></p>
+            <span className="text-[#4da6ff] text-xs font-semibold">#1 Recommended Financing Partner</span>
           </div>
-          <button className="btn-primary flex-shrink-0 py-3 px-6">Check My Rate</button>
+          <div className="p-6 flex flex-col sm:flex-row items-center gap-5">
+            <div className="text-5xl flex-shrink-0">❄️</div>
+            <div className="flex-1 text-center sm:text-left">
+              <h3 className="text-white font-bold text-xl mb-1">Don't Buy Your HVAC — Get It All Included</h3>
+              <p className="text-surface-300 text-sm">Equipment + installation + repairs + maintenance + consumable parts — all for one low monthly payment. No up-front cost, no hidden fees.</p>
+            </div>
+            <button className="bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/50 text-white font-bold py-3 px-6 rounded-xl transition-all flex-shrink-0 flex items-center gap-2 whitespace-nowrap">
+              See If I Qualify <ArrowRight size={16} />
+            </button>
+          </div>
         </div>
       </section>
 

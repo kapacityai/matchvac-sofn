@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
 import { PRODUCTS } from '../../data/mockData'
-import { ShoppingCart, Star, Plus, Check, Wrench, X } from 'lucide-react'
+import { ShoppingCart, Star, Plus, Check, Wrench, X, CheckCircle, Shield, ArrowRight } from 'lucide-react'
 
 const CATEGORIES = ['All', 'Thermostats', 'Air Filters', 'Furnaces', 'Water Heaters']
 
 export default function Store() {
+  const navigate = useNavigate()
   const [cart, setCart] = useState([])
   const [activeCategory, setActiveCategory] = useState('All')
   const [cartOpen, setCartOpen] = useState(false)
@@ -53,8 +55,50 @@ export default function Store() {
           )}
         </div>
 
-        {/* Featured banner */}
-        <div className="card bg-gradient-to-r from-brand-900/40 to-accent-900/40 border-brand-500/20 flex items-center gap-4 py-4">
+        {/* ── Comfort Connect — ALWAYS #1 Featured Financing Partner ── */}
+        <div
+          onClick={() => navigate('/comfort-connect')}
+          className="cursor-pointer rounded-2xl border-2 border-[#003478] bg-gradient-to-r from-[#003478]/40 to-[#001a3d]/60 overflow-hidden hover:border-[#4da6ff] transition-all group"
+        >
+          {/* Header bar */}
+          <div className="bg-[#003478] px-5 py-2 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {/* CC Logo inline */}
+              <div className="flex items-center gap-2">
+                <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                  <path d="M20 4L4 16v20h10V24h12v12h10V16L20 4z" fill="white" opacity="0.9"/>
+                </svg>
+                <span className="text-white font-bold text-sm tracking-wide">Comfort Connect</span>
+              </div>
+              <span className="badge bg-[#4da6ff]/30 text-[#4da6ff] border-0 text-xs font-bold px-2 py-0.5 rounded-full">Premier Program®</span>
+            </div>
+            <span className="text-[#4da6ff] text-xs font-semibold uppercase tracking-wider">#1 Recommended Financing Partner</span>
+          </div>
+
+          <div className="px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex-1">
+              <h3 className="text-white font-extrabold text-lg mb-1">
+                Don't Buy — Get It All Included for One Low Monthly Payment
+              </h3>
+              <p className="text-surface-300 text-sm mb-3">
+                Equipment + installation + all repairs + maintenance + consumable parts. No up-front cost. No hidden fees.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {['No Up-Front Cost', 'Repairs Included', '24/7 Priority Service', 'Transferable'].map(b => (
+                  <div key={b} className="flex items-center gap-1 text-xs text-[#4da6ff] font-medium">
+                    <CheckCircle size={11} /> {b}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <button className="flex-shrink-0 bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/40 text-white font-bold py-3 px-5 rounded-xl transition-all flex items-center gap-2 text-sm whitespace-nowrap">
+              See If I Qualify <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+
+        {/* Air Filter Subscription — secondary banner */}
+        <div className="card bg-gradient-to-r from-brand-900/30 to-accent-900/30 border-brand-500/20 flex items-center gap-4 py-4">
           <div className="text-4xl">🌬️</div>
           <div>
             <p className="text-white font-bold">Air Filter Subscription</p>

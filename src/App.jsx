@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext'
 import Sidebar from './components/Sidebar'
 import Website from './pages/Website'
 import LoginPage from './pages/LoginPage'
+import ComfortConnect from './pages/ComfortConnect'
 
 import CustomerHome from './pages/customer/CustomerHome'
 import ServiceRequest from './pages/customer/ServiceRequest'
@@ -43,9 +44,10 @@ function AppRoutes() {
   if (!user) {
     return (
       <Routes>
-        <Route path="/"      element={<Website />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="*"      element={<Navigate to="/" replace />} />
+        <Route path="/"                element={<Website />} />
+        <Route path="/login"           element={<LoginPage />} />
+        <Route path="/comfort-connect" element={<ComfortConnect />} />
+        <Route path="*"                element={<Navigate to="/" replace />} />
       </Routes>
     )
   }
@@ -54,8 +56,9 @@ function AppRoutes() {
   return (
     <AppShell>
       <Routes>
-        <Route path="/"      element={<Navigate to={home} replace />} />
-        <Route path="/login" element={<Navigate to={home} replace />} />
+        <Route path="/"                element={<Navigate to={home} replace />} />
+        <Route path="/login"           element={<Navigate to={home} replace />} />
+        <Route path="/comfort-connect" element={<ComfortConnect />} />
 
         {/* Customer */}
         <Route path="/customer"         element={user.role==='customer' ? <CustomerHome />   : <Navigate to={home} replace />} />

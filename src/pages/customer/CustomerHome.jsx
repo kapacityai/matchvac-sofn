@@ -126,17 +126,25 @@ export default function CustomerHome() {
         {/* Ad slots */}
         <div className="space-y-3">
           {/* Comfort Connect — permanent featured placement */}
-          <div className="card bg-gradient-to-r from-brand-900/40 to-accent-900/40 border-brand-500/30 flex items-center gap-4">
-            <div className="text-4xl flex-shrink-0">❄️</div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="badge badge-blue">Featured Partner</span>
-                <span className="text-surface-500 text-xs">Comfort Connect Premier</span>
-              </div>
-              <p className="text-white font-bold text-sm">0% APR Financing — Up to $15,000</p>
-              <p className="text-surface-400 text-xs mt-0.5">Finance new HVAC equipment. Approved in 60 seconds. <span className="text-brand-400">comfortconnect.com</span></p>
+          <div
+            onClick={() => navigate('/comfort-connect')}
+            className="cursor-pointer rounded-2xl border-2 border-[#003478] bg-gradient-to-r from-[#003478]/40 to-[#001a3d]/60 hover:border-[#4da6ff] transition-all group"
+          >
+            <div className="bg-[#003478] px-4 py-1.5 rounded-t-xl flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 40 40" fill="none"><path d="M20 4L4 16v20h10V24h12v12h10V16L20 4z" fill="white" opacity="0.9"/></svg>
+              <span className="text-white font-bold text-xs tracking-wide">Comfort Connect</span>
+              <span className="ml-auto text-[#4da6ff] text-xs font-semibold">#1 Recommended Partner</span>
             </div>
-            <button className="btn-primary py-2 text-xs px-3 flex-shrink-0">Check Rate</button>
+            <div className="flex items-center gap-3 px-4 py-3">
+              <div className="text-3xl flex-shrink-0">❄️</div>
+              <div className="flex-1 min-w-0">
+                <p className="text-white font-bold text-sm">Premier Program® — Equipment Included, No Up-Front Cost</p>
+                <p className="text-surface-400 text-xs mt-0.5">All repairs + maintenance + consumables included in one low monthly payment.</p>
+              </div>
+              <button className="bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/40 text-white font-bold py-2 px-3 rounded-xl text-xs flex-shrink-0 transition-all whitespace-nowrap">
+                See If I Qualify
+              </button>
+            </div>
           </div>
           {/* GreenLeaf Financing — service page ad slot */}
           <div className="card bg-gradient-to-r from-emerald-900/20 to-surface-900 border-emerald-500/20 flex items-center gap-4">

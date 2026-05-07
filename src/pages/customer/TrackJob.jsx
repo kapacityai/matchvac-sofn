@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
 import { CheckCircle, Car, MapPin, Wrench, Camera, Star, Phone, MessageCircle } from 'lucide-react'
 
@@ -12,6 +13,7 @@ const TIMELINE = [
 ]
 
 export default function TrackJob() {
+  const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(1)
   const [showRating, setShowRating] = useState(false)
   const [rating, setRating] = useState(0)
@@ -125,17 +127,25 @@ export default function TrackJob() {
           </div>
         </div>
 
-        {/* Post-job ad slot — Comfort Connect */}
-        <div className="card bg-gradient-to-r from-brand-900/40 to-accent-900/30 border-brand-500/20 flex items-center gap-4">
-          <div className="text-3xl flex-shrink-0">❄️</div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-0.5">
-              <span className="badge badge-blue text-xs">Featured Partner</span>
-            </div>
-            <p className="text-white font-bold text-sm">Finance Your Next HVAC Upgrade</p>
-            <p className="text-surface-400 text-xs">0% APR for 18 months — Comfort Connect Premier</p>
+        {/* Post-job ad — Comfort Connect Premier */}
+        <div
+          onClick={() => navigate('/comfort-connect')}
+          className="cursor-pointer rounded-2xl border-2 border-[#003478] bg-gradient-to-r from-[#003478]/40 to-[#001a3d]/60 hover:border-[#4da6ff] transition-all group overflow-hidden"
+        >
+          <div className="bg-[#003478] px-4 py-1.5 flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 40 40" fill="none"><path d="M20 4L4 16v20h10V24h12v12h10V16L20 4z" fill="white" opacity="0.9"/></svg>
+            <span className="text-white font-bold text-xs">Comfort Connect Premier Program®</span>
           </div>
-          <button className="btn-primary text-xs py-2 px-3 flex-shrink-0">Learn More</button>
+          <div className="flex items-center gap-3 px-4 py-3">
+            <div className="text-2xl flex-shrink-0">❄️</div>
+            <div className="flex-1 min-w-0">
+              <p className="text-white font-bold text-sm">Need a New System? Don't Buy — Get It Included.</p>
+              <p className="text-surface-400 text-xs">Low monthly payment covers everything. No up-front cost.</p>
+            </div>
+            <button className="bg-[#003478] border border-[#4da6ff]/40 text-white font-bold py-2 px-3 rounded-xl text-xs flex-shrink-0 group-hover:bg-[#00449e] transition-all">
+              See If I Qualify
+            </button>
+          </div>
         </div>
 
         {/* Demo controls */}
