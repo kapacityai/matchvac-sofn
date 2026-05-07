@@ -5,20 +5,21 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
   LineChart, Line, PieChart, Pie, Cell, Legend, AreaChart, Area
 } from 'recharts'
-import { MOCK_TECHS, MOCK_CONTRACTORS, MOCK_JOBS, AD_SLOTS } from '../../data/mockData'
+import { MOCK_TECHS, MOCK_CONTRACTORS, MOCK_JOBS, AD_SLOTS, TECH_SUBSCRIPTION_TIERS } from '../../data/mockData'
 
-// ─── Monthly data with all revenue streams ───────────────────────────────────
+// ─── Monthly data — all 7 revenue streams ────────────────────────────────────
 const monthlyData = [
-  { month: 'Jan', serviceFees: 630, contractorSubs: 1196, adRevenue: 420, storeComm: 180, financingRef: 90,  ccRevenue: 250, total: 2766 },
-  { month: 'Feb', serviceFees: 915, contractorSubs: 1196, adRevenue: 540, storeComm: 240, financingRef: 135, ccRevenue: 310, total: 3336 },
-  { month: 'Mar', serviceFees: 1335, contractorSubs: 1196, adRevenue: 680, storeComm: 390, financingRef: 190, ccRevenue: 390, total: 4181 },
-  { month: 'Apr', serviceFees: 1680, contractorSubs: 1693, adRevenue: 820, storeComm: 510, financingRef: 260, ccRevenue: 475, total: 5438 },
-  { month: 'May', serviceFees: 720,  contractorSubs: 1693, adRevenue: 290, storeComm: 180, financingRef: 110, ccRevenue: 210, total: 3203 },
-]
+  { month: 'Jan', serviceFees: 630,  contractorSubs: 1196, techSubs: 247,  adRevenue: 420, storeComm: 180, financingRef: 90,  ccRevenue: 250  },
+  { month: 'Feb', serviceFees: 915,  contractorSubs: 1196, techSubs: 345,  adRevenue: 540, storeComm: 240, financingRef: 135, ccRevenue: 310  },
+  { month: 'Mar', serviceFees: 1335, contractorSubs: 1196, techSubs: 493,  adRevenue: 680, storeComm: 390, financingRef: 190, ccRevenue: 390  },
+  { month: 'Apr', serviceFees: 1680, contractorSubs: 1693, techSubs: 641,  adRevenue: 820, storeComm: 510, financingRef: 260, ccRevenue: 475  },
+  { month: 'May', serviceFees: 720,  contractorSubs: 1693, techSubs: 740,  adRevenue: 290, storeComm: 180, financingRef: 110, ccRevenue: 210  },
+].map(m => ({ ...m, total: Object.keys(m).filter(k => k !== 'month').reduce((s, k) => s + m[k], 0) }))
 
 const STREAM_COLORS = {
   serviceFees:    '#0ea5e9',
   contractorSubs: '#8b5cf6',
+  techSubs:       '#06b6d4',
   adRevenue:      '#f59e0b',
   storeComm:      '#10b981',
   financingRef:   '#f43f5e',
@@ -26,12 +27,13 @@ const STREAM_COLORS = {
 }
 
 const STREAM_LABELS = {
-  serviceFees:    'Service Fees',
+  serviceFees:    'Service Fees (15% take rate)',
   contractorSubs: 'Contractor Subscriptions',
-  adRevenue:      'Ad Revenue',
-  storeComm:      'Store Commissions',
+  techSubs:       'Tech Subscriptions (Pro/Elite)',
+  adRevenue:      'Ad & Sponsored Revenue',
+  storeComm:      'Store/Marketplace Commissions',
   financingRef:   'Financing Referrals',
-  ccRevenue:      'Comfort Connect',
+  ccRevenue:      'Comfort Connect Originations',
 }
 
 // ─── Tech payout monthly data ────────────────────────────────────────────────
@@ -132,6 +134,33 @@ export default function AdminReports() {
                   <p className="text-surface-600 text-xs pl-2">YTD 2026</p>
                 </div>
               ))}
+            </div>
+
+            {/* Tech subscription mini-breakdown */}
+            <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-cyan-900/20 to-surface-900 p-4 flex items-center gap-4 flex-wrap">
+              <div className="w-9 h-9 rounded-xl bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                <Users size={18} className="text-cyan-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-white font-bold text-sm">Tech Subscription MRR</p>
+                <p className="text-surface-400 text-xs">Pro · Elite plans — recurring monthly from technician side</p>
+              </div>
+              {Object.entries(TECH_SUBSCRIPTION_TIERS).filter(([k]) => k !== 'free').map(([key, tier]) => {
+                const count = MOCK_TECHS.filter(t => t.subscription === key && t.status === 'active').length
+                return (
+                  <div key={key} className="text-center px-3">
+                    <p className="text-white font-extrabold text-lg">{count}</p>
+                    <p className="text-surface-500 text-xs">{tier.name} @ ${tier.price}/mo</p>
+                    <p className="text-cyan-400 text-xs font-semibold">${count * tier.price}/mo</p>
+                  </div>
+                )
+              })}
+              <div className="text-center px-3 border-l border-white/10">
+                <p className="text-cyan-400 font-extrabold text-xl">
+                  ${MOCK_TECHS.filter(t => t.status === 'active').reduce((s, t) => s + (TECH_SUBSCRIPTION_TIERS[t.subscription]?.price || 0), 0)}/mo
+                </p>
+                <p className="text-surface-500 text-xs">Total MRR</p>
+              </div>
             </div>
 
             {/* Total GMV callout */}
@@ -421,6 +450,60 @@ export default function AdminReports() {
                     </tr>
                   </tfoot>
                 </table>
+              </div>
+            </div>
+
+            {/* Tech subscription breakdown */}
+            <div className="card">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="section-title">Tech Subscription Revenue</h3>
+                  <p className="section-sub">Pro & Elite plan fees collected from technicians</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-cyan-400 font-extrabold text-xl">
+                    ${MOCK_TECHS.filter(t => t.status === 'active').reduce((s, t) => s + (TECH_SUBSCRIPTION_TIERS[t.subscription]?.price || 0), 0)}/mo
+                  </p>
+                  <p className="text-surface-500 text-xs">current MRR</p>
+                </div>
+              </div>
+              <div className="space-y-2 mb-4">
+                {MOCK_TECHS.filter(t => t.status === 'active').map(tech => {
+                  const plan = TECH_SUBSCRIPTION_TIERS[tech.subscription]
+                  return (
+                    <div key={tech.id} className="flex items-center gap-4 px-4 py-3 bg-surface-800/50 rounded-xl">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                        {tech.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-white text-sm font-medium">{tech.name}</p>
+                        <p className="text-surface-500 text-xs">{tech.location} · {tech.jobs} jobs completed</p>
+                      </div>
+                      <div className="text-center px-3">
+                        <p className="text-surface-400 text-xs">Fee Rate</p>
+                        <p className="text-emerald-400 font-bold text-sm">{(plan.platformFee * 100).toFixed(0)}%</p>
+                      </div>
+                      <div className="text-right">
+                        <span className={`badge ${tech.subscription === 'elite' ? 'badge-purple' : tech.subscription === 'pro' ? 'badge-blue' : 'badge-yellow'}`}>
+                          {plan.name}
+                        </span>
+                        <p className="text-cyan-400 font-bold text-sm mt-1">${plan.price}/mo</p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="bg-surface-800/40 rounded-xl p-4 grid grid-cols-3 gap-4 text-center text-sm">
+                {Object.entries(TECH_SUBSCRIPTION_TIERS).map(([key, tier]) => {
+                  const count = MOCK_TECHS.filter(t => t.subscription === key && t.status === 'active').length
+                  return (
+                    <div key={key}>
+                      <p className="text-white font-extrabold text-2xl">{count}</p>
+                      <p className="text-surface-400 text-xs">{tier.name} techs</p>
+                      <p className="text-cyan-400 font-semibold text-xs mt-0.5">${count * tier.price}/mo</p>
+                    </div>
+                  )
+                })}
               </div>
             </div>
 

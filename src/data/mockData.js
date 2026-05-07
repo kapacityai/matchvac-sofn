@@ -37,11 +37,59 @@ export const MOCK_JOBS = [
   { id: 'j7', service: '🚨 No A/C Emergency', customer: 'Amy F.', address: '660 University Dr, Irvine, CA', tier: 'Standard', price: 499, techFee: 74.85, netPay: 424.15, status: 'available', date: '2026-05-07', urgent: true },
 ]
 
+// Tech subscription tiers
+export const TECH_SUBSCRIPTION_TIERS = {
+  free: {
+    id: 'free',
+    name: 'Standard',
+    price: 0,
+    platformFee: 0.15,
+    color: 'surface',
+    perks: [
+      'Access to all available jobs',
+      '15% platform fee per job',
+      'Standard dispatch priority',
+      'Basic earnings dashboard',
+    ],
+  },
+  pro: {
+    id: 'pro',
+    name: 'Pro',
+    price: 49,
+    platformFee: 0.11,
+    color: 'brand',
+    badge: 'Most Popular',
+    perks: [
+      'Priority job dispatch queue',
+      '11% platform fee (save 4%)',
+      'Pro badge on profile',
+      'Early access to premium jobs',
+      'Advanced earnings analytics',
+    ],
+  },
+  elite: {
+    id: 'elite',
+    name: 'Elite',
+    price: 99,
+    platformFee: 0.08,
+    color: 'accent',
+    badge: 'Best Value',
+    perks: [
+      'First in dispatch queue always',
+      '8% platform fee (save 7%)',
+      'Elite badge + featured profile',
+      'Emergency job priority access',
+      'Dedicated account support',
+      'Monthly performance report',
+    ],
+  },
+}
+
 export const MOCK_TECHS = [
-  { id: 'tech-1', name: 'Marcus Rivera', email: 'tech@demo.com', rating: 4.9, jobs: 247, status: 'active', location: 'Costa Mesa, CA', certifications: ['EPA 608', 'NATE Certified', 'CA State License'], joinDate: '2025-03-15', earnings: 42850 },
-  { id: 'tech-2', name: 'Deja Williams', email: 'deja@demo.com', rating: 4.8, jobs: 189, status: 'active', location: 'Irvine, CA', certifications: ['EPA 608', 'NATE Certified'], joinDate: '2025-04-02', earnings: 31200 },
-  { id: 'tech-3', name: 'Alex Tran', email: 'alex@demo.com', rating: 4.7, jobs: 134, status: 'pending', location: 'Newport Beach, CA', certifications: ['EPA 608'], joinDate: '2026-04-20', earnings: 0 },
-  { id: 'tech-4', name: 'Jordan Lee', email: 'jordan@demo.com', rating: 4.6, jobs: 78, status: 'active', location: 'Huntington Beach, CA', certifications: ['EPA 608', 'NATE Certified'], joinDate: '2025-09-10', earnings: 13750 },
+  { id: 'tech-1', name: 'Marcus Rivera', email: 'tech@demo.com', rating: 4.9, jobs: 247, status: 'active', location: 'Costa Mesa, CA', certifications: ['EPA 608', 'NATE Certified', 'CA State License'], joinDate: '2025-03-15', earnings: 42850, subscription: 'elite' },
+  { id: 'tech-2', name: 'Deja Williams', email: 'deja@demo.com', rating: 4.8, jobs: 189, status: 'active', location: 'Irvine, CA', certifications: ['EPA 608', 'NATE Certified'], joinDate: '2025-04-02', earnings: 31200, subscription: 'pro' },
+  { id: 'tech-3', name: 'Alex Tran', email: 'alex@demo.com', rating: 4.7, jobs: 134, status: 'pending', location: 'Newport Beach, CA', certifications: ['EPA 608'], joinDate: '2026-04-20', earnings: 0, subscription: 'free' },
+  { id: 'tech-4', name: 'Jordan Lee', email: 'jordan@demo.com', rating: 4.6, jobs: 78, status: 'active', location: 'Huntington Beach, CA', certifications: ['EPA 608', 'NATE Certified'], joinDate: '2025-09-10', earnings: 13750, subscription: 'pro' },
 ]
 
 export const MOCK_CUSTOMERS = [

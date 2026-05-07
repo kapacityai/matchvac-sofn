@@ -1,9 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
-import { MOCK_JOBS } from '../../data/mockData'
-import { DollarSign, Briefcase, Star, TrendingUp, ChevronRight, AlertTriangle, Clock, Zap } from 'lucide-react'
+import { MOCK_JOBS, MOCK_TECHS, TECH_SUBSCRIPTION_TIERS } from '../../data/mockData'
+import { DollarSign, Briefcase, Star, TrendingUp, ChevronRight, AlertTriangle, Clock, Zap, Crown } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
+
+const demoTech = MOCK_TECHS[0]
+const subTier  = TECH_SUBSCRIPTION_TIERS[demoTech.subscription]
 
 const earningsData = [
   { day: 'Mon', earnings: 211 }, { day: 'Tue', earnings: 75 }, { day: 'Wed', earnings: 594 },
@@ -20,6 +23,19 @@ export default function TechDashboard() {
       <Header title="Tech Dashboard" subtitle="Thursday, May 7, 2026" />
 
       <div className="flex-1 p-6 space-y-6 max-w-5xl">
+        {/* Subscription status pill */}
+        <div
+          onClick={() => navigate('/tech/subscription')}
+          className="cursor-pointer flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-accent-900/30 to-surface-900 border border-accent-500/30 hover:border-accent-400 transition-all"
+        >
+          <Crown size={18} className="text-accent-400 flex-shrink-0" />
+          <div className="flex-1">
+            <span className="text-white font-bold text-sm">{subTier.name} Plan</span>
+            <span className="text-surface-400 text-xs ml-2">· {(subTier.platformFee * 100).toFixed(0)}% platform fee · Priority dispatch active</span>
+          </div>
+          <span className="text-accent-400 text-xs font-medium flex items-center gap-1">Manage <ChevronRight size={13} /></span>
+        </div>
+
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[

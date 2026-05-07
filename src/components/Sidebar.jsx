@@ -5,7 +5,7 @@ import Logo from './Logo'
 import {
   LayoutDashboard, Wrench, MapPin, ShoppingBag, Star, CreditCard,
   Users, Briefcase, BarChart3, Megaphone, Package, Settings,
-  Bell, LogOut, ChevronRight, DollarSign, FileText, Map, ClipboardList
+  Bell, LogOut, ChevronRight, DollarSign, FileText, Map, ClipboardList, Crown
 } from 'lucide-react'
 
 const navConfig = {
@@ -23,6 +23,7 @@ const navConfig = {
     { icon: Map, label: 'Available Jobs', path: '/tech/jobs' },
     { icon: Briefcase, label: 'My Jobs', path: '/tech/myjobs' },
     { icon: DollarSign, label: 'Earnings', path: '/tech/earnings' },
+    { icon: Crown, label: 'Subscription', path: '/tech/subscription' },
     { icon: FileText, label: 'Tax Center', path: '/tech/tax' },
     { icon: Star, label: 'Reviews', path: '/tech/reviews' },
     { icon: Settings, label: 'Documents', path: '/tech/docs' },

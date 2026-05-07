@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
-import { MOCK_JOBS } from '../../data/mockData'
-import { DollarSign, TrendingUp, Download, CreditCard } from 'lucide-react'
+import { MOCK_JOBS, MOCK_TECHS, TECH_SUBSCRIPTION_TIERS } from '../../data/mockData'
+import { DollarSign, TrendingUp, Download, CreditCard, Crown, ChevronRight, Zap } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
+
+// Marcus Rivera is the demo tech
+const demoTech = MOCK_TECHS[0]
+const subTier = TECH_SUBSCRIPTION_TIERS[demoTech.subscription]
 
 const monthlyData = [
   { month: 'Jan', gross: 3200, net: 2720 }, { month: 'Feb', gross: 4100, net: 3485 },
@@ -13,18 +18,45 @@ const monthlyData = [
 const completedJobs = MOCK_JOBS.filter(j => j.status === 'completed')
 
 export default function TechEarnings() {
+  const navigate = useNavigate()
   const [period, setPeriod] = useState('month')
+  const feeRate = subTier.platformFee
+  const feePct  = (feeRate * 100).toFixed(0)
 
   return (
     <div className="flex flex-col h-full overflow-auto">
       <Header title="Earnings" subtitle="Your payouts & financial overview" />
 
       <div className="flex-1 p-6 space-y-6 max-w-4xl">
+
+        {/* Subscription plan banner */}
+        <div
+          onClick={() => navigate('/tech/subscription')}
+          className="cursor-pointer rounded-2xl border border-accent-500/40 bg-gradient-to-r from-accent-900/30 to-surface-900 hover:border-accent-400 transition-all flex items-center gap-4 px-5 py-4"
+        >
+          <div className="w-10 h-10 rounded-xl bg-accent-500/20 flex items-center justify-center flex-shrink-0">
+            <Crown size={20} className="text-accent-400" />
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <p className="text-white font-bold">{subTier.name} Plan</p>
+              <span className="badge badge-purple">{feePct}% fee</span>
+            </div>
+            <p className="text-surface-400 text-xs">
+              You save {(15 - Number(feePct))}% vs Standard on every job
+              {subTier.price > 0 && ` · $${subTier.price}/mo`}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 text-accent-400 text-sm font-medium flex-shrink-0">
+            Manage <ChevronRight size={15} />
+          </div>
+        </div>
+
         {/* Summary cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
             { label: 'Gross YTD', value: '$50,462', sub: 'Before fees', color: 'text-white' },
-            { label: 'Net YTD', value: '$42,850', sub: 'After 15% fee', color: 'text-emerald-400' },
+            { label: 'Net YTD', value: '$42,850', sub: `After ${feePct}% fee`, color: 'text-emerald-400' },
             { label: 'Pending', value: '$126.65', sub: '1 job settling', color: 'text-amber-400' },
             { label: 'Paid Out', value: '$42,723', sub: 'All time', color: 'text-brand-400' },
           ].map(s => (

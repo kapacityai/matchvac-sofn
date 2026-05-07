@@ -18,6 +18,7 @@ import TechDashboard from './pages/tech/TechDashboard'
 import AvailableJobs from './pages/tech/AvailableJobs'
 import TechMyJobs from './pages/tech/TechMyJobs'
 import TechEarnings from './pages/tech/TechEarnings'
+import TechSubscription from './pages/tech/TechSubscription'
 import TaxCenter from './pages/tech/TaxCenter'
 
 import AdminOverview from './pages/admin/AdminOverview'
@@ -76,13 +77,14 @@ function AppRoutes() {
         <Route path="/customer/billing" element={user.role==='customer' ? <CustomerJobs />   : <Navigate to={home} replace />} />
 
         {/* Tech */}
-        <Route path="/tech"          element={user.role==='tech' ? <TechDashboard /> : <Navigate to={home} replace />} />
-        <Route path="/tech/jobs"     element={user.role==='tech' ? <AvailableJobs /> : <Navigate to={home} replace />} />
-        <Route path="/tech/myjobs"   element={user.role==='tech' ? <TechMyJobs />    : <Navigate to={home} replace />} />
-        <Route path="/tech/earnings" element={user.role==='tech' ? <TechEarnings />  : <Navigate to={home} replace />} />
-        <Route path="/tech/tax"      element={user.role==='tech' ? <TaxCenter />     : <Navigate to={home} replace />} />
-        <Route path="/tech/reviews"  element={user.role==='tech' ? <TechDashboard /> : <Navigate to={home} replace />} />
-        <Route path="/tech/docs"     element={user.role==='tech' ? <TechDashboard /> : <Navigate to={home} replace />} />
+        <Route path="/tech"               element={user.role==='tech' ? <TechDashboard />   : <Navigate to={home} replace />} />
+        <Route path="/tech/jobs"          element={user.role==='tech' ? <AvailableJobs />   : <Navigate to={home} replace />} />
+        <Route path="/tech/myjobs"        element={user.role==='tech' ? <TechMyJobs />      : <Navigate to={home} replace />} />
+        <Route path="/tech/earnings"      element={user.role==='tech' ? <TechEarnings />    : <Navigate to={home} replace />} />
+        <Route path="/tech/subscription"  element={user.role==='tech' ? <TechSubscription />: <Navigate to={home} replace />} />
+        <Route path="/tech/tax"           element={user.role==='tech' ? <TaxCenter />       : <Navigate to={home} replace />} />
+        <Route path="/tech/reviews"       element={user.role==='tech' ? <TechDashboard />   : <Navigate to={home} replace />} />
+        <Route path="/tech/docs"          element={user.role==='tech' ? <TechDashboard />   : <Navigate to={home} replace />} />
 
         {/* Admin */}
         <Route path="/admin"               element={user.role==='admin' ? <AdminOverview />  : <Navigate to={home} replace />} />
