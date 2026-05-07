@@ -51,8 +51,18 @@ export function AuthProvider({ children }) {
 
   const logout = () => persistUser(null)
 
+  const updateProfile = (fields) => {
+    const updated = { ...user, ...fields }
+    // Recompute avatar if name changed
+    if (fields.name) {
+      updated.avatar = fields.name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || updated.avatar
+    }
+    persistUser(updated)
+    return updated
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, error, setError }}>
+    <AuthContext.Provider value={{ user, login, logout, register, updateProfile, error, setError }}>
       {children}
     </AuthContext.Provider>
   )

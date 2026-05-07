@@ -13,6 +13,7 @@ import ServiceRequest from './pages/customer/ServiceRequest'
 import TrackJob from './pages/customer/TrackJob'
 import Store from './pages/customer/Store'
 import CustomerJobs from './pages/customer/CustomerJobs'
+import CustomerProfile from './pages/customer/CustomerProfile'
 
 import TechDashboard from './pages/tech/TechDashboard'
 import AvailableJobs from './pages/tech/AvailableJobs'
@@ -73,8 +74,9 @@ function AppRoutes() {
         <Route path="/customer/track"   element={user.role==='customer' ? <TrackJob />       : <Navigate to={home} replace />} />
         <Route path="/customer/store"   element={user.role==='customer' ? <Store />          : <Navigate to={home} replace />} />
         <Route path="/customer/jobs"    element={user.role==='customer' ? <CustomerJobs />   : <Navigate to={home} replace />} />
-        <Route path="/customer/reviews" element={user.role==='customer' ? <CustomerJobs />   : <Navigate to={home} replace />} />
-        <Route path="/customer/billing" element={user.role==='customer' ? <CustomerJobs />   : <Navigate to={home} replace />} />
+        <Route path="/customer/reviews" element={user.role==='customer' ? <CustomerJobs />     : <Navigate to={home} replace />} />
+        <Route path="/customer/billing" element={user.role==='customer' ? <CustomerProfile /> : <Navigate to={home} replace />} />
+        <Route path="/customer/profile" element={user.role==='customer' ? <CustomerProfile /> : <Navigate to={home} replace />} />
 
         {/* Tech */}
         <Route path="/tech"               element={user.role==='tech' ? <TechDashboard />   : <Navigate to={home} replace />} />
