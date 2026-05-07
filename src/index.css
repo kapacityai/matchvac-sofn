@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  body {
+    @apply bg-surface-950 text-white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-600 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-500;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  .glass-dark {
+    @apply bg-surface-900/80 backdrop-blur-xl border border-white/10;
+  }
+  .btn-primary {
+    @apply bg-brand-500 hover:bg-brand-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-2 justify-center;
+  }
+  .btn-secondary {
+    @apply bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-2 justify-center border border-white/10;
+  }
+  .btn-ghost {
+    @apply hover:bg-white/10 text-surface-300 hover:text-white font-medium px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-2;
+  }
+  .card {
+    @apply bg-surface-900 border border-white/10 rounded-2xl p-5;
+  }
+  .card-hover {
+    @apply card hover:border-brand-500/40 hover:bg-surface-800 transition-all duration-200 cursor-pointer;
+  }
+  .input {
+    @apply bg-surface-800 border border-white/10 text-white placeholder-surface-500 rounded-xl px-4 py-3 w-full focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 transition-all duration-200;
+  }
+  .label {
+    @apply text-surface-300 text-sm font-medium mb-1.5 block;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+  .badge-green {
+    @apply badge bg-emerald-500/20 text-emerald-400;
+  }
+  .badge-yellow {
+    @apply badge bg-amber-500/20 text-amber-400;
+  }
+  .badge-red {
+    @apply badge bg-rose-500/20 text-rose-400;
+  }
+  .badge-blue {
+    @apply badge bg-brand-500/20 text-brand-400;
+  }
+  .badge-purple {
+    @apply badge bg-accent-500/20 text-accent-400;
+  }
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-surface-400 hover:text-white hover:bg-white/8 transition-all duration-200 font-medium text-sm cursor-pointer;
+  }
+  .sidebar-item-active {
+    @apply sidebar-item text-white bg-brand-500/20 text-brand-300;
+  }
+  .stat-card {
+    @apply card flex flex-col gap-1;
+  }
+  .section-title {
+    @apply text-lg font-bold text-white;
+  }
+  .section-sub {
+    @apply text-surface-400 text-sm;
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-up { animation: slide-up 0.4s ease-out forwards; }
+.animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-pulse-slow { animation: pulse-slow 2s ease-in-out infinite; }
+
+.glow-blue { box-shadow: 0 0 30px rgba(14, 165, 233, 0.15); }
+.glow-purple { box-shadow: 0 0 30px rgba(139, 92, 246, 0.15); }
