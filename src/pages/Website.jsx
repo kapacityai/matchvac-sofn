@@ -311,34 +311,63 @@ export default function Website() {
               </button>
             </div>
             <div className="space-y-3">
+              {/* Tier cards — corrected pricing */}
               {[
-                { label: 'Pay-per-Job', detail: '15% platform fee · No monthly cost', badge: '' },
-                { label: 'Subscription', detail: '$149/mo · 8% fee · Instant payouts', badge: 'Best Value' },
+                { label: 'Standard',      detail: 'Free · 15% platform fee per job · Standard dispatch', badge: '' },
+                { label: 'Pro',           detail: '$49/mo · 11% fee · Priority dispatch queue', badge: 'Most Popular' },
+                { label: 'Elite',         detail: '$99/mo · 8% fee · First in queue + instant payouts', badge: 'Best Value' },
               ].map(p => (
-                <div key={p.label} className="card">
+                <div key={p.label} className={`card ${p.badge === 'Best Value' ? 'border-accent-500/40 bg-gradient-to-br from-accent-900/20 to-surface-900' : ''}`}>
                   <div className="flex items-center justify-between mb-1">
-                    <p className="text-white font-bold text-lg">{p.label}</p>
-                    {p.badge && <span className="badge badge-green">{p.badge}</span>}
+                    <p className="text-white font-bold">{p.label}</p>
+                    {p.badge && <span className={`badge ${p.badge === 'Best Value' ? 'badge-purple' : 'badge-blue'}`}>{p.badge}</span>}
                   </div>
                   <p className="text-surface-400 text-sm">{p.detail}</p>
                 </div>
               ))}
+
+              {/* Example earnings — itemized at 8% Elite rate */}
               <div className="card bg-gradient-to-br from-brand-900/40 to-surface-900 border-brand-500/20">
-                <p className="text-surface-400 text-xs mb-3">EXAMPLE EARNINGS THIS WEEK</p>
-                <div className="space-y-2 text-sm">
+                <p className="text-surface-400 text-xs font-semibold uppercase tracking-widest mb-3">Example Earnings This Week</p>
+                <p className="text-surface-600 text-xs mb-3">Elite plan · 8% fee applied</p>
+                <div className="space-y-3 text-sm">
                   {[
-                    { service: 'Furnace Repair', net: '$211.65' },
-                    { service: 'No A/C Emergency', net: '$594.15' },
-                    { service: 'Duct Cleaning', net: '$466.65' },
-                  ].map(e => (
-                    <div key={e.service} className="flex justify-between">
-                      <span className="text-surface-300">{e.service}</span>
-                      <span className="text-emerald-400 font-bold">{e.net}</span>
-                    </div>
-                  ))}
-                  <div className="border-t border-white/10 pt-2 flex justify-between font-bold">
-                    <span className="text-white">3-Day Total</span>
-                    <span className="text-emerald-400 text-lg">$1,272.45</span>
+                    { service: 'Furnace Repair',   gross: 249, fee: 8 },
+                    { service: 'No A/C Emergency', gross: 499, fee: 8 },
+                    { service: 'Duct Cleaning',    gross: 549, fee: 8 },
+                  ].map(e => {
+                    const feeAmt = +(e.gross * e.fee / 100).toFixed(2)
+                    const net    = +(e.gross - feeAmt).toFixed(2)
+                    return (
+                      <div key={e.service} className="space-y-0.5">
+                        <div className="flex justify-between">
+                          <span className="text-white font-medium">{e.service}</span>
+                          <span className="text-white">${e.gross.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-surface-500 text-xs pl-2">Platform fee ({e.fee}%)</span>
+                          <span className="text-rose-400 text-xs">−${feeAmt.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-surface-500 text-xs pl-2">Your net</span>
+                          <span className="text-emerald-400 font-bold text-xs">${net.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div className="border-t border-white/10 mt-3 pt-3 space-y-1">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-surface-400">Total gross</span>
+                    <span className="text-white font-medium">$1,297.00</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-surface-400">Total fees (8%)</span>
+                    <span className="text-rose-400 font-medium">−$103.76</span>
+                  </div>
+                  <div className="flex justify-between font-bold mt-1 pt-1 border-t border-white/10">
+                    <span className="text-white">3-Day Take-Home</span>
+                    <span className="text-emerald-400 text-lg">$1,193.24</span>
                   </div>
                 </div>
               </div>
