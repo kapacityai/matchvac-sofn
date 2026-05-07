@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo'
+import LocationTicker from '../components/LocationTicker'
 import { SERVICES, PRODUCTS } from '../data/mockData'
 import {
   Zap, Shield, MapPin, Star, ChevronRight, Menu, X,
@@ -69,6 +70,8 @@ function Nav({ onLogin }) {
           <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
           <a href="#services" className="hover:text-white transition-colors">Services</a>
           <a href="#store" className="hover:text-white transition-colors">Store</a>
+          <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
+          <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
           <a href="#techs" className="hover:text-white transition-colors">For Technicians</a>
         </div>
         <div className="hidden md:flex items-center gap-3">
@@ -84,6 +87,8 @@ function Nav({ onLogin }) {
           {['How It Works','Services','Store','For Technicians'].map(l => (
             <a key={l} href={`#${l.toLowerCase().replace(/ /g,'-')}`} className="block text-surface-300 hover:text-white py-1" onClick={() => setOpen(false)}>{l}</a>
           ))}
+          <button onClick={() => { navigate('/financing'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">Financing</button>
+          <button onClick={() => { navigate('/contractors'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">For Contractors</button>
           <div className="flex gap-2 pt-2">
             <button onClick={onLogin} className="btn-secondary flex-1 text-sm py-2">Sign In</button>
             <button onClick={() => navigate('/login?signup=customer')} className="btn-primary flex-1 text-sm py-2">Sign Up</button>
@@ -110,8 +115,8 @@ export default function Website() {
           <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-500/8 rounded-full blur-3xl" />
         </div>
         <div className="relative max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 badge badge-blue px-4 py-1.5 text-sm mb-6">
-            <Zap size={14} /> Now serving Orange County, CA
+          <div className="flex justify-center mb-6">
+            <LocationTicker />
           </div>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6">
             HVAC Service,<br />
@@ -392,7 +397,9 @@ export default function Website() {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <Logo size="sm" />
           <p className="text-surface-500 text-sm text-center">© 2026 ServiceConnect. All rights reserved. · Orange County, CA</p>
-          <div className="flex gap-4 text-surface-500 text-sm">
+          <div className="flex gap-4 text-surface-500 text-sm flex-wrap justify-center">
+            <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
+            <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
             <span className="hover:text-white cursor-pointer">Privacy</span>
             <span className="hover:text-white cursor-pointer">Terms</span>
             <span className="hover:text-white cursor-pointer">Contact</span>

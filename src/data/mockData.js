@@ -51,6 +51,25 @@ export const MOCK_CUSTOMERS = [
   { id: 'cust-4', name: 'Diana P.', email: 'diana@demo.com', jobs: 5, spent: 2190, joinDate: '2025-08-05', status: 'active' },
 ]
 
+// Active service locations derived from enrolled techs — ticker pulls from this
+export const SERVICE_LOCATIONS = [
+  { city: 'Costa Mesa', state: 'CA', techs: 3, new: false },
+  { city: 'Irvine', state: 'CA', techs: 5, new: false },
+  { city: 'Newport Beach', state: 'CA', techs: 2, new: false },
+  { city: 'Huntington Beach', state: 'CA', techs: 4, new: false },
+  { city: 'Laguna Beach', state: 'CA', techs: 2, new: true },
+  { city: 'Anaheim', state: 'CA', techs: 6, new: false },
+  { city: 'Santa Ana', state: 'CA', techs: 4, new: false },
+  { city: 'Tustin', state: 'CA', techs: 2, new: true },
+  { city: 'Mission Viejo', state: 'CA', techs: 3, new: false },
+  { city: 'Lake Forest', state: 'CA', techs: 2, new: false },
+  { city: 'Garden Grove', state: 'CA', techs: 3, new: false },
+  { city: 'Fountain Valley', state: 'CA', techs: 2, new: false },
+  { city: 'Fullerton', state: 'CA', techs: 3, new: true },
+  { city: 'Brea', state: 'CA', techs: 1, new: false },
+  { city: 'San Clemente', state: 'CA', techs: 2, new: true },
+]
+
 export const AD_SLOTS = [
   { id: 'ad1', partner: 'Comfort Connect Premier', type: 'homepage_banner', active: true, impressions: 14200, clicks: 892 },
   { id: 'ad2', partner: 'GreenLeaf Financing', type: 'service_page', active: true, impressions: 6800, clicks: 341 },
