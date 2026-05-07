@@ -425,7 +425,7 @@ export default function Website() {
       <footer className="border-t border-white/10 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <Logo size="sm" />
-          <p className="text-surface-500 text-sm text-center">© 2026 ServiceConnect. All rights reserved. · Orange County, CA</p>
+          <p className="text-surface-500 text-sm text-center">© 2026 ServiceConnect. All rights reserved. · Maryland · DMV &amp; Expanding Nationwide</p>
           <div className="flex gap-4 text-surface-500 text-sm flex-wrap justify-center">
             <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
             <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
