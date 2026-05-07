@@ -5,7 +5,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
   LineChart, Line, PieChart, Pie, Cell, Legend, AreaChart, Area
 } from 'recharts'
-import { MOCK_TECHS, MOCK_CONTRACTORS, AD_SLOTS } from '../../data/mockData'
+import { MOCK_TECHS, MOCK_CONTRACTORS, MOCK_JOBS, AD_SLOTS } from '../../data/mockData'
 
 // ─── Monthly data with all revenue streams ───────────────────────────────────
 const monthlyData = [
@@ -33,6 +33,26 @@ const STREAM_LABELS = {
   financingRef:   'Financing Referrals',
   ccRevenue:      'Comfort Connect',
 }
+
+// ─── Tech payout monthly data ────────────────────────────────────────────────
+const techPayoutMonthly = [
+  { month: 'Jan', marcus: 1840, deja: 1210, jordan: 490, total: 3540 },
+  { month: 'Feb', marcus: 2650, deja: 1580, jordan: 720, total: 4950 },
+  { month: 'Mar', marcus: 3890, deja: 2240, jordan: 1050, total: 7180 },
+  { month: 'Apr', marcus: 4920, deja: 3100, jordan: 1380, total: 9400 },
+  { month: 'May', marcus: 2140, deja: 980, jordan: 0, total: 3120 },
+]
+
+const TECH_COLORS = { marcus: '#0ea5e9', deja: '#8b5cf6', jordan: '#f59e0b' }
+
+// Per-job payout data for the transaction log
+const JOB_PAYOUTS = MOCK_JOBS.filter(j => j.status === 'completed' || j.status === 'in_progress').map(j => ({
+  ...j,
+  grossRevenue: j.price,
+  platformFee: j.techFee,
+  techPayout: j.netPay,
+  margin: ((j.techFee / j.price) * 100).toFixed(1),
+}))
 
 const PIE_DATA = Object.entries(STREAM_LABELS).map(([key, label]) => ({
   name: label,
@@ -73,6 +93,7 @@ export default function AdminReports() {
 
   const tabs = [
     { id: 'overview', label: 'Revenue Overview', icon: TrendingUp },
+    { id: 'payouts', label: 'Tech Payouts', icon: DollarSign },
     { id: 'contractors', label: 'Contractors', icon: Building2 },
     { id: 'ads', label: 'Ad Revenue', icon: Megaphone },
     { id: 'tax', label: '1099 / Tax', icon: FileText },
@@ -250,6 +271,197 @@ export default function AdminReports() {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ══════════════ TECH PAYOUTS TAB ══════════════ */}
+        {activeTab === 'payouts' && (
+          <>
+            {/* KPI row */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { label: 'Total Paid Out YTD', value: `$${MOCK_TECHS.reduce((s,t) => s + t.earnings, 0).toLocaleString()}`, color: 'text-white', sub: 'to all active techs' },
+                { label: 'Avg Per-Job Payout', value: `$${Math.round(JOB_PAYOUTS.reduce((s,j) => s + j.techPayout, 0) / JOB_PAYOUTS.length).toLocaleString()}`, color: 'text-brand-400', sub: 'net after platform fee' },
+                { label: 'Platform Fee Collected', value: `$${JOB_PAYOUTS.reduce((s,j) => s + j.platformFee, 0).toFixed(2)}`, color: 'text-emerald-400', sub: '15% of gross on demo jobs' },
+                { label: 'Jobs Completed YTD', value: MOCK_TECHS.reduce((s,t) => s + t.jobs, 0).toLocaleString(), color: 'text-amber-400', sub: 'across all techs' },
+              ].map(s => (
+                <div key={s.label} className="stat-card">
+                  <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
+                  <p className="text-surface-400 text-xs mt-0.5">{s.label}</p>
+                  <p className="text-surface-600 text-xs">{s.sub}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Monthly payout stacked bar */}
+            <div className="card">
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="section-title">Monthly Tech Payouts by Technician</h3>
+                <button className="btn-secondary text-sm py-2"><Download size={14} /> Export</button>
+              </div>
+              <p className="section-sub mb-4">Net earnings disbursed to each tech per month</p>
+              <div className="h-56">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={techPayoutMonthly} barGap={3}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="month" stroke="#475569" tick={{ fontSize: 11 }} />
+                    <YAxis stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
+                    <Tooltip
+                      contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }}
+                      formatter={(v, name) => [`$${v.toLocaleString()}`, name.charAt(0).toUpperCase() + name.slice(1)]}
+                    />
+                    <Bar dataKey="marcus" fill={TECH_COLORS.marcus} name="Marcus Rivera" stackId="a" />
+                    <Bar dataKey="deja" fill={TECH_COLORS.deja} name="Deja Williams" stackId="a" />
+                    <Bar dataKey="jordan" fill={TECH_COLORS.jordan} name="Jordan Lee" stackId="a" radius={[4,4,0,0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="flex gap-4 mt-3 flex-wrap">
+                {[['Marcus Rivera', TECH_COLORS.marcus], ['Deja Williams', TECH_COLORS.deja], ['Jordan Lee', TECH_COLORS.jordan]].map(([name, color]) => (
+                  <div key={name} className="flex items-center gap-1.5">
+                    <div className="w-3 h-3 rounded-sm" style={{ background: color }} />
+                    <span className="text-surface-400 text-xs">{name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Per-tech payout cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {MOCK_TECHS.filter(t => t.status === 'active').map(tech => {
+                const techJobs = MOCK_JOBS.filter(j => j.tech === tech.name && j.status === 'completed')
+                const gross = techJobs.reduce((s, j) => s + j.price, 0)
+                const fees = techJobs.reduce((s, j) => s + j.techFee, 0)
+                const net = techJobs.reduce((s, j) => s + j.netPay, 0)
+                return (
+                  <div key={tech.id} className="card">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
+                        {tech.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <div>
+                        <p className="text-white font-bold">{tech.name}</p>
+                        <div className="flex items-center gap-1">
+                          <Star size={11} className="text-amber-400 fill-amber-400" />
+                          <span className="text-surface-400 text-xs">{tech.rating} · {tech.jobs} jobs</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-surface-400">Gross Revenue</span>
+                        <span className="text-white font-medium">${gross.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-surface-400">Platform Fee (15%)</span>
+                        <span className="text-rose-400 font-medium">−${fees.toFixed(2)}</span>
+                      </div>
+                      <div className="border-t border-white/10 pt-2 flex justify-between font-bold">
+                        <span className="text-surface-300">Net Paid Out</span>
+                        <span className="text-emerald-400">${net.toFixed(2)}</span>
+                      </div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-white/10 flex justify-between items-center">
+                      <span className="text-surface-500 text-xs">YTD Earnings</span>
+                      <span className="text-white font-extrabold text-lg">${tech.earnings.toLocaleString()}</span>
+                    </div>
+                    <button className="btn-secondary w-full mt-3 text-xs py-2"><Download size={12} /> Payout Statement</button>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Transaction-level payout log */}
+            <div className="card overflow-hidden">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="section-title">Payout Transaction Log</h3>
+                  <p className="section-sub">Job-by-job breakdown: gross, platform fee, net disbursed</p>
+                </div>
+                <button className="btn-secondary text-sm py-2"><Download size={14} /> CSV</button>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      {['Date', 'Job', 'Technician', 'Tier', 'Gross', 'Platform Fee', 'Net Paid', 'Status'].map(h => (
+                        <th key={h} className="text-left text-surface-500 font-medium pb-3 pr-4 whitespace-nowrap">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {JOB_PAYOUTS.map(job => (
+                      <tr key={job.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                        <td className="py-3 pr-4 text-surface-400 whitespace-nowrap">{job.date}</td>
+                        <td className="py-3 pr-4 text-white font-medium">{job.service}</td>
+                        <td className="py-3 pr-4 text-surface-300 whitespace-nowrap">{job.tech}</td>
+                        <td className="py-3 pr-4">
+                          <span className={`badge ${job.tier === 'Premium' ? 'badge-purple' : job.tier === 'Standard' ? 'badge-blue' : 'badge-yellow'}`}>{job.tier}</span>
+                        </td>
+                        <td className="py-3 pr-4 text-white font-semibold">${job.grossRevenue}</td>
+                        <td className="py-3 pr-4 text-rose-400">−${job.platformFee.toFixed(2)}</td>
+                        <td className="py-3 pr-4 text-emerald-400 font-bold">${job.techPayout.toFixed(2)}</td>
+                        <td className="py-3 pr-4">
+                          <span className={`badge ${job.status === 'completed' ? 'badge-green' : 'badge-blue'}`}>
+                            {job.status === 'completed' ? 'Disbursed' : 'Pending'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr className="bg-surface-800/30 border-t border-white/20">
+                      <td colSpan={4} className="py-3 pr-4 font-bold text-white">Totals</td>
+                      <td className="py-3 pr-4 font-bold text-white">${JOB_PAYOUTS.reduce((s,j) => s+j.grossRevenue, 0).toLocaleString()}</td>
+                      <td className="py-3 pr-4 font-bold text-rose-400">−${JOB_PAYOUTS.reduce((s,j) => s+j.platformFee, 0).toFixed(2)}</td>
+                      <td className="py-3 pr-4 font-extrabold text-emerald-400">${JOB_PAYOUTS.reduce((s,j) => s+j.techPayout, 0).toFixed(2)}</td>
+                      <td />
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+            {/* Gross vs Net area chart */}
+            <div className="card">
+              <h3 className="section-title mb-1">Gross Revenue vs Tech Payouts</h3>
+              <p className="section-sub mb-4">Platform keeps the spread between the two lines</p>
+              <div className="h-52">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={[
+                    { month: 'Jan', gross: 4200, payouts: 3540 },
+                    { month: 'Feb', gross: 5880, payouts: 4950 },
+                    { month: 'Mar', gross: 8510, payouts: 7180 },
+                    { month: 'Apr', gross: 11200, payouts: 9400 },
+                    { month: 'May', gross: 3710, payouts: 3120 },
+                  ]}>
+                    <defs>
+                      <linearGradient id="grossGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                      </linearGradient>
+                      <linearGradient id="payoutGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="month" stroke="#475569" tick={{ fontSize: 11 }} />
+                    <YAxis stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
+                    <Tooltip
+                      contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }}
+                      formatter={v => `$${v.toLocaleString()}`}
+                    />
+                    <Area type="monotone" dataKey="gross" stroke="#0ea5e9" strokeWidth={2} fill="url(#grossGrad)" name="Gross Revenue" />
+                    <Area type="monotone" dataKey="payouts" stroke="#10b981" strokeWidth={2} fill="url(#payoutGrad)" name="Tech Payouts" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="flex gap-5 mt-2">
+                <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-brand-400" /><span className="text-surface-400 text-xs">Gross Revenue (customer payments)</span></div>
+                <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-emerald-500" /><span className="text-surface-400 text-xs">Tech Payouts (disbursed)</span></div>
               </div>
             </div>
           </>
