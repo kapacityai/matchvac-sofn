@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Logo from '../components/Logo'
 import { Eye, EyeOff, Zap, Shield, MapPin, ArrowRight, Upload, CheckCircle } from 'lucide-react'
@@ -158,11 +159,19 @@ function TechSignup({ onBack }) {
 // ── Main Login ───────────────────────────────────────────────────────────────
 export default function LoginPage() {
   const { login, error, setError } = useAuth()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [email, setEmailVal] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [mode, setMode] = useState('login')
+  // auto-open signup flow if coming from website CTA
+  const [mode, setMode] = useState(() => {
+    const s = searchParams.get('signup')
+    if (s === 'customer') return 'customer_signup'
+    if (s === 'tech') return 'tech_signup'
+    return 'login'
+  })
 
   // When register() or login() sets user in context, AppRoutes sees it and
   // replaces the entire route tree — LoginPage unmounts automatically.
@@ -198,7 +207,10 @@ export default function LoginPage() {
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10 flex flex-col h-full p-12">
-          <Logo size="md" />
+          <div className="flex items-center justify-between">
+            <Logo size="md" />
+            <button onClick={() => navigate('/')} className="text-surface-500 hover:text-white text-sm transition-colors">← Website</button>
+          </div>
           <div className="flex-1 flex flex-col justify-center">
             <div className="max-w-md">
               <div className="badge badge-blue mb-4">🔧 HVAC On-Demand Marketplace</div>

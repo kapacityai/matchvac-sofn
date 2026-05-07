@@ -125,6 +125,19 @@ export default function TrackJob() {
           </div>
         </div>
 
+        {/* Post-job ad slot — Comfort Connect */}
+        <div className="card bg-gradient-to-r from-brand-900/40 to-accent-900/30 border-brand-500/20 flex items-center gap-4">
+          <div className="text-3xl flex-shrink-0">❄️</div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="badge badge-blue text-xs">Featured Partner</span>
+            </div>
+            <p className="text-white font-bold text-sm">Finance Your Next HVAC Upgrade</p>
+            <p className="text-surface-400 text-xs">0% APR for 18 months — Comfort Connect Premier</p>
+          </div>
+          <button className="btn-primary text-xs py-2 px-3 flex-shrink-0">Learn More</button>
+        </div>
+
         {/* Demo controls */}
         <div className="card border-dashed border-white/10">
           <p className="text-surface-500 text-xs font-semibold uppercase tracking-widest mb-3">Demo Controls</p>

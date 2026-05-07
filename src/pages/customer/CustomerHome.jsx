@@ -123,20 +123,33 @@ export default function CustomerHome() {
           </div>
         )}
 
-        {/* Comfort Connect promo */}
-        <div className="card bg-gradient-to-r from-brand-900/40 to-accent-900/40 border-brand-500/20">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center flex-shrink-0 text-2xl">
-              ❄️
+        {/* Ad slots */}
+        <div className="space-y-3">
+          {/* Comfort Connect — permanent featured placement */}
+          <div className="card bg-gradient-to-r from-brand-900/40 to-accent-900/40 border-brand-500/30 flex items-center gap-4">
+            <div className="text-4xl flex-shrink-0">❄️</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="badge badge-blue">Featured Partner</span>
+                <span className="text-surface-500 text-xs">Comfort Connect Premier</span>
+              </div>
+              <p className="text-white font-bold text-sm">0% APR Financing — Up to $15,000</p>
+              <p className="text-surface-400 text-xs mt-0.5">Finance new HVAC equipment. Approved in 60 seconds. <span className="text-brand-400">comfortconnect.com</span></p>
             </div>
-            <div className="flex-1">
-              <div className="badge badge-blue mb-2">Featured Partner</div>
-              <h3 className="text-white font-bold mb-1">Comfort Connect Premier Program</h3>
-              <p className="text-surface-400 text-sm mb-3">Get exclusive financing on HVAC equipment. 0% APR for 18 months on approved credit.</p>
-              <button className="btn-primary py-2 text-sm">
-                Learn More
-              </button>
+            <button className="btn-primary py-2 text-xs px-3 flex-shrink-0">Check Rate</button>
+          </div>
+          {/* GreenLeaf Financing — service page ad slot */}
+          <div className="card bg-gradient-to-r from-emerald-900/20 to-surface-900 border-emerald-500/20 flex items-center gap-4">
+            <div className="text-3xl flex-shrink-0">🌿</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="badge badge-purple text-xs">Sponsored</span>
+                <span className="text-surface-500 text-xs">GreenLeaf Financing</span>
+              </div>
+              <p className="text-white font-semibold text-sm">HVAC Loans from 5.9% APR</p>
+              <p className="text-surface-400 text-xs mt-0.5">For qualified customers. Fast decisions, flexible terms.</p>
             </div>
+            <button className="btn-secondary py-2 text-xs px-3 flex-shrink-0">Apply Now</button>
           </div>
         </div>
       </div>
