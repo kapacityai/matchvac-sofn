@@ -1,48 +1,228 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Logo from '../components/Logo'
-import { Eye, EyeOff, Zap, Shield, MapPin } from 'lucide-react'
+import { Eye, EyeOff, Zap, Shield, MapPin, ArrowRight, Upload, CheckCircle } from 'lucide-react'
 
-const DEMO_CREDS = [
-  { role: 'Admin', email: 'admin@demo.com', color: 'from-purple-500 to-accent-600' },
-  { role: 'Customer', email: 'customer@demo.com', color: 'from-brand-400 to-brand-600' },
-  { role: 'HVAC Tech', email: 'tech@demo.com', color: 'from-emerald-400 to-emerald-600' },
-]
+// ── Sign-up: Customer ────────────────────────────────────────────────────────
+function CustomerSignup({ onBack }) {
+  const { register } = useAuth()
+  const navigate = useNavigate()
+  const [step, setStep] = useState(0)
+  const [form, setForm] = useState({ name: '', email: '', phone: '', address: '', card: '' })
+  const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
+  const finish = () => {
+    const u = register(form.name || 'New Customer', form.email || 'newuser@demo.com', 'customer')
+    navigate('/customer')
+  }
+
+  return (
+    <div className="w-full max-w-sm mx-auto animate-slide-up">
+      <button onClick={onBack} className="text-surface-400 hover:text-white text-sm mb-6 flex items-center gap-1">
+        ← Back to sign in
+      </button>
+      <h2 className="text-2xl font-bold text-white mb-1">Create Customer Account</h2>
+      <p className="text-surface-400 text-sm mb-6">Book HVAC service in minutes</p>
+
+      {step === 0 && (
+        <div className="space-y-4">
+          <div><label className="label">Full Name</label><input className="input" placeholder="Jane Smith" value={form.name} onChange={set('name')} /></div>
+          <div><label className="label">Email Address</label><input className="input" type="email" placeholder="jane@email.com" value={form.email} onChange={set('email')} /></div>
+          <div><label className="label">Phone (for SMS updates)</label><input className="input" type="tel" placeholder="(555) 000-0000" value={form.phone} onChange={set('phone')} /></div>
+          <div><label className="label">Service Address</label><input className="input" placeholder="123 Main St, City, State ZIP" value={form.address} onChange={set('address')} /></div>
+          <button onClick={() => setStep(1)} className="btn-primary w-full py-3">Continue <ArrowRight size={16} /></button>
+        </div>
+      )}
+
+      {step === 1 && (
+        <div className="space-y-4">
+          <p className="text-surface-400 text-sm">Add a payment method to book services. Funds are held in escrow until job completion.</p>
+          <div><label className="label">Card Number</label><input className="input font-mono" placeholder="4242 4242 4242 4242" value={form.card} onChange={set('card')} /></div>
+          <div className="grid grid-cols-2 gap-3">
+            <div><label className="label">Expiry</label><input className="input" placeholder="MM / YY" /></div>
+            <div><label className="label">CVC</label><input className="input" placeholder="123" /></div>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-surface-400 mt-1">
+            <Shield size={14} className="text-emerald-400" /> Secured by Stripe — never stored on our servers
+          </div>
+          <div className="flex gap-3">
+            <button onClick={() => setStep(0)} className="btn-secondary flex-1">Back</button>
+            <button onClick={finish} className="btn-primary flex-1">Create Account</button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Sign-up: HVAC Tech ───────────────────────────────────────────────────────
+function TechSignup({ onBack }) {
+  const { register } = useAuth()
+  const navigate = useNavigate()
+  const [step, setStep] = useState(0)
+  const [form, setForm] = useState({ name: '', email: '', phone: '', coverage: '', plan: 'per_job' })
+  const [uploaded, setUploaded] = useState({})
+  const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
+
+  const DOCS = [
+    { key: 'license', label: "Driver's License (front & back)" },
+    { key: 'w9', label: 'IRS Form W-9' },
+    { key: 'certs', label: 'HVAC Certifications (EPA 608, NATE, etc.)' },
+  ]
+
+  const finish = () => {
+    const u = register(form.name || 'New Tech', form.email || 'newtech@demo.com', 'tech')
+    navigate('/tech')
+  }
+
+  return (
+    <div className="w-full max-w-sm mx-auto animate-slide-up">
+      <button onClick={onBack} className="text-surface-400 hover:text-white text-sm mb-6 flex items-center gap-1">
+        ← Back to sign in
+      </button>
+      <h2 className="text-2xl font-bold text-white mb-1">Apply as HVAC Tech</h2>
+      <p className="text-surface-400 text-sm mb-6">Start earning in your area</p>
+
+      {/* Step progress */}
+      <div className="flex gap-1 mb-6">
+        {['Info', 'Docs', 'Plan', 'Review'].map((s, i) => (
+          <div key={s} className="flex-1">
+            <div className={`h-1 rounded-full ${i <= step ? 'bg-brand-500' : 'bg-surface-700'}`} />
+            <p className={`text-xs mt-1 text-center ${i === step ? 'text-brand-400' : 'text-surface-600'}`}>{s}</p>
+          </div>
+        ))}
+      </div>
+
+      {step === 0 && (
+        <div className="space-y-4">
+          <div><label className="label">Full Name</label><input className="input" placeholder="Marcus Rivera" value={form.name} onChange={set('name')} /></div>
+          <div><label className="label">Email Address</label><input className="input" type="email" placeholder="marcus@email.com" value={form.email} onChange={set('email')} /></div>
+          <div><label className="label">Phone</label><input className="input" type="tel" placeholder="(555) 000-0000" value={form.phone} onChange={set('phone')} /></div>
+          <div><label className="label">Service Coverage Area (zip codes or city)</label><input className="input" placeholder="e.g. Costa Mesa, Irvine, Newport Beach" value={form.coverage} onChange={set('coverage')} /></div>
+          <button onClick={() => setStep(1)} className="btn-primary w-full py-3">Next: Upload Documents <ArrowRight size={16} /></button>
+        </div>
+      )}
+
+      {step === 1 && (
+        <div className="space-y-4">
+          <p className="text-surface-400 text-sm">All documents are reviewed within 24 hours. Your account will show <span className="text-amber-400">Pending Review</span> until approved.</p>
+          {DOCS.map(doc => (
+            <div key={doc.key}>
+              <label className="label">{doc.label}</label>
+              <button
+                onClick={() => setUploaded(u => ({ ...u, [doc.key]: true }))}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-sm font-medium ${uploaded[doc.key] ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400' : 'border-dashed border-white/[15%] text-surface-400 hover:border-brand-500/40 hover:text-white'}`}
+              >
+                {uploaded[doc.key] ? <CheckCircle size={16} /> : <Upload size={16} />}
+                {uploaded[doc.key] ? 'Uploaded ✓' : 'Click to upload'}
+              </button>
+            </div>
+          ))}
+          <div className="flex gap-3">
+            <button onClick={() => setStep(0)} className="btn-secondary flex-1">Back</button>
+            <button onClick={() => setStep(2)} className="btn-primary flex-1">Next</button>
+          </div>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div className="space-y-4">
+          <p className="text-surface-400 text-sm">Choose your platform fee structure:</p>
+          {[
+            { key: 'per_job', label: 'Pay-per-Job', detail: '15% platform fee deducted from each job', badge: '' },
+            { key: 'subscription', label: 'Monthly Subscription', detail: '$149/month — reduced 8% per-job rate + instant payouts', badge: 'Best Value' },
+          ].map(p => (
+            <button
+              key={p.key}
+              onClick={() => setForm(f => ({ ...f, plan: p.key }))}
+              className={`w-full text-left card transition-all ${form.plan === p.key ? 'border-brand-500 bg-brand-500/10' : 'hover:border-white/20'}`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <p className="text-white font-semibold">{p.label}</p>
+                {p.badge && <span className="badge badge-green">{p.badge}</span>}
+              </div>
+              <p className="text-surface-400 text-sm">{p.detail}</p>
+            </button>
+          ))}
+          <div className="flex gap-3">
+            <button onClick={() => setStep(1)} className="btn-secondary flex-1">Back</button>
+            <button onClick={() => setStep(3)} className="btn-primary flex-1">Next</button>
+          </div>
+        </div>
+      )}
+
+      {step === 3 && (
+        <div className="space-y-4">
+          <div className="card bg-surface-800/50 text-sm text-surface-300 h-32 overflow-y-auto leading-relaxed">
+            <p className="font-semibold text-white mb-1">Independent Contractor Agreement</p>
+            You acknowledge that you are an independent contractor, not an employee of ServiceConnect. You will receive a 1099-NEC at year-end for all earnings over $600. You are responsible for your own taxes, insurance, and certifications. Platform fees of {form.plan === 'subscription' ? '8% + $149/mo' : '15%'} apply to each job. By clicking below you e-sign this agreement.
+          </div>
+          <div><label className="label">Bank Account for Payouts</label><input className="input" placeholder="Routing + Account number" /></div>
+          <div className="flex gap-3">
+            <button onClick={() => setStep(2)} className="btn-secondary flex-1">Back</button>
+            <button onClick={finish} className="btn-primary flex-1">Submit Application</button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Main Login ───────────────────────────────────────────────────────────────
 export default function LoginPage() {
-  const { login, error } = useAuth()
+  const { login, error, setError, user } = useAuth()
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [mode, setMode] = useState('login') // 'login' | 'customer_signup' | 'tech_signup'
 
-  const handleSubmit = async (e) => {
+  // Navigate as soon as user state is set
+  useEffect(() => {
+    if (user) navigate(`/${user.role}`, { replace: true })
+  }, [user, navigate])
+
+  const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
     setTimeout(() => {
       login(email, password)
       setLoading(false)
-    }, 800)
+    }, 600)
   }
 
-  const quickLogin = (demoEmail) => {
-    setEmail(demoEmail)
-    setPassword('demo1234')
+  const handleQuickLogin = (demoEmail) => {
+    setLoading(true)
+    setTimeout(() => {
+      login(demoEmail, 'demo1234')
+      setLoading(false)
+    }, 600)
   }
+
+  if (mode === 'customer_signup') return (
+    <div className="min-h-screen bg-surface-950 flex items-center justify-center px-6">
+      <CustomerSignup onBack={() => { setMode('login'); setError('') }} />
+    </div>
+  )
+
+  if (mode === 'tech_signup') return (
+    <div className="min-h-screen bg-surface-950 flex items-center justify-center px-6 py-12">
+      <TechSignup onBack={() => { setMode('login'); setError('') }} />
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-surface-950 flex">
-      {/* Left — hero */}
+      {/* Left hero */}
       <div className="hidden lg:flex flex-col flex-1 relative overflow-hidden bg-gradient-to-br from-surface-900 to-surface-950 border-r border-white/10">
-        {/* Background glow */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/8 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
         </div>
-
         <div className="relative z-10 flex flex-col h-full p-12">
           <Logo size="md" />
-
           <div className="flex-1 flex flex-col justify-center">
             <div className="max-w-md">
               <div className="badge badge-blue mb-4">🔧 HVAC On-Demand Marketplace</div>
@@ -53,9 +233,8 @@ export default function LoginPage() {
                 </span>
               </h2>
               <p className="text-surface-400 text-lg leading-relaxed mb-8">
-                Connect with certified HVAC technicians in minutes. Real-time tracking, escrow payments, and guaranteed quality work.
+                Connect with certified HVAC technicians in minutes. Real-time tracking, escrow payments, guaranteed quality.
               </p>
-
               <div className="space-y-3">
                 {[
                   { icon: Zap, text: 'Instant dispatch to nearby techs', color: 'text-amber-400' },
@@ -72,62 +251,55 @@ export default function LoginPage() {
               </div>
             </div>
           </div>
-
-          <div className="text-surface-600 text-xs">
-            © 2026 ServiceConnect. All rights reserved.
-          </div>
+          <p className="text-surface-600 text-xs">© 2026 ServiceConnect. All rights reserved.</p>
         </div>
       </div>
 
-      {/* Right — form */}
+      {/* Right form */}
       <div className="flex-1 lg:max-w-md flex flex-col justify-center px-8 py-12">
         <div className="w-full max-w-sm mx-auto">
-          <div className="lg:hidden mb-8">
-            <Logo size="md" />
-          </div>
+          <div className="lg:hidden mb-8"><Logo size="md" /></div>
 
           <h2 className="text-2xl font-bold text-white mb-1">Welcome back</h2>
-          <p className="text-surface-400 text-sm mb-8">Sign in to your account to continue</p>
+          <p className="text-surface-400 text-sm mb-6">Sign in to your account</p>
 
-          {/* Demo quick access */}
+          {/* Quick demo access */}
           <div className="mb-6">
-            <p className="text-surface-500 text-xs font-semibold uppercase tracking-wider mb-2">Quick Demo Access</p>
+            <p className="text-surface-500 text-xs font-semibold uppercase tracking-wider mb-2">Demo — One-Click Access</p>
             <div className="grid grid-cols-3 gap-2">
-              {DEMO_CREDS.map(c => (
+              {[
+                { role: 'Admin', email: 'admin@demo.com', color: 'from-purple-500 to-accent-600' },
+                { role: 'Customer', email: 'customer@demo.com', color: 'from-brand-400 to-brand-600' },
+                { role: 'HVAC Tech', email: 'tech@demo.com', color: 'from-emerald-400 to-emerald-600' },
+              ].map(c => (
                 <button
                   key={c.role}
-                  onClick={() => quickLogin(c.email)}
-                  className={`py-2 px-3 rounded-xl bg-gradient-to-br ${c.color} text-white text-xs font-semibold text-center opacity-90 hover:opacity-100 transition-opacity active:scale-95`}
+                  onClick={() => handleQuickLogin(c.email)}
+                  disabled={loading}
+                  className={`py-2.5 px-3 rounded-xl bg-gradient-to-br ${c.color} text-white text-xs font-bold text-center opacity-90 hover:opacity-100 transition-all active:scale-95 disabled:opacity-50`}
                 >
-                  {c.role}
+                  {loading ? '...' : c.role}
                 </button>
               ))}
             </div>
+            <p className="text-surface-600 text-xs text-center mt-2">Click any button above to instantly demo that role</p>
+          </div>
+
+          <div className="flex items-center gap-3 mb-5">
+            <div className="flex-1 h-px bg-white/10" />
+            <span className="text-surface-500 text-xs">or sign in manually</span>
+            <div className="flex-1 h-px bg-white/10" />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="label">Email address</label>
-              <input
-                className="input"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
+              <input className="input" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} required />
             </div>
             <div>
               <label className="label">Password</label>
               <div className="relative">
-                <input
-                  className="input pr-11"
-                  type={show ? 'text' : 'password'}
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  required
-                />
+                <input className="input pr-11" type={show ? 'text' : 'password'} placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} required />
                 <button type="button" onClick={() => setShow(!show)} className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-500 hover:text-white">
                   {show ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -140,25 +312,35 @@ export default function LoginPage() {
               </div>
             )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-primary w-full py-3 text-base"
-            >
-              {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : 'Sign In'}
+            <button type="submit" disabled={loading} className="btn-primary w-full py-3 text-base">
+              {loading
+                ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                : 'Sign In'
+              }
             </button>
           </form>
 
-          <p className="text-center text-surface-500 text-sm mt-6">
-            Don't have an account?{' '}
-            <span className="text-brand-400 hover:text-brand-300 cursor-pointer font-medium">Create one</span>
-          </p>
-
-          <p className="text-center text-surface-600 text-xs mt-6">
-            Demo password for all accounts: <span className="text-surface-400 font-mono">demo1234</span>
-          </p>
+          <div className="mt-6 space-y-2">
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="text-surface-500 text-xs">new here?</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => setMode('customer_signup')}
+                className="btn-secondary text-sm py-2.5 justify-center"
+              >
+                Customer Sign Up
+              </button>
+              <button
+                onClick={() => setMode('tech_signup')}
+                className="btn-secondary text-sm py-2.5 justify-center"
+              >
+                Apply as Tech
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

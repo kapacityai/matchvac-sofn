@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const AuthContext = createContext(null)
 
@@ -13,18 +14,32 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState('')
 
   const login = (email, password) => {
-    if (password !== 'demo1234') { setError('Invalid credentials'); return false }
-    const u = DEMO_USERS[email]
-    if (!u) { setError('No account found'); return false }
+    if (password !== 'demo1234') {
+      setError('Invalid credentials. Use password: demo1234')
+      return null
+    }
+    const u = DEMO_USERS[email.toLowerCase().trim()]
+    if (!u) {
+      setError('No account found for that email.')
+      return null
+    }
+    setError('')
+    setUser(u)
+    return u
+  }
+
+  const register = (name, email, role) => {
+    const avatar = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    const u = { id: `${role}-${Date.now()}`, role, name, email, avatar }
     setUser(u)
     setError('')
-    return true
+    return u
   }
 
   const logout = () => setUser(null)
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, error, setError }}>
+    <AuthContext.Provider value={{ user, login, logout, register, error, setError }}>
       {children}
     </AuthContext.Provider>
   )
