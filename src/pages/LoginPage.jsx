@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Logo from '../components/Logo'
 import { Eye, EyeOff, Zap, Shield, MapPin } from 'lucide-react'
@@ -12,7 +11,6 @@ const DEMO_CREDS = [
 
 export default function LoginPage() {
   const { login, error } = useAuth()
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
@@ -22,11 +20,7 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setTimeout(() => {
-      const ok = login(email, password)
-      if (ok) {
-        const role = email.includes('admin') ? 'admin' : email.includes('tech') ? 'tech' : 'customer'
-        navigate(`/${role}`)
-      }
+      login(email, password)
       setLoading(false)
     }, 800)
   }
