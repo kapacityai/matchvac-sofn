@@ -16,7 +16,6 @@ const navConfig = {
     { icon: ShoppingBag, label: 'Store', path: '/customer/store' },
     { icon: ClipboardList, label: 'My Jobs', path: '/customer/jobs' },
     { icon: Star, label: 'Reviews', path: '/customer/reviews' },
-    { icon: UserCircle, label: 'Profile', path: '/customer/billing' },
   ],
   tech: [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/tech' },
@@ -62,17 +61,23 @@ export default function Sidebar() {
         )}
       </div>
 
-      {/* User info */}
+      {/* User info — clickable for customers to access profile */}
       {!collapsed && (
-        <div className="mx-3 mt-4 mb-2 px-3 py-3 rounded-xl bg-white/5 border border-white/10">
+        <div
+          onClick={() => user.role === 'customer' ? navigate('/customer/billing') : undefined}
+          className={`mx-3 mt-4 mb-2 px-3 py-3 rounded-xl bg-white/5 border border-white/10 ${user.role === 'customer' ? 'cursor-pointer hover:bg-white/10 hover:border-brand-500/40 transition-all group' : ''}`}
+        >
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
               {user.avatar}
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p className="text-white text-sm font-semibold truncate">{user.name}</p>
-              <p className="text-surface-500 text-xs capitalize">{user.role}</p>
+              <p className="text-surface-500 text-xs capitalize">{user.role === 'customer' ? 'View Profile' : user.role}</p>
             </div>
+            {user.role === 'customer' && (
+              <UserCircle size={14} className="text-surface-600 group-hover:text-brand-400 transition-colors flex-shrink-0" />
+            )}
           </div>
         </div>
       )}
