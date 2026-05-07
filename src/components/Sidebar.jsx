@@ -49,9 +49,9 @@ export default function Sidebar() {
   const nav = navConfig[user.role] || []
 
   return (
-    <aside className={`${collapsed ? 'w-16' : 'w-60'} h-screen flex flex-col bg-surface-900 border-r border-white/8 flex-shrink-0 transition-all duration-300 relative`}>
+    <aside className={`${collapsed ? 'w-16' : 'w-60'} h-screen flex flex-col bg-surface-900 border-r border-white/10 flex-shrink-0 transition-all duration-300 relative`}>
       {/* Logo */}
-      <div className={`flex items-center ${collapsed ? 'justify-center px-3' : 'px-5'} py-5 border-b border-white/8`}>
+      <div className={`flex items-center ${collapsed ? 'justify-center px-3' : 'px-5'} py-5 border-b border-white/10`}>
         {collapsed ? (
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center">
             <span className="text-white text-xs font-bold">SC</span>
@@ -63,7 +63,7 @@ export default function Sidebar() {
 
       {/* User info */}
       {!collapsed && (
-        <div className="mx-3 mt-4 mb-2 px-3 py-3 rounded-xl bg-white/5 border border-white/8">
+        <div className="mx-3 mt-4 mb-2 px-3 py-3 rounded-xl bg-white/5 border border-white/10">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
               {user.avatar}
@@ -96,7 +96,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Bottom */}
-      <div className="px-3 pb-4 border-t border-white/8 pt-3 space-y-0.5">
+      <div className="px-3 pb-4 border-t border-white/10 pt-3 space-y-0.5">
         <button
           onClick={() => { logout(); navigate('/') }}
           className={`w-full sidebar-item ${collapsed ? 'justify-center' : ''} text-rose-400 hover:text-rose-300 hover:bg-rose-500/10`}

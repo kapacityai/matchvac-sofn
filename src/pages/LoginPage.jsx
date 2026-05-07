@@ -39,7 +39,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-surface-950 flex">
       {/* Left — hero */}
-      <div className="hidden lg:flex flex-col flex-1 relative overflow-hidden bg-gradient-to-br from-surface-900 to-surface-950 border-r border-white/8">
+      <div className="hidden lg:flex flex-col flex-1 relative overflow-hidden bg-gradient-to-br from-surface-900 to-surface-950 border-r border-white/10">
         {/* Background glow */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl" />

@@ -26,7 +26,7 @@ export default function AdminInventory() {
         <div className="card overflow-hidden p-0">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/8">
+              <tr className="border-b border-white/10">
                 <th className="text-left px-5 py-3 text-surface-400 font-medium">Product</th>
                 <th className="text-left px-5 py-3 text-surface-400 font-medium hidden md:table-cell">Category</th>
                 <th className="text-right px-5 py-3 text-surface-400 font-medium">Price</th>
@@ -36,7 +36,7 @@ export default function AdminInventory() {
             </thead>
             <tbody>
               {products.map((p, i) => (
-                <tr key={p.id} className={`${i < products.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/3 transition-colors`}>
+                <tr key={p.id} className={`${i < products.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors`}>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-3">
                       <span className="text-xl">{p.image}</span>
@@ -73,7 +73,7 @@ export default function AdminInventory() {
           <div className="card max-w-md w-full">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-white font-bold">{editProduct ? 'Edit Product' : 'Add Product'}</h3>
-              <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-xl bg-white/8 flex items-center justify-center">
+              <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center">
                 <X size={16} className="text-white" />
               </button>
             </div>

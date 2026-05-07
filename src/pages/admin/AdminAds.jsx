@@ -103,7 +103,7 @@ export default function AdminAds() {
           <div className="card max-w-md w-full">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-white font-bold text-lg">New Ad Campaign</h3>
-              <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-xl bg-white/8 flex items-center justify-center">
+              <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center">
                 <X size={16} className="text-white" />
               </button>
             </div>
@@ -120,7 +120,7 @@ export default function AdminAds() {
               </div>
               <div>
                 <label className="label">Ad Creative</label>
-                <div className="border border-dashed border-white/15 rounded-xl p-5 text-center cursor-pointer hover:border-brand-500/40 transition-colors">
+                <div className="border border-dashed border-white/[15%] rounded-xl p-5 text-center cursor-pointer hover:border-brand-500/40 transition-colors">
                   <Upload size={18} className="text-surface-500 mx-auto mb-1" />
                   <p className="text-surface-400 text-sm">Upload banner image</p>
                 </div>

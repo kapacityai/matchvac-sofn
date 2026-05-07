@@ -99,7 +99,7 @@ export default function AdminOverview() {
 
         {/* Recent jobs */}
         <div className="card overflow-hidden p-0">
-          <div className="px-5 py-4 border-b border-white/8">
+          <div className="px-5 py-4 border-b border-white/10">
             <h3 className="section-title">Recent Jobs</h3>
           </div>
           <table className="w-full text-sm">
@@ -114,7 +114,7 @@ export default function AdminOverview() {
             </thead>
             <tbody>
               {MOCK_JOBS.slice(0, 5).map((job, i) => (
-                <tr key={job.id} className={`${i < 4 ? 'border-b border-white/5' : ''} hover:bg-white/3 transition-colors`}>
+                <tr key={job.id} className={`${i < 4 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors`}>
                   <td className="px-5 py-3 text-white font-medium">{job.service}</td>
                   <td className="px-5 py-3 text-surface-400 hidden md:table-cell">{job.customer || 'Jordan S.'}</td>
                   <td className="px-5 py-3 text-surface-400 hidden lg:table-cell">{job.tech || '—'}</td>

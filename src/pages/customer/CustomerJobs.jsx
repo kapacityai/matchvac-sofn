@@ -21,7 +21,7 @@ export default function CustomerJobs() {
       <div className="flex-1 p-6 max-w-3xl space-y-5">
         <div className="flex gap-2">
           {['all', 'in_progress', 'completed'].map(f => (
-            <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${filter === f ? 'bg-brand-500 text-white' : 'bg-surface-800 text-surface-400 border border-white/8 hover:text-white'}`}>
+            <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${filter === f ? 'bg-brand-500 text-white' : 'bg-surface-800 text-surface-400 border border-white/10 hover:text-white'}`}>
               {f === 'all' ? 'All Jobs' : f === 'in_progress' ? 'Active' : 'Completed'}
             </button>
           ))}

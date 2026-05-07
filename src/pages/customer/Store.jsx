@@ -37,7 +37,7 @@ export default function Store() {
             <button
               key={c}
               onClick={() => setActiveCategory(c)}
-              className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${activeCategory === c ? 'bg-brand-500 text-white' : 'bg-surface-800 text-surface-400 hover:text-white border border-white/8'}`}
+              className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${activeCategory === c ? 'bg-brand-500 text-white' : 'bg-surface-800 text-surface-400 hover:text-white border border-white/10'}`}
             >
               {c}
             </button>
@@ -93,7 +93,7 @@ export default function Store() {
                   >
                     {addedId === product.id ? <><Check size={15} /> Added</> : <><Plus size={15} /> Add to Cart</>}
                   </button>
-                  <button className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-medium text-surface-400 hover:text-white border border-white/8 hover:border-brand-500/30 transition-all">
+                  <button className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-medium text-surface-400 hover:text-white border border-white/10 hover:border-brand-500/30 transition-all">
                     <Wrench size={13} /> + Add Installation
                   </button>
                 </div>
@@ -110,7 +110,7 @@ export default function Store() {
           <div className="w-full max-w-sm bg-surface-900 border-l border-white/10 flex flex-col h-full overflow-auto">
             <div className="flex items-center justify-between p-5 border-b border-white/10">
               <h3 className="text-white font-bold text-lg">Cart ({cartCount})</h3>
-              <button onClick={() => setCartOpen(false)} className="w-8 h-8 rounded-xl bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
+              <button onClick={() => setCartOpen(false)} className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/[15%] transition-colors">
                 <X size={16} className="text-white" />
               </button>
             </div>
@@ -123,9 +123,9 @@ export default function Store() {
                     <p className="text-brand-400 text-sm font-bold">${(item.price * item.qty).toFixed(2)}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => setCart(c => c.map(i => i.id === item.id && i.qty > 1 ? {...i, qty: i.qty - 1} : i).filter(i => i.qty > 0))} className="w-6 h-6 rounded-lg bg-white/8 text-white text-sm flex items-center justify-center">-</button>
+                    <button onClick={() => setCart(c => c.map(i => i.id === item.id && i.qty > 1 ? {...i, qty: i.qty - 1} : i).filter(i => i.qty > 0))} className="w-6 h-6 rounded-lg bg-white/10 text-white text-sm flex items-center justify-center">-</button>
                     <span className="text-white text-sm w-4 text-center">{item.qty}</span>
-                    <button onClick={() => addToCart(item)} className="w-6 h-6 rounded-lg bg-white/8 text-white text-sm flex items-center justify-center">+</button>
+                    <button onClick={() => addToCart(item)} className="w-6 h-6 rounded-lg bg-white/10 text-white text-sm flex items-center justify-center">+</button>
                   </div>
                 </div>
               ))}

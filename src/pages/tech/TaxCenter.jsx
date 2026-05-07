@@ -129,7 +129,7 @@ export default function TaxCenter() {
             ))}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-white/8 flex justify-between text-sm">
+          <div className="mt-4 pt-3 border-t border-white/10 flex justify-between text-sm">
             <span className="text-surface-400">Total deduction</span>
             <span className="text-emerald-400 font-bold">${mileageDeduction}</span>
           </div>

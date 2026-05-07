@@ -17,7 +17,7 @@ export default function AvailableJobs() {
       <Header title="Available Jobs" subtitle="First come, first served — claim fast" />
 
       <div className="flex-1 p-6 max-w-3xl space-y-4">
-        <div className="flex items-center gap-3 px-4 py-3 bg-surface-800 border border-white/8 rounded-xl text-sm text-surface-300">
+        <div className="flex items-center gap-3 px-4 py-3 bg-surface-800 border border-white/10 rounded-xl text-sm text-surface-300">
           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse flex-shrink-0" />
           <span>{jobs.length} jobs available in your coverage area (Costa Mesa, CA + 25mi radius)</span>
         </div>

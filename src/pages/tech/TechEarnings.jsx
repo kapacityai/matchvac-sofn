@@ -78,7 +78,7 @@ export default function TechEarnings() {
           <div className="card overflow-hidden p-0">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/8">
+                <tr className="border-b border-white/10">
                   <th className="text-left px-5 py-3 text-surface-400 font-medium">Service</th>
                   <th className="text-left px-5 py-3 text-surface-400 font-medium hidden sm:table-cell">Date</th>
                   <th className="text-right px-5 py-3 text-surface-400 font-medium">Gross</th>
@@ -88,7 +88,7 @@ export default function TechEarnings() {
               </thead>
               <tbody>
                 {completedJobs.map((job, i) => (
-                  <tr key={job.id} className={`${i < completedJobs.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/3 transition-colors`}>
+                  <tr key={job.id} className={`${i < completedJobs.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors`}>
                     <td className="px-5 py-3 text-white font-medium">{job.service}</td>
                     <td className="px-5 py-3 text-surface-400 hidden sm:table-cell">{job.date}</td>
                     <td className="px-5 py-3 text-right text-white">${job.price}</td>

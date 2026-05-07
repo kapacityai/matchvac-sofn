@@ -19,7 +19,7 @@ export default function AdminUsers() {
 
       <div className="flex-1 p-6 max-w-5xl space-y-5">
         {/* Tabs */}
-        <div className="flex gap-2 border-b border-white/8 pb-0">
+        <div className="flex gap-2 border-b border-white/10 pb-0">
           {['techs', 'customers'].map(t => (
             <button
               key={t}
@@ -83,7 +83,7 @@ export default function AdminUsers() {
                   </div>
 
                   {expanded === tech.id && (
-                    <div className="mt-4 pt-4 border-t border-white/8 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm animate-fade-in">
+                    <div className="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm animate-fade-in">
                       {[
                         { label: "Driver's License", icon: FileText, status: 'uploaded' },
                         { label: 'W-9 Form', icon: FileText, status: 'uploaded' },
@@ -110,7 +110,7 @@ export default function AdminUsers() {
           <div className="card overflow-hidden p-0">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/8">
+                <tr className="border-b border-white/10">
                   <th className="text-left px-5 py-3 text-surface-400 font-medium">Customer</th>
                   <th className="text-right px-5 py-3 text-surface-400 font-medium">Jobs</th>
                   <th className="text-right px-5 py-3 text-surface-400 font-medium">Total Spent</th>
@@ -120,7 +120,7 @@ export default function AdminUsers() {
               </thead>
               <tbody>
                 {MOCK_CUSTOMERS.map((c, i) => (
-                  <tr key={c.id} className={`${i < MOCK_CUSTOMERS.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/3 transition-colors`}>
+                  <tr key={c.id} className={`${i < MOCK_CUSTOMERS.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors`}>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">

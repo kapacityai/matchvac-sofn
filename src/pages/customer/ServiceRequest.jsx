@@ -146,7 +146,7 @@ export default function ServiceRequest() {
               </div>
               <div>
                 <label className="label">Photos (optional)</label>
-                <div className="border border-dashed border-white/15 rounded-xl p-6 text-center hover:border-brand-500/40 transition-colors cursor-pointer">
+                <div className="border border-dashed border-white/[15%] rounded-xl p-6 text-center hover:border-brand-500/40 transition-colors cursor-pointer">
                   <Upload size={20} className="text-surface-500 mx-auto mb-2" />
                   <p className="text-surface-400 text-sm">Click to upload photos</p>
                   <p className="text-surface-600 text-xs mt-1">PNG, JPG up to 10MB</p>

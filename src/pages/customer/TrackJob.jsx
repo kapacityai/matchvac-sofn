@@ -88,10 +88,10 @@ export default function TrackJob() {
             <p className="text-surface-500 text-xs mt-0.5">2018 White Ford Transit Van · CA 7ABC123</p>
           </div>
           <div className="flex gap-2">
-            <button className="w-10 h-10 rounded-xl bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
+            <button className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/[15%] transition-colors">
               <Phone size={16} className="text-brand-400" />
             </button>
-            <button className="w-10 h-10 rounded-xl bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors">
+            <button className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/[15%] transition-colors">
               <MessageCircle size={16} className="text-brand-400" />
             </button>
           </div>
