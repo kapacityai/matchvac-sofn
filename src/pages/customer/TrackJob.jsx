@@ -1,40 +1,87 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
-import { CheckCircle, Car, MapPin, Wrench, Camera, Star, Phone, MessageCircle } from 'lucide-react'
+import { CheckCircle, Car, MapPin, Wrench, Camera, Star, Phone, MessageCircle, Shield, DollarSign, ArrowRight, Lock } from 'lucide-react'
 
 const TIMELINE = [
   { key: 'accepted', icon: CheckCircle, label: 'Job Accepted', sub: 'Marcus is on the way', color: 'text-emerald-400', bg: 'bg-emerald-400' },
   { key: 'enroute', icon: Car, label: 'En Route', sub: 'ETA: ~12 minutes', color: 'text-brand-400', bg: 'bg-brand-400' },
   { key: 'arrived', icon: MapPin, label: 'Arrived', sub: 'Tech has arrived', color: 'text-amber-400', bg: 'bg-amber-400' },
   { key: 'working', icon: Wrench, label: 'Work in Progress', sub: 'Diagnostics underway', color: 'text-accent-400', bg: 'bg-accent-400' },
-  { key: 'photos', icon: Camera, label: 'Completion Photos', sub: 'Awaiting upload', color: 'text-surface-400', bg: 'bg-surface-600' },
-  { key: 'complete', icon: CheckCircle, label: 'Job Complete', sub: 'Awaiting confirmation', color: 'text-surface-400', bg: 'bg-surface-600' },
+  { key: 'photos', icon: Camera, label: 'Completion Photos', sub: 'Photos uploaded by tech', color: 'text-purple-400', bg: 'bg-purple-400' },
+  { key: 'complete', icon: CheckCircle, label: 'Marked Complete by Tech', sub: 'Awaiting your confirmation', color: 'text-emerald-400', bg: 'bg-emerald-400' },
 ]
 
 export default function TrackJob() {
   const navigate = useNavigate()
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(5) // Start at tech-marked-complete
+  const [paymentReleased, setPaymentReleased] = useState(false)
   const [showRating, setShowRating] = useState(false)
   const [rating, setRating] = useState(0)
-  const [eta, setEta] = useState(12)
+  const [hoverRating, setHoverRating] = useState(0)
+  const [reviewDone, setReviewDone] = useState(false)
+  const [releasing, setReleasing] = useState(false)
+  const [eta, setEta] = useState(0) // Already arrived
 
+  // ETA countdown (only relevant for early steps)
   useEffect(() => {
-    const t = setInterval(() => {
-      setEta(e => Math.max(0, e - 1))
-    }, 3000)
+    if (currentStep >= 2) return
+    const t = setInterval(() => setEta(e => Math.max(0, e - 1)), 3000)
     return () => clearInterval(t)
-  }, [])
+  }, [currentStep])
+
+  const handleReleasePayment = () => {
+    setReleasing(true)
+    setTimeout(() => {
+      setReleasing(false)
+      setPaymentReleased(true)
+      setTimeout(() => setShowRating(true), 800)
+    }, 1800)
+  }
+
+  const handleSubmitReview = () => {
+    setShowRating(false)
+    setReviewDone(true)
+  }
+
+  const techCompletedJob = currentStep >= 5
 
   return (
     <div className="flex flex-col h-full overflow-auto">
-      <Header title="Track Job" subtitle="Thermostat Installation — In Progress" />
+      <Header
+        title="Track Job"
+        subtitle={paymentReleased ? 'Thermostat Installation — Completed ✓' : 'Thermostat Installation — In Progress'}
+      />
 
       <div className="flex-1 p-6 max-w-2xl space-y-5">
+
+        {/* ── PAYMENT RELEASED BANNER ── */}
+        {paymentReleased && !reviewDone && (
+          <div className="rounded-2xl bg-gradient-to-r from-emerald-900/50 to-surface-900 border border-emerald-500/40 p-5 text-center">
+            <div className="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mx-auto mb-3">
+              <CheckCircle size={28} className="text-emerald-400" />
+            </div>
+            <h3 className="text-white font-bold text-lg mb-1">Payment Released!</h3>
+            <p className="text-surface-400 text-sm">$149.00 has been released to Marcus Rivera. A receipt has been sent to your email.</p>
+          </div>
+        )}
+
+        {reviewDone && (
+          <div className="rounded-2xl bg-gradient-to-r from-brand-900/40 to-surface-900 border border-brand-500/30 p-5 text-center">
+            <div className="w-14 h-14 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center mx-auto mb-3">
+              <Star size={28} className="text-amber-400 fill-amber-400" />
+            </div>
+            <h3 className="text-white font-bold text-lg mb-1">All Done — Thanks!</h3>
+            <p className="text-surface-400 text-sm mb-4">Your review has been submitted. Marcus will appreciate it!</p>
+            <button onClick={() => navigate('/customer/jobs')} className="btn-primary py-2.5 px-6">
+              View Job History <ArrowRight size={16} />
+            </button>
+          </div>
+        )}
+
         {/* Map placeholder */}
         <div className="relative h-52 rounded-2xl overflow-hidden border border-white/10">
           <div className="absolute inset-0 bg-gradient-to-br from-surface-800 to-surface-900 flex items-center justify-center">
-            {/* Fake map grid */}
             <div className="absolute inset-0 opacity-10">
               {Array.from({length: 8}).map((_, i) => (
                 <div key={i} className="absolute w-full h-px bg-brand-400" style={{ top: `${i * 14}%` }} />
@@ -43,12 +90,12 @@ export default function TrackJob() {
                 <div key={i} className="absolute h-full w-px bg-brand-400" style={{ left: `${i * 14}%` }} />
               ))}
             </div>
-            {/* Tech pin */}
+            {/* Tech pin — at home location once arrived */}
             <div className="relative">
-              <div className="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center border-2 border-white shadow-lg animate-pulse-slow">
-                <Car size={18} className="text-white" />
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 border-white shadow-lg ${paymentReleased ? 'bg-emerald-500' : 'bg-brand-500 animate-pulse-slow'}`}>
+                {paymentReleased ? <CheckCircle size={18} className="text-white" /> : <Car size={18} className="text-white" />}
               </div>
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-brand-500 rotate-45" />
+              <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 ${paymentReleased ? 'bg-emerald-500' : 'bg-brand-500'}`} />
             </div>
             {/* Home pin */}
             <div className="absolute bottom-8 right-16">
@@ -56,20 +103,11 @@ export default function TrackJob() {
                 <MapPin size={14} className="text-white" />
               </div>
             </div>
-            {/* Route line */}
-            <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <path d="M 50 50 Q 65 45 80 35" stroke="#0ea5e9" strokeWidth="2" fill="none" strokeDasharray="4 2" />
-            </svg>
           </div>
-          {eta > 0 && (
-            <div className="absolute top-3 left-3 glass px-3 py-1.5 rounded-xl text-sm font-semibold text-white">
-              ETA: {eta} min
-            </div>
-          )}
           <div className="absolute top-3 right-3 glass px-3 py-1.5 rounded-xl">
             <div className="flex items-center gap-1.5">
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              <span className="text-white text-xs font-medium">Live</span>
+              <div className={`w-2 h-2 rounded-full ${paymentReleased ? 'bg-surface-500' : 'bg-emerald-400 animate-pulse'}`} />
+              <span className="text-white text-xs font-medium">{paymentReleased ? 'Complete' : 'Live'}</span>
             </div>
           </div>
         </div>
@@ -113,19 +151,92 @@ export default function TrackJob() {
                       <item.icon size={15} />
                     </div>
                     {i < TIMELINE.length - 1 && (
-                      <div className={`w-px flex-1 min-h-4 mt-1 ${done ? item.bg : 'bg-surface-800'}`} style={{ minHeight: 16 }} />
+                      <div className={`w-px flex-1 mt-1 ${done ? item.bg : 'bg-surface-800'}`} style={{ minHeight: 16 }} />
                     )}
                   </div>
                   <div className="pb-4">
                     <p className={`text-sm font-semibold ${active ? 'text-white' : done ? 'text-surface-300' : 'text-surface-600'}`}>{item.label}</p>
                     <p className={`text-xs mt-0.5 ${active ? item.color : done ? 'text-surface-400' : 'text-surface-700'}`}>{item.sub}</p>
-                    {active && <span className="badge badge-blue mt-1">Current</span>}
+                    {active && !paymentReleased && <span className="badge badge-blue mt-1">Current</span>}
+                    {active && paymentReleased && <span className="badge badge-green mt-1">Confirmed ✓</span>}
                   </div>
                 </div>
               )
             })}
           </div>
         </div>
+
+        {/* ── CUSTOMER CONFIRM & RELEASE PAYMENT ── */}
+        {techCompletedJob && !paymentReleased && (
+          <div className="rounded-2xl border-2 border-emerald-500/50 bg-gradient-to-br from-emerald-900/30 to-surface-900 p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-400/10 flex items-center justify-center flex-shrink-0">
+                <Lock size={20} className="text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-white font-bold">Marcus has marked the job complete</p>
+                <p className="text-surface-400 text-xs">Review the work and release payment from escrow</p>
+              </div>
+            </div>
+
+            {/* Escrow summary */}
+            <div className="bg-surface-800/60 rounded-xl p-4 mb-4 space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-surface-400">Service</span>
+                <span className="text-white">Thermostat Installation (Standard)</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-surface-400">Technician</span>
+                <span className="text-white">Marcus Rivera</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-surface-400">Escrow Hold</span>
+                <span className="text-amber-400 font-semibold flex items-center gap-1"><Shield size={12} /> $149.00 secured</span>
+              </div>
+              <div className="border-t border-white/10 pt-2 flex justify-between font-bold">
+                <span className="text-white">Total to Release</span>
+                <span className="text-emerald-400 text-base">$149.00</span>
+              </div>
+            </div>
+
+            <p className="text-surface-500 text-xs mb-4 leading-relaxed">
+              By confirming, you release the escrowed funds to Marcus Rivera. Only confirm if the work was completed to your satisfaction.
+            </p>
+
+            <button
+              onClick={handleReleasePayment}
+              disabled={releasing}
+              className={`w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all text-base ${releasing ? 'bg-emerald-700 cursor-not-allowed' : 'bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98]'}`}
+            >
+              {releasing ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Releasing Payment…
+                </>
+              ) : (
+                <>
+                  <DollarSign size={20} />
+                  Confirm &amp; Release Payment
+                </>
+              )}
+            </button>
+          </div>
+        )}
+
+        {/* Completion photos preview (shown at step 4+) */}
+        {currentStep >= 4 && (
+          <div className="card">
+            <h3 className="font-bold text-white mb-3 text-sm">Completion Photos from Marcus</h3>
+            <div className="grid grid-cols-3 gap-2">
+              {['Before', 'During', 'After'].map((label, i) => (
+                <div key={label} className="aspect-square rounded-xl bg-surface-800 flex flex-col items-center justify-center border border-white/10">
+                  <Camera size={18} className="text-surface-500 mb-1" />
+                  <span className="text-surface-600 text-xs">{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Post-job ad — Comfort Connect Premier */}
         <div
@@ -151,33 +262,55 @@ export default function TrackJob() {
         {/* Demo controls */}
         <div className="card border-dashed border-white/10">
           <p className="text-surface-500 text-xs font-semibold uppercase tracking-widest mb-3">Demo Controls</p>
-          <div className="flex gap-2">
-            <button disabled={currentStep === 0} onClick={() => setCurrentStep(s => s - 1)} className="btn-secondary text-sm py-2">← Prev</button>
-            <button disabled={currentStep >= TIMELINE.length - 1} onClick={() => setCurrentStep(s => s + 1)} className="btn-primary text-sm py-2">Next →</button>
+          <div className="flex gap-2 flex-wrap">
+            <button disabled={currentStep === 0} onClick={() => { setCurrentStep(s => s - 1); setPaymentReleased(false); setReviewDone(false) }} className="btn-secondary text-sm py-2">← Prev Step</button>
+            <button disabled={currentStep >= TIMELINE.length - 1} onClick={() => setCurrentStep(s => s + 1)} className="btn-primary text-sm py-2">Next Step →</button>
+            <button onClick={() => { setCurrentStep(5); setPaymentReleased(false); setReviewDone(false); setRating(0) }} className="btn-ghost text-sm py-2">Reset Demo</button>
+          </div>
+          <p className="text-surface-600 text-xs mt-2">Step {currentStep + 1} of {TIMELINE.length}: {TIMELINE[currentStep]?.label}</p>
+        </div>
+      </div>
+
+      {/* ── RATING MODAL ── */}
+      {showRating && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="card max-w-sm w-full text-center">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-2xl font-bold text-white mx-auto mb-4">
+              MR
+            </div>
+            <h3 className="text-xl font-bold text-white mb-1">Rate Your Experience</h3>
+            <p className="text-surface-400 text-sm mb-1">How was Marcus Rivera?</p>
+            <p className="text-surface-500 text-xs mb-5">Thermostat Installation · $149.00</p>
+            <div className="flex justify-center gap-3 mb-4">
+              {[1,2,3,4,5].map(r => (
+                <button
+                  key={r}
+                  onClick={() => setRating(r)}
+                  onMouseEnter={() => setHoverRating(r)}
+                  onMouseLeave={() => setHoverRating(0)}
+                >
+                  <Star size={36} className={r <= (hoverRating || rating) ? 'text-amber-400 fill-amber-400' : 'text-surface-700'} />
+                </button>
+              ))}
+            </div>
+            {rating > 0 && (
+              <p className="text-amber-400 font-semibold text-sm mb-4">
+                {['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent!'][rating]}
+              </p>
+            )}
+            <button
+              disabled={rating === 0}
+              onClick={handleSubmitReview}
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${rating > 0 ? 'btn-primary' : 'bg-surface-800 text-surface-500 cursor-not-allowed'}`}
+            >
+              Submit Review
+            </button>
+            <button onClick={() => { setShowRating(false); setReviewDone(true) }} className="text-surface-500 text-xs mt-3 hover:text-surface-400 transition-colors">
+              Skip for now
+            </button>
           </div>
         </div>
-
-        {/* Rating modal */}
-        {showRating && (
-          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-            <div className="card max-w-sm w-full text-center">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
-                <CheckCircle size={32} className="text-emerald-400" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-1">Job Complete!</h3>
-              <p className="text-surface-400 text-sm mb-5">How was your experience with Marcus?</p>
-              <div className="flex justify-center gap-2 mb-5">
-                {[1,2,3,4,5].map(r => (
-                  <button key={r} onClick={() => setRating(r)}>
-                    <Star size={32} className={r <= rating ? 'text-amber-400 fill-amber-400' : 'text-surface-600'} />
-                  </button>
-                ))}
-              </div>
-              <button className="btn-primary w-full" onClick={() => setShowRating(false)}>Submit Review</button>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </div>
   )
 }

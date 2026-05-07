@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
 import { MOCK_JOBS } from '../../data/mockData'
-import { CheckCircle, Clock, Wrench, Star, ChevronRight } from 'lucide-react'
+import { CheckCircle, Clock, Wrench, Star, ChevronRight, ArrowRight } from 'lucide-react'
 
 const cJobs = MOCK_JOBS.filter(j => ['j1','j2','j3','j4'].includes(j.id))
 
@@ -12,6 +13,7 @@ const statusConfig = {
 }
 
 export default function CustomerJobs() {
+  const navigate = useNavigate()
   const [filter, setFilter] = useState('all')
   const filtered = filter === 'all' ? cJobs : cJobs.filter(j => j.status === filter)
 
@@ -52,7 +54,16 @@ export default function CustomerJobs() {
                   </div>
                   <div className="text-right flex-shrink-0">
                     <p className="text-white font-bold">${job.price}</p>
-                    <ChevronRight size={16} className="text-surface-500 ml-auto mt-1" />
+                    {job.status === 'in_progress' ? (
+                      <button
+                        onClick={() => navigate('/customer/track')}
+                        className="mt-2 flex items-center gap-1 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors whitespace-nowrap"
+                      >
+                        Approve &amp; Pay <ArrowRight size={12} />
+                      </button>
+                    ) : (
+                      <ChevronRight size={16} className="text-surface-500 ml-auto mt-1" />
+                    )}
                   </div>
                 </div>
               </div>

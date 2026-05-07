@@ -19,27 +19,26 @@ export default function CustomerHome() {
       <Header title={`Hey, ${user?.name?.split(' ')[0]} 👋`} subtitle="What can we fix for you today?" />
 
       <div className="flex-1 p-6 space-y-6 max-w-4xl">
-        {/* Active job alert */}
+        {/* Active job alert — ACTION REQUIRED */}
         {activeJob && (
           <div
             onClick={() => navigate('/customer/track')}
-            className="card-hover border-brand-500/40 bg-brand-500/5 cursor-pointer animate-fade-in"
+            className="cursor-pointer animate-fade-in rounded-2xl border-2 border-emerald-500/60 bg-gradient-to-r from-emerald-900/30 to-surface-900 hover:border-emerald-400 transition-all"
           >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-brand-500/20 flex items-center justify-center flex-shrink-0">
-                <Wrench size={22} className="text-brand-400 animate-pulse-slow" />
+            <div className="bg-emerald-500/10 border-b border-emerald-500/20 px-4 py-2 flex items-center gap-2 rounded-t-2xl">
+              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider">Action Required — Payment Pending</span>
+            </div>
+            <div className="flex items-center gap-4 p-4">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <CheckCircle size={22} className="text-emerald-400" />
               </div>
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="badge badge-blue">Active Job</span>
-                  <span className="text-surface-500 text-xs">•</span>
-                  <span className="text-surface-400 text-xs">In Progress</span>
-                </div>
-                <p className="text-white font-semibold">{activeJob.service}</p>
-                <p className="text-surface-400 text-sm">Tech {activeJob.tech} is working on your system</p>
+                <p className="text-white font-bold">{activeJob.service} — Complete!</p>
+                <p className="text-surface-400 text-sm">Marcus Rivera has marked the job done. Confirm to release $149.00 from escrow.</p>
               </div>
-              <div className="flex items-center gap-1 text-brand-400 text-sm font-medium">
-                Track <ChevronRight size={16} />
+              <div className="flex items-center gap-1 text-emerald-400 text-sm font-bold whitespace-nowrap">
+                Approve &amp; Pay <ChevronRight size={16} />
               </div>
             </div>
           </div>
