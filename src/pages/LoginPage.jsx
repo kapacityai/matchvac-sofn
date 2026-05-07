@@ -1,27 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import Logo from '../components/Logo'
 import { Eye, EyeOff, Zap, Shield, MapPin, ArrowRight, Upload, CheckCircle } from 'lucide-react'
 
-// ── Sign-up: Customer ────────────────────────────────────────────────────────
+// ── Customer Signup ──────────────────────────────────────────────────────────
 function CustomerSignup({ onBack }) {
   const { register } = useAuth()
-  const navigate = useNavigate()
   const [step, setStep] = useState(0)
-  const [form, setForm] = useState({ name: '', email: '', phone: '', address: '', card: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', address: '' })
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
-  const finish = () => {
-    const u = register(form.name || 'New Customer', form.email || 'newuser@demo.com', 'customer')
-    navigate('/customer')
-  }
+  // Calling register() sets user in context → AppRoutes re-renders → redirects to /customer automatically
+  const finish = () => register(form.name || 'New Customer', form.email || 'newcustomer@demo.com', 'customer')
 
   return (
     <div className="w-full max-w-sm mx-auto animate-slide-up">
-      <button onClick={onBack} className="text-surface-400 hover:text-white text-sm mb-6 flex items-center gap-1">
-        ← Back to sign in
-      </button>
+      <button onClick={onBack} className="text-surface-400 hover:text-white text-sm mb-6 flex items-center gap-1">← Back to sign in</button>
       <h2 className="text-2xl font-bold text-white mb-1">Create Customer Account</h2>
       <p className="text-surface-400 text-sm mb-6">Book HVAC service in minutes</p>
 
@@ -37,13 +31,13 @@ function CustomerSignup({ onBack }) {
 
       {step === 1 && (
         <div className="space-y-4">
-          <p className="text-surface-400 text-sm">Add a payment method to book services. Funds are held in escrow until job completion.</p>
-          <div><label className="label">Card Number</label><input className="input font-mono" placeholder="4242 4242 4242 4242" value={form.card} onChange={set('card')} /></div>
+          <p className="text-surface-400 text-sm">Add a payment method. Funds are held in escrow until job completion.</p>
+          <div><label className="label">Card Number</label><input className="input font-mono" placeholder="4242 4242 4242 4242" /></div>
           <div className="grid grid-cols-2 gap-3">
             <div><label className="label">Expiry</label><input className="input" placeholder="MM / YY" /></div>
             <div><label className="label">CVC</label><input className="input" placeholder="123" /></div>
           </div>
-          <div className="flex items-center gap-2 text-xs text-surface-400 mt-1">
+          <div className="flex items-center gap-2 text-xs text-surface-400">
             <Shield size={14} className="text-emerald-400" /> Secured by Stripe — never stored on our servers
           </div>
           <div className="flex gap-3">
@@ -56,10 +50,9 @@ function CustomerSignup({ onBack }) {
   )
 }
 
-// ── Sign-up: HVAC Tech ───────────────────────────────────────────────────────
+// ── Tech Signup ──────────────────────────────────────────────────────────────
 function TechSignup({ onBack }) {
   const { register } = useAuth()
-  const navigate = useNavigate()
   const [step, setStep] = useState(0)
   const [form, setForm] = useState({ name: '', email: '', phone: '', coverage: '', plan: 'per_job' })
   const [uploaded, setUploaded] = useState({})
@@ -67,29 +60,25 @@ function TechSignup({ onBack }) {
 
   const DOCS = [
     { key: 'license', label: "Driver's License (front & back)" },
-    { key: 'w9', label: 'IRS Form W-9' },
-    { key: 'certs', label: 'HVAC Certifications (EPA 608, NATE, etc.)' },
+    { key: 'w9',      label: 'IRS Form W-9' },
+    { key: 'certs',   label: 'HVAC Certifications (EPA 608, NATE, etc.)' },
   ]
 
-  const finish = () => {
-    const u = register(form.name || 'New Tech', form.email || 'newtech@demo.com', 'tech')
-    navigate('/tech')
-  }
+  const finish = () => register(form.name || 'New Tech', form.email || 'newtech@demo.com', 'tech')
+
+  const steps = ['Info', 'Docs', 'Plan', 'Review']
 
   return (
     <div className="w-full max-w-sm mx-auto animate-slide-up">
-      <button onClick={onBack} className="text-surface-400 hover:text-white text-sm mb-6 flex items-center gap-1">
-        ← Back to sign in
-      </button>
+      <button onClick={onBack} className="text-surface-400 hover:text-white text-sm mb-6 flex items-center gap-1">← Back to sign in</button>
       <h2 className="text-2xl font-bold text-white mb-1">Apply as HVAC Tech</h2>
-      <p className="text-surface-400 text-sm mb-6">Start earning in your area</p>
+      <p className="text-surface-400 text-sm mb-5">Start earning in your area</p>
 
-      {/* Step progress */}
       <div className="flex gap-1 mb-6">
-        {['Info', 'Docs', 'Plan', 'Review'].map((s, i) => (
-          <div key={s} className="flex-1">
-            <div className={`h-1 rounded-full ${i <= step ? 'bg-brand-500' : 'bg-surface-700'}`} />
-            <p className={`text-xs mt-1 text-center ${i === step ? 'text-brand-400' : 'text-surface-600'}`}>{s}</p>
+        {steps.map((s, i) => (
+          <div key={s} className="flex-1 text-center">
+            <div className={`h-1 rounded-full mb-1 ${i <= step ? 'bg-brand-500' : 'bg-surface-700'}`} />
+            <p className={`text-xs ${i === step ? 'text-brand-400' : 'text-surface-600'}`}>{s}</p>
           </div>
         ))}
       </div>
@@ -99,14 +88,14 @@ function TechSignup({ onBack }) {
           <div><label className="label">Full Name</label><input className="input" placeholder="Marcus Rivera" value={form.name} onChange={set('name')} /></div>
           <div><label className="label">Email Address</label><input className="input" type="email" placeholder="marcus@email.com" value={form.email} onChange={set('email')} /></div>
           <div><label className="label">Phone</label><input className="input" type="tel" placeholder="(555) 000-0000" value={form.phone} onChange={set('phone')} /></div>
-          <div><label className="label">Service Coverage Area (zip codes or city)</label><input className="input" placeholder="e.g. Costa Mesa, Irvine, Newport Beach" value={form.coverage} onChange={set('coverage')} /></div>
+          <div><label className="label">Coverage Area</label><input className="input" placeholder="e.g. Costa Mesa, Irvine, Newport Beach" value={form.coverage} onChange={set('coverage')} /></div>
           <button onClick={() => setStep(1)} className="btn-primary w-full py-3">Next: Upload Documents <ArrowRight size={16} /></button>
         </div>
       )}
 
       {step === 1 && (
         <div className="space-y-4">
-          <p className="text-surface-400 text-sm">All documents are reviewed within 24 hours. Your account will show <span className="text-amber-400">Pending Review</span> until approved.</p>
+          <p className="text-surface-400 text-sm">Documents reviewed within 24 hours. Account shows <span className="text-amber-400 font-medium">Pending Review</span> until approved.</p>
           {DOCS.map(doc => (
             <div key={doc.key}>
               <label className="label">{doc.label}</label>
@@ -115,7 +104,7 @@ function TechSignup({ onBack }) {
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-sm font-medium ${uploaded[doc.key] ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400' : 'border-dashed border-white/[15%] text-surface-400 hover:border-brand-500/40 hover:text-white'}`}
               >
                 {uploaded[doc.key] ? <CheckCircle size={16} /> : <Upload size={16} />}
-                {uploaded[doc.key] ? 'Uploaded ✓' : 'Click to upload'}
+                {uploaded[doc.key] ? 'Uploaded ✓' : 'Tap to upload'}
               </button>
             </div>
           ))}
@@ -130,14 +119,11 @@ function TechSignup({ onBack }) {
         <div className="space-y-4">
           <p className="text-surface-400 text-sm">Choose your platform fee structure:</p>
           {[
-            { key: 'per_job', label: 'Pay-per-Job', detail: '15% platform fee deducted from each job', badge: '' },
-            { key: 'subscription', label: 'Monthly Subscription', detail: '$149/month — reduced 8% per-job rate + instant payouts', badge: 'Best Value' },
+            { key: 'per_job',      label: 'Pay-per-Job',          detail: '15% platform fee per job, no monthly cost' },
+            { key: 'subscription', label: 'Monthly Subscription', detail: '$149/mo — reduced 8% per-job rate + instant payouts', badge: 'Best Value' },
           ].map(p => (
-            <button
-              key={p.key}
-              onClick={() => setForm(f => ({ ...f, plan: p.key }))}
-              className={`w-full text-left card transition-all ${form.plan === p.key ? 'border-brand-500 bg-brand-500/10' : 'hover:border-white/20'}`}
-            >
+            <button key={p.key} onClick={() => setForm(f => ({ ...f, plan: p.key }))}
+              className={`w-full text-left card transition-all ${form.plan === p.key ? 'border-brand-500 bg-brand-500/10' : 'hover:border-white/20'}`}>
               <div className="flex items-center justify-between mb-1">
                 <p className="text-white font-semibold">{p.label}</p>
                 {p.badge && <span className="badge badge-green">{p.badge}</span>}
@@ -154,9 +140,9 @@ function TechSignup({ onBack }) {
 
       {step === 3 && (
         <div className="space-y-4">
-          <div className="card bg-surface-800/50 text-sm text-surface-300 h-32 overflow-y-auto leading-relaxed">
+          <div className="card bg-surface-800/50 text-sm text-surface-300 h-28 overflow-y-auto leading-relaxed">
             <p className="font-semibold text-white mb-1">Independent Contractor Agreement</p>
-            You acknowledge that you are an independent contractor, not an employee of ServiceConnect. You will receive a 1099-NEC at year-end for all earnings over $600. You are responsible for your own taxes, insurance, and certifications. Platform fees of {form.plan === 'subscription' ? '8% + $149/mo' : '15%'} apply to each job. By clicking below you e-sign this agreement.
+            You are an independent contractor, not an employee of ServiceConnect. You will receive a 1099-NEC at year-end for earnings over $600. Platform fee: {form.plan === 'subscription' ? '8% + $149/mo' : '15%'} per job. By clicking Submit you e-sign this agreement.
           </div>
           <div><label className="label">Bank Account for Payouts</label><input className="input" placeholder="Routing + Account number" /></div>
           <div className="flex gap-3">
@@ -171,38 +157,28 @@ function TechSignup({ onBack }) {
 
 // ── Main Login ───────────────────────────────────────────────────────────────
 export default function LoginPage() {
-  const { login, error, setError, user } = useAuth()
-  const navigate = useNavigate()
-  const [email, setEmail] = useState('')
+  const { login, error, setError } = useAuth()
+  const [email, setEmailVal] = useState('')
   const [password, setPassword] = useState('')
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [mode, setMode] = useState('login') // 'login' | 'customer_signup' | 'tech_signup'
+  const [mode, setMode] = useState('login')
 
-  // Navigate as soon as user state is set
-  useEffect(() => {
-    if (user) navigate(`/${user.role}`, { replace: true })
-  }, [user, navigate])
+  // When register() or login() sets user in context, AppRoutes sees it and
+  // replaces the entire route tree — LoginPage unmounts automatically.
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const doLogin = (em, pw) => {
     setLoading(true)
     setTimeout(() => {
-      login(email, password)
+      login(em, pw)   // sets user in context → AppRoutes re-renders → navigates
       setLoading(false)
-    }, 600)
+    }, 500)
   }
 
-  const handleQuickLogin = (demoEmail) => {
-    setLoading(true)
-    setTimeout(() => {
-      login(demoEmail, 'demo1234')
-      setLoading(false)
-    }, 600)
-  }
+  const handleSubmit = (e) => { e.preventDefault(); doLogin(email, password) }
 
   if (mode === 'customer_signup') return (
-    <div className="min-h-screen bg-surface-950 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-surface-950 flex items-center justify-center px-6 py-12">
       <CustomerSignup onBack={() => { setMode('login'); setError('') }} />
     </div>
   )
@@ -217,7 +193,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-surface-950 flex">
       {/* Left hero */}
       <div className="hidden lg:flex flex-col flex-1 relative overflow-hidden bg-gradient-to-br from-surface-900 to-surface-950 border-r border-white/10">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-20 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
         </div>
@@ -228,18 +204,16 @@ export default function LoginPage() {
               <div className="badge badge-blue mb-4">🔧 HVAC On-Demand Marketplace</div>
               <h2 className="text-4xl font-extrabold text-white leading-tight mb-4">
                 Fast, Verified HVAC<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">
-                  Service On Demand
-                </span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">Service On Demand</span>
               </h2>
               <p className="text-surface-400 text-lg leading-relaxed mb-8">
                 Connect with certified HVAC technicians in minutes. Real-time tracking, escrow payments, guaranteed quality.
               </p>
               <div className="space-y-3">
                 {[
-                  { icon: Zap, text: 'Instant dispatch to nearby techs', color: 'text-amber-400' },
-                  { icon: MapPin, text: 'Live GPS tracking of your technician', color: 'text-brand-400' },
-                  { icon: Shield, text: 'Secure escrow — pay only when done', color: 'text-emerald-400' },
+                  { icon: Zap,    text: 'Instant dispatch to nearby techs',        color: 'text-amber-400' },
+                  { icon: MapPin, text: 'Live GPS tracking of your technician',    color: 'text-brand-400' },
+                  { icon: Shield, text: 'Secure escrow — pay only when complete',  color: 'text-emerald-400' },
                 ].map(({ icon: Icon, text, color }) => (
                   <div key={text} className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
@@ -263,26 +237,22 @@ export default function LoginPage() {
           <h2 className="text-2xl font-bold text-white mb-1">Welcome back</h2>
           <p className="text-surface-400 text-sm mb-6">Sign in to your account</p>
 
-          {/* Quick demo access */}
+          {/* One-click demo access */}
           <div className="mb-6">
-            <p className="text-surface-500 text-xs font-semibold uppercase tracking-wider mb-2">Demo — One-Click Access</p>
+            <p className="text-surface-500 text-xs font-semibold uppercase tracking-wider mb-2">One-Click Demo Access</p>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { role: 'Admin', email: 'admin@demo.com', color: 'from-purple-500 to-accent-600' },
-                { role: 'Customer', email: 'customer@demo.com', color: 'from-brand-400 to-brand-600' },
-                { role: 'HVAC Tech', email: 'tech@demo.com', color: 'from-emerald-400 to-emerald-600' },
+                { role: 'Admin',     email: 'admin@demo.com',    color: 'from-purple-500 to-accent-600' },
+                { role: 'Customer',  email: 'customer@demo.com', color: 'from-brand-400 to-brand-600' },
+                { role: 'HVAC Tech', email: 'tech@demo.com',     color: 'from-emerald-400 to-emerald-600' },
               ].map(c => (
-                <button
-                  key={c.role}
-                  onClick={() => handleQuickLogin(c.email)}
-                  disabled={loading}
-                  className={`py-2.5 px-3 rounded-xl bg-gradient-to-br ${c.color} text-white text-xs font-bold text-center opacity-90 hover:opacity-100 transition-all active:scale-95 disabled:opacity-50`}
-                >
-                  {loading ? '...' : c.role}
+                <button key={c.role} onClick={() => doLogin(c.email, 'demo1234')} disabled={loading}
+                  className={`py-3 px-2 rounded-xl bg-gradient-to-br ${c.color} text-white text-xs font-bold text-center hover:opacity-90 active:scale-95 transition-all disabled:opacity-50`}>
+                  {loading ? '…' : c.role}
                 </button>
               ))}
             </div>
-            <p className="text-surface-600 text-xs text-center mt-2">Click any button above to instantly demo that role</p>
+            <p className="text-surface-600 text-xs text-center mt-2">Tap any button above to instantly enter that role</p>
           </div>
 
           <div className="flex items-center gap-3 mb-5">
@@ -294,7 +264,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="label">Email address</label>
-              <input className="input" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} required />
+              <input className="input" type="email" placeholder="you@example.com" value={email} onChange={e => setEmailVal(e.target.value)} required />
             </div>
             <div>
               <label className="label">Password</label>
@@ -307,36 +277,25 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <div className="px-4 py-3 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-sm">
-                {error}
-              </div>
+              <div className="px-4 py-3 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-sm">{error}</div>
             )}
 
             <button type="submit" disabled={loading} className="btn-primary w-full py-3 text-base">
-              {loading
-                ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                : 'Sign In'
-              }
+              {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" /> : 'Sign In'}
             </button>
           </form>
 
-          <div className="mt-6 space-y-2">
+          <div className="mt-6 space-y-3">
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-white/10" />
               <span className="text-surface-500 text-xs">new here?</span>
               <div className="flex-1 h-px bg-white/10" />
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => setMode('customer_signup')}
-                className="btn-secondary text-sm py-2.5 justify-center"
-              >
+              <button onClick={() => { setMode('customer_signup'); setError('') }} className="btn-secondary text-sm py-2.5 justify-center">
                 Customer Sign Up
               </button>
-              <button
-                onClick={() => setMode('tech_signup')}
-                className="btn-secondary text-sm py-2.5 justify-center"
-              >
+              <button onClick={() => { setMode('tech_signup'); setError('') }} className="btn-secondary text-sm py-2.5 justify-center">
                 Apply as Tech
               </button>
             </div>
