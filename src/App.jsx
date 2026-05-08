@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage'
 import ComfortConnect from './pages/ComfortConnect'
 import FinancingPage from './pages/FinancingPage'
 import ContractorsPage from './pages/ContractorsPage'
+import CostBreakdown from './pages/CostBreakdown'
 
 import CustomerHome from './pages/customer/CustomerHome'
 import ServiceRequest from './pages/customer/ServiceRequest'
@@ -53,6 +54,7 @@ function AppRoutes() {
         <Route path="/comfort-connect" element={<ComfortConnect />} />
         <Route path="/financing"       element={<FinancingPage />} />
         <Route path="/contractors"     element={<ContractorsPage />} />
+        <Route path="/cost"            element={<CostBreakdown />} />
         <Route path="*"                element={<Navigate to="/" replace />} />
       </Routes>
     )
@@ -67,6 +69,7 @@ function AppRoutes() {
         <Route path="/comfort-connect" element={<ComfortConnect />} />
         <Route path="/financing"       element={<FinancingPage />} />
         <Route path="/contractors"     element={<ContractorsPage />} />
+        <Route path="/cost"            element={<CostBreakdown />} />
 
         {/* Customer */}
         <Route path="/customer"         element={user.role==='customer' ? <CustomerHome />   : <Navigate to={home} replace />} />
