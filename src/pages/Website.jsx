@@ -429,8 +429,7 @@ export default function Website() {
           <div className="flex gap-4 text-surface-500 text-sm flex-wrap justify-center">
             <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
             <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
-            <button onClick={() => navigate('/cost')} className="hover:text-white transition-colors">Launch Costs</button>
-            <span className="hover:text-white cursor-pointer">Privacy</span>
+<span className="hover:text-white cursor-pointer">Privacy</span>
             <span className="hover:text-white cursor-pointer">Terms</span>
             <span className="hover:text-white cursor-pointer">Contact</span>
           </div>
