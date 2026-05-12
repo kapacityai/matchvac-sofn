@@ -203,6 +203,26 @@ CREATE TABLE IF NOT EXISTS ad_slots (
   created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- ── LENDING PARTNER APPLICATIONS ─────────────────────────────
+CREATE TABLE IF NOT EXISTS lending_partner_applications (
+  id               UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  company          TEXT NOT NULL,
+  website          TEXT,
+  contact_name     TEXT NOT NULL,
+  email            TEXT NOT NULL,
+  phone            TEXT,
+  category         TEXT,
+  description      TEXT,
+  tier             TEXT NOT NULL CHECK (tier IN ('starter', 'growth', 'premier')),
+  status           TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'active', 'cancelled')),
+  approved_at      TIMESTAMPTZ,
+  approved_by      UUID REFERENCES users(id),
+  stripe_subscription_id TEXT,
+  monthly_fee      DECIMAL,
+  notes            TEXT,
+  created_at       TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- ── INDEXES ───────────────────────────────────────────────────
 CREATE INDEX IF NOT EXISTS idx_jobs_customer ON jobs(customer_id);
 CREATE INDEX IF NOT EXISTS idx_jobs_tech ON jobs(tech_id);
@@ -227,3 +247,50 @@ INSERT INTO services (name, category, emergency, price_basic, price_standard, pr
   ('No Heat Emergency', 'Emergency', true, 349, 499, 699, 'Priority dispatch — no heat emergency'),
   ('No A/C Emergency', 'Emergency', true, 349, 499, 699, 'Priority dispatch — no A/C emergency')
 ON CONFLICT DO NOTHING;
+
+-- ============================================================
+-- ROW LEVEL SECURITY
+-- ============================================================
+-- Enable RLS on all tables
+ALTER TABLE users                        ENABLE ROW LEVEL SECURITY;
+ALTER TABLE customer_profiles            ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tech_profiles                ENABLE ROW LEVEL SECURITY;
+ALTER TABLE services                     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE jobs                         ENABLE ROW LEVEL SECURITY;
+ALTER TABLE payments                     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tech_subscriptions           ENABLE ROW LEVEL SECURITY;
+ALTER TABLE premier_memberships          ENABLE ROW LEVEL SECURITY;
+ALTER TABLE gps_flags                    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contractor_applications      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE lending_partner_applications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE notifications                ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ad_slots                     ENABLE ROW LEVEL SECURITY;
+
+-- NOTE: All data access goes through the backend API using the
+-- service role key, which bypasses RLS. These policies protect
+-- against any direct client access.
+
+-- Services are public read
+CREATE POLICY "services_public_read" ON services
+  FOR SELECT USING (true);
+
+-- Users can only read their own record
+CREATE POLICY "users_own_read" ON users
+  FOR SELECT USING (auth.uid()::text = id::text);
+
+-- Customers see their own jobs; techs see assigned or available jobs
+CREATE POLICY "jobs_customer_read" ON jobs
+  FOR SELECT USING (auth.uid()::text = customer_id::text);
+
+CREATE POLICY "jobs_tech_read" ON jobs
+  FOR SELECT USING (
+    auth.uid()::text = tech_id::text OR status = 'available'
+  );
+
+-- Notifications: users see only their own
+CREATE POLICY "notifications_own" ON notifications
+  FOR ALL USING (auth.uid()::text = user_id::text);
+
+-- Ad slots are public read
+CREATE POLICY "ad_slots_public_read" ON ad_slots
+  FOR SELECT USING (active = true);
