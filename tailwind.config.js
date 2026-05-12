@@ -3,58 +3,71 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Hanfan coral — primary brand color
         brand: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          50:  '#FFF0F0',
+          100: '#FFE8E9',
+          200: '#FFD0D2',
+          300: '#FFB0B3',
+          400: '#FF7A7F',
+          500: '#FF5A5F',
+          600: '#E84E53',
+          700: '#C73E43',
+          800: '#9B2E32',
+          900: '#7A2326',
         },
-        surface: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
-        },
+        // Hanfan amber — pro/secondary
         accent: {
-          400: '#a78bfa',
-          500: '#8b5cf6',
-          600: '#7c3aed',
+          100: '#FFF3CC',
+          200: '#FFE080',
+          300: '#FFD040',
+          400: '#FFC733',
+          500: '#FFB400',
+          600: '#E6A200',
+          700: '#CC9000',
         },
+        // Hanfan ink surface scale
+        surface: {
+          50:  '#F7F7F7',
+          100: '#EFEFEF',
+          200: '#E0E0E0',
+          300: '#C8C8C8',
+          400: '#A0A0A0',
+          500: '#6B6B6B',
+          600: '#4A4A4A',
+          700: '#3A3A3A',
+          800: '#2A2A2A',
+          900: '#1F1F1F',
+          950: '#1A1A1A',
+        },
+        // Hanfan semantic
+        coral:  '#FF5A5F',
+        amber:  '#FFB400',
+        ink:    '#1A1A1A',
+        ash:    '#6B6B6B',
+        warm:   '#FFF8F4',
+        blush:  '#FFE8E9',
         emerald: {
           400: '#34d399',
           500: '#10b981',
           600: '#059669',
         },
-        amber: {
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-        },
         rose: {
           400: '#fb7185',
           500: '#f43f5e',
           600: '#e11d48',
-        }
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Syne', 'system-ui', 'sans-serif'],
+        sans:    ['DM Sans', 'system-ui', 'sans-serif'],
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-      }
+      borderRadius: {
+        'card': '16px',
+        'card-sm': '12px',
+        'btn':  '10px',
+        'pill': '100px',
+      },
     }
   },
   plugins: []
