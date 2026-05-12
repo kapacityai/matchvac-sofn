@@ -72,6 +72,7 @@ function Nav({ onLogin }) {
           <a href="#store" className="hover:text-white transition-colors">Store</a>
           <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
           <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
+          <button onClick={() => navigate('/lending-partners')} className="hover:text-white transition-colors">Lending Partners</button>
           <a href="#techs" className="hover:text-white transition-colors">For Technicians</a>
         </div>
         <div className="hidden md:flex items-center gap-3">
@@ -89,6 +90,7 @@ function Nav({ onLogin }) {
           ))}
           <button onClick={() => { navigate('/financing'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">Financing</button>
           <button onClick={() => { navigate('/contractors'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">For Contractors</button>
+          <button onClick={() => { navigate('/lending-partners'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">Lending Partners</button>
           <div className="flex gap-2 pt-2">
             <button onClick={onLogin} className="btn-secondary flex-1 text-sm py-2">Sign In</button>
             <button onClick={() => navigate('/login?signup=customer')} className="btn-primary flex-1 text-sm py-2">Sign Up</button>
