@@ -204,7 +204,12 @@ export default function TechDocuments() {
 
         {/* Help note */}
         <p className="text-surface-600 text-xs text-center">
-          Document review typically takes 1–2 business days. Questions? Contact <span className="text-brand-400">support@serviceconnect.com</span>
+          Document review typically takes 1–2 business days. Questions? Contact <span className="text-brand-400">support@serviceconnect.io</span>
+        </p>
+        <p className="text-surface-600 text-xs text-center">
+          By maintaining your account you agree to our{' '}
+          <a href="/terms?tab=tech" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">Technician Terms of Service</a>
+          {' '}including the off-platform solicitation policy.
         </p>
       </div>
 

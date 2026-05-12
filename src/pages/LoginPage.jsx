@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Logo from '../components/Logo'
-import { Eye, EyeOff, Zap, Shield, MapPin, ArrowRight, Upload, CheckCircle } from 'lucide-react'
+import { Eye, EyeOff, Zap, Shield, MapPin, ArrowRight, Upload, CheckCircle, FileText } from 'lucide-react'
 
 // ── Customer Signup ──────────────────────────────────────────────────────────
 function CustomerSignup({ onBack }) {
@@ -44,6 +44,12 @@ function CustomerSignup({ onBack }) {
             <button onClick={() => setStep(0)} className="btn-secondary flex-1">Back</button>
             <button onClick={finish} className="btn-primary flex-1">Create Account</button>
           </div>
+          <p className="text-surface-600 text-xs text-center mt-2">
+            By creating an account you agree to our{' '}
+            <a href="/terms?tab=customer" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">Customer Terms of Service</a>
+            {' '}and{' '}
+            <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">General Terms</a>.
+          </p>
         </div>
       )}
     </div>
@@ -142,13 +148,25 @@ function TechSignup({ onBack }) {
         <div className="space-y-4">
           <div className="card bg-surface-800/50 text-sm text-surface-300 h-28 overflow-y-auto leading-relaxed">
             <p className="font-semibold text-white mb-1">Independent Contractor Agreement</p>
-            You are an independent contractor, not an employee of ServiceConnect. You will receive a 1099-NEC at year-end for earnings over $600. Platform fee: {form.plan === 'subscription' ? '8% + $149/mo' : '15%'} per job. By clicking Submit you e-sign this agreement.
+            You are an independent contractor, not an employee of ServiceConnect. You will receive a 1099-NEC at year-end for earnings over $600. Platform fee: {form.plan === 'subscription' ? '8% + $149/mo' : '15%'} per job. Off-platform solicitation of customers obtained through ServiceConnect is strictly prohibited and subject to liquidated damages of $5,000 per violation. By clicking Submit you e-sign this agreement and the full Technician Terms of Service.
+          </div>
+          <div className="flex items-center gap-2 px-3 py-2 bg-brand-500/10 border border-brand-500/20 rounded-xl">
+            <FileText size={13} className="text-brand-400 flex-shrink-0" />
+            <a href="/terms?tab=tech" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline text-xs">
+              Read full Technician Terms of Service →
+            </a>
           </div>
           <div><label className="label">Bank Account for Payouts</label><input className="input" placeholder="Routing + Account number" /></div>
           <div className="flex gap-3">
             <button onClick={() => setStep(2)} className="btn-secondary flex-1">Back</button>
             <button onClick={finish} className="btn-primary flex-1">Submit Application</button>
           </div>
+          <p className="text-surface-600 text-xs text-center">
+            By submitting you agree to our{' '}
+            <a href="/terms?tab=tech" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">Technician Terms</a>
+            {' '}and{' '}
+            <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">General Terms</a>.
+          </p>
         </div>
       )}
     </div>
