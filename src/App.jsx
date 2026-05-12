@@ -21,6 +21,8 @@ import TechMyJobs from './pages/tech/TechMyJobs'
 import TechEarnings from './pages/tech/TechEarnings'
 import TechSubscription from './pages/tech/TechSubscription'
 import TaxCenter from './pages/tech/TaxCenter'
+import TechReviews from './pages/tech/TechReviews'
+import TechDocuments from './pages/tech/TechDocuments'
 
 import AdminOverview from './pages/admin/AdminOverview'
 import AdminUsers from './pages/admin/AdminUsers'
@@ -28,6 +30,8 @@ import AdminJobs from './pages/admin/AdminJobs'
 import AdminReports from './pages/admin/AdminReports'
 import AdminAds from './pages/admin/AdminAds'
 import AdminInventory from './pages/admin/AdminInventory'
+import AdminNotifications from './pages/admin/AdminNotifications'
+import AdminSettings from './pages/admin/AdminSettings'
 
 function AppShell({ children }) {
   return (
@@ -85,8 +89,8 @@ function AppRoutes() {
         <Route path="/tech/earnings"      element={user.role==='tech' ? <TechEarnings />    : <Navigate to={home} replace />} />
         <Route path="/tech/subscription"  element={user.role==='tech' ? <TechSubscription />: <Navigate to={home} replace />} />
         <Route path="/tech/tax"           element={user.role==='tech' ? <TaxCenter />       : <Navigate to={home} replace />} />
-        <Route path="/tech/reviews"       element={user.role==='tech' ? <TechDashboard />   : <Navigate to={home} replace />} />
-        <Route path="/tech/docs"          element={user.role==='tech' ? <TechDashboard />   : <Navigate to={home} replace />} />
+        <Route path="/tech/reviews"       element={user.role==='tech' ? <TechReviews />    : <Navigate to={home} replace />} />
+        <Route path="/tech/docs"          element={user.role==='tech' ? <TechDocuments />  : <Navigate to={home} replace />} />
 
         {/* Admin */}
         <Route path="/admin"               element={user.role==='admin' ? <AdminOverview />  : <Navigate to={home} replace />} />
@@ -95,8 +99,8 @@ function AppRoutes() {
         <Route path="/admin/reports"       element={user.role==='admin' ? <AdminReports />   : <Navigate to={home} replace />} />
         <Route path="/admin/ads"           element={user.role==='admin' ? <AdminAds />       : <Navigate to={home} replace />} />
         <Route path="/admin/inventory"     element={user.role==='admin' ? <AdminInventory /> : <Navigate to={home} replace />} />
-        <Route path="/admin/notifications" element={user.role==='admin' ? <AdminOverview />  : <Navigate to={home} replace />} />
-        <Route path="/admin/settings"      element={user.role==='admin' ? <AdminOverview />  : <Navigate to={home} replace />} />
+        <Route path="/admin/notifications" element={user.role==='admin' ? <AdminNotifications /> : <Navigate to={home} replace />} />
+        <Route path="/admin/settings"      element={user.role==='admin' ? <AdminSettings />     : <Navigate to={home} replace />} />
 
         <Route path="*" element={<Navigate to={home} replace />} />
       </Routes>
