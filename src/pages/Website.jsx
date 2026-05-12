@@ -63,32 +63,32 @@ function Nav({ onLogin }) {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   return (
-    <nav className="sticky top-0 z-50 bg-surface-950/80 backdrop-blur-xl border-b border-white/10">
+    <nav style={{ background: 'rgba(26,26,26,0.95)', backdropFilter: 'blur(20px)', borderBottom: '0.5px solid rgba(255,255,255,0.07)' }} className="sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Logo size="sm" />
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-surface-400">
+        <div className="hidden md:flex items-center gap-6 text-sm text-surface-400" style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500 }}>
           <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
           <a href="#services" className="hover:text-white transition-colors">Services</a>
           <a href="#store" className="hover:text-white transition-colors">Store</a>
           <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
-          <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
-          <a href="#techs" className="hover:text-white transition-colors">For Technicians</a>
+          <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Pros</button>
+          <a href="#techs" className="hover:text-white transition-colors">Join as a Pro</a>
         </div>
         <div className="hidden md:flex items-center gap-3">
           <button onClick={onLogin} className="btn-ghost text-sm">Sign In</button>
-          <button onClick={() => navigate('/login?signup=customer')} className="btn-primary text-sm py-2">Get Started</button>
+          <button onClick={() => navigate('/login?signup=customer')} className="btn-primary text-sm py-2 px-5">Get Started</button>
         </div>
         <button className="md:hidden" onClick={() => setOpen(!open)}>
           {open ? <X size={22} className="text-white" /> : <Menu size={22} className="text-white" />}
         </button>
       </div>
       {open && (
-        <div className="md:hidden bg-surface-900 border-t border-white/10 px-6 py-4 space-y-3 text-sm">
-          {['How It Works','Services','Store','For Technicians'].map(l => (
+        <div style={{ background: '#1F1F1F', borderTop: '0.5px solid rgba(255,255,255,0.07)' }} className="md:hidden px-6 py-4 space-y-3 text-sm">
+          {['How It Works','Services','Store','Join as a Pro'].map(l => (
             <a key={l} href={`#${l.toLowerCase().replace(/ /g,'-')}`} className="block text-surface-300 hover:text-white py-1" onClick={() => setOpen(false)}>{l}</a>
           ))}
           <button onClick={() => { navigate('/financing'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">Financing</button>
-          <button onClick={() => { navigate('/contractors'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">For Contractors</button>
+          <button onClick={() => { navigate('/contractors'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">For Pros</button>
           <div className="flex gap-2 pt-2">
             <button onClick={onLogin} className="btn-secondary flex-1 text-sm py-2">Sign In</button>
             <button onClick={() => navigate('/login?signup=customer')} className="btn-primary flex-1 text-sm py-2">Sign Up</button>
@@ -108,46 +108,69 @@ export default function Website() {
     <div className="bg-surface-950 min-h-screen text-white">
       <Nav onLogin={goLogin} />
 
-      {/* ── HERO ── */}
-      <section className="relative overflow-hidden py-24 px-6">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brand-500/8 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-500/8 rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-5xl mx-auto text-center">
+      {/* ── HERO — Coral background, Hanfan brand ── */}
+      <section style={{ background: '#FF5A5F', position: 'relative', overflow: 'hidden' }} className="py-24 px-6">
+        {/* Ghosted handshake watermark */}
+        <svg style={{ position: 'absolute', right: '-4%', top: '50%', transform: 'translateY(-50%)', opacity: 0.12, pointerEvents: 'none' }}
+          width="520" height="520" viewBox="0 0 200 200" fill="none">
+          <path d="M40 110c0 0 15-20 35-20s30 15 45 15 25-10 40-10" stroke="white" strokeWidth="8" strokeLinecap="round"/>
+          <path d="M30 130c0 0 20-15 40-15s35 20 50 20 30-15 50-15" stroke="white" strokeWidth="6" strokeLinecap="round"/>
+          <path d="M50 90c0 0 10-15 25-15s20 10 30 10 15-8 28-8" stroke="white" strokeWidth="5" strokeLinecap="round"/>
+          <circle cx="100" cy="70" r="22" fill="white"/>
+          <path d="M80 90 Q100 110 120 90" stroke="white" strokeWidth="5" fill="none" strokeLinecap="round"/>
+        </svg>
+
+        <div className="relative max-w-5xl mx-auto">
           <div className="flex justify-center mb-6">
             <LocationTicker />
           </div>
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6">
-            HVAC Service,<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-300 to-accent-400">
-              On Demand
-            </span>
-          </h1>
-          <p className="text-surface-400 text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Book a certified HVAC technician in minutes. Real-time tracking, escrow payments, and guaranteed quality — all in one app.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
-            <button onClick={() => navigate('/login?signup=customer')} className="btn-primary py-4 px-8 text-lg">
-              Book a Technician <ArrowRight size={20} />
-            </button>
-            <button onClick={goLogin} className="btn-secondary py-4 px-8 text-lg">
-              Sign In
-            </button>
-          </div>
-          {/* Social proof */}
-          <div className="flex items-center justify-center gap-8 flex-wrap text-sm text-surface-400">
-            {[
-              { value: '500+', label: 'Jobs Completed' },
-              { value: '4.9★', label: 'Average Rating' },
-              { value: '< 15 min', label: 'Avg. Acceptance' },
-              { value: '100%', label: 'Escrow Protected' },
-            ].map(s => (
-              <div key={s.label} className="text-center">
-                <p className="text-white font-bold text-lg">{s.value}</p>
-                <p className="text-surface-500 text-xs">{s.label}</p>
-              </div>
-            ))}
+
+          <div className="text-center">
+            {/* Founding line */}
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontStyle: 'italic', color: 'rgba(255,255,255,0.75)', fontSize: '15px', marginBottom: '16px' }}>
+              Have a need. Fill a need.
+            </p>
+
+            <h1 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, color: 'white', lineHeight: 1.05, letterSpacing: '-0.03em' }}
+              className="text-5xl sm:text-6xl lg:text-7xl mb-6">
+              Real pros<br />on demand.
+            </h1>
+
+            <p style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.8)', fontSize: '18px', lineHeight: 1.6, maxWidth: '520px', margin: '0 auto 36px' }}>
+              Book a verified home service professional in minutes. Real-time tracking, secure escrow payments, guaranteed quality.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
+              <button onClick={() => navigate('/login?signup=customer')}
+                style={{ background: '#1A1A1A', color: 'white', fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: '16px', padding: '14px 32px', borderRadius: '10px', border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.background = '#2A2A2A'}
+                onMouseLeave={e => e.currentTarget.style.background = '#1A1A1A'}
+              >
+                Book a Pro <ArrowRight size={18} />
+              </button>
+              <button onClick={goLogin}
+                style={{ background: 'rgba(255,255,255,0.15)', color: 'white', fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: '16px', padding: '14px 32px', borderRadius: '10px', border: '1.5px solid rgba(255,255,255,0.4)', cursor: 'pointer', transition: 'background 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.25)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}
+              >
+                Sign In
+              </button>
+            </div>
+
+            {/* Social proof pills */}
+            <div className="flex items-center justify-center gap-6 flex-wrap">
+              {[
+                { value: '500+', label: 'Jobs Completed' },
+                { value: '4.9★', label: 'Average Rating' },
+                { value: '< 15 min', label: 'Avg. Acceptance' },
+                { value: '100%', label: 'Escrow Protected' },
+              ].map(s => (
+                <div key={s.label} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: '100px', padding: '8px 18px', backdropFilter: 'blur(10px)' }}>
+                  <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, color: 'white', fontSize: '15px' }}>{s.value} </span>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(255,255,255,0.75)', fontSize: '13px' }}>{s.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -422,16 +445,16 @@ export default function Website() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="border-t border-white/10 py-10 px-6">
+      <footer style={{ borderTop: '0.5px solid rgba(255,255,255,0.07)' }} className="py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <Logo size="sm" />
-          <p className="text-surface-500 text-sm text-center">© 2026 ServiceConnect. All rights reserved. · Maryland · DMV &amp; Expanding Nationwide</p>
-          <div className="flex gap-4 text-surface-500 text-sm flex-wrap justify-center">
+          <p style={{ fontFamily: "'DM Sans', sans-serif", color: '#6B6B6B', fontSize: '13px' }} className="text-center">© 2026 Hanfan. All rights reserved. · Maryland · DMV &amp; Expanding Nationwide</p>
+          <div className="flex gap-4 text-sm flex-wrap justify-center" style={{ color: '#6B6B6B', fontFamily: "'DM Sans', sans-serif" }}>
             <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
-            <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
-<span className="hover:text-white cursor-pointer">Privacy</span>
-            <span className="hover:text-white cursor-pointer">Terms</span>
-            <span className="hover:text-white cursor-pointer">Contact</span>
+            <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Pros</button>
+            <span className="hover:text-white cursor-pointer transition-colors">Privacy</span>
+            <span className="hover:text-white cursor-pointer transition-colors">Terms</span>
+            <span className="hover:text-white cursor-pointer transition-colors">Contact</span>
           </div>
         </div>
       </footer>
