@@ -1,7 +1,9 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState } from 'react'
+import { auth as apiAuth } from '../lib/api.js'
 
 const AuthContext = createContext(null)
 
+// ── Demo users (used when VITE_API_URL is not set) ────────────
 const DEMO_USERS = {
   'admin@demo.com':    { id: 'admin-1', role: 'admin',    name: 'Alex Admin',    email: 'admin@demo.com',    avatar: 'AA' },
   'customer@demo.com': { id: 'cust-1',  role: 'customer', name: 'Jordan Smith',  email: 'customer@demo.com', avatar: 'JS' },
@@ -10,12 +12,7 @@ const DEMO_USERS = {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('sc_user')
-      return saved ? JSON.parse(saved) : null
-    } catch {
-      return null
-    }
+    try { return JSON.parse(localStorage.getItem('sc_user')) } catch { return null }
   })
   const [error, setError] = useState('')
 
@@ -25,35 +22,74 @@ export function AuthProvider({ children }) {
     setUser(u)
   }
 
-  const login = (email, password) => {
+  // ── LOGIN ────────────────────────────────────────────────────
+  const login = async (email, password) => {
     const trimmed = email.toLowerCase().trim()
-    if (password !== 'demo1234') {
-      setError('Incorrect password. Use: demo1234')
-      return null
-    }
-    const u = DEMO_USERS[trimmed]
-    if (!u) {
-      setError('No account found for that email.')
-      return null
-    }
     setError('')
+
+    // Live API mode
+    if (apiAuth.isLive) {
+      try {
+        const { user: u } = await apiAuth.login({ email: trimmed, password })
+        persistUser(u)
+        return u
+      } catch (err) {
+        setError(err.message || 'Login failed')
+        return null
+      }
+    }
+
+    // Demo mode
+    if (password !== 'demo1234') { setError('Incorrect password. Use: demo1234'); return null }
+    const u = DEMO_USERS[trimmed]
+    if (!u) { setError('No account found for that email.'); return null }
     persistUser(u)
     return u
   }
 
-  const register = (name, email, role) => {
+  // ── REGISTER ─────────────────────────────────────────────────
+  const register = async (name, email, password, role) => {
+    setError('')
+
+    // Live API mode
+    if (apiAuth.isLive) {
+      try {
+        const { user: u } = await apiAuth.register({ name, email, password, role })
+        persistUser(u)
+        return u
+      } catch (err) {
+        setError(err.message || 'Registration failed')
+        return null
+      }
+    }
+
+    // Demo mode
     const avatar = name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'U'
     const u = { id: `${role}-${Date.now()}`, role, name, email, avatar }
-    setError('')
     persistUser(u)
     return u
   }
 
-  const logout = () => persistUser(null)
+  // ── LOGOUT ───────────────────────────────────────────────────
+  const logout = () => {
+    apiAuth.logout()
+    persistUser(null)
+  }
 
-  const updateProfile = (fields) => {
+  // ── UPDATE PROFILE ───────────────────────────────────────────
+  const updateProfile = async (fields) => {
+    if (apiAuth.isLive) {
+      try {
+        const { user: u } = await apiAuth.updateMe(fields)
+        persistUser(u)
+        return u
+      } catch (err) {
+        setError(err.message)
+        return user
+      }
+    }
+    // Demo mode — local only
     const updated = { ...user, ...fields }
-    // Recompute avatar if name changed
     if (fields.name) {
       updated.avatar = fields.name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || updated.avatar
     }
