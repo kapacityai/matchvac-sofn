@@ -374,7 +374,7 @@ export default function TermsOfService() {
       <div className="border-b border-white/10 bg-surface-900/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <button onClick={() => navigate(-1)} className="text-surface-400 hover:text-white transition-colors flex items-center gap-1.5 text-sm">
+            <button onClick={() => window.history.length > 1 ? navigate(-1) : navigate('/')} className="text-surface-400 hover:text-white transition-colors flex items-center gap-1.5 text-sm">
               <ArrowLeft size={16} /> Back
             </button>
             <div className="h-5 w-px bg-white/10" />

@@ -167,8 +167,8 @@ export default function ContractorsPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 bg-surface-950/90 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-surface-400 hover:text-white transition-colors text-sm">
-            <ChevronLeft size={18} /> Back
+          <button onClick={() => navigate('/')} className="flex items-center gap-2 text-surface-400 hover:text-white transition-colors text-sm">
+            <ChevronLeft size={18} /> Home
           </button>
           <Logo size="sm" />
           <button onClick={() => navigate('/')} className="text-surface-400 hover:text-white text-sm">Website</button>
