@@ -241,19 +241,20 @@ export default function TrackJob() {
         {/* Post-job ad — Comfort Connect Premier */}
         <div
           onClick={() => navigate('/comfort-connect')}
-          className="cursor-pointer rounded-2xl border-2 border-[#003478] bg-gradient-to-r from-[#003478]/40 to-[#001a3d]/60 hover:border-[#4da6ff] transition-all group overflow-hidden"
+          className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-md transition-all"
         >
-          <div className="bg-[#003478] px-4 py-1.5 flex items-center gap-2">
-            <svg width="14" height="14" viewBox="0 0 40 40" fill="none"><path d="M20 4L4 16v20h10V24h12v12h10V16L20 4z" fill="white" opacity="0.9"/></svg>
-            <span className="text-white font-bold text-xs">Comfort Connect Premier Program®</span>
-          </div>
-          <div className="flex items-center gap-3 px-4 py-3">
-            <div className="text-2xl flex-shrink-0">❄️</div>
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
+          <div className="flex items-center gap-3 px-4 py-3.5">
+            <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-xl flex-shrink-0">❄️</div>
             <div className="flex-1 min-w-0">
-              <p className="text-white font-bold text-sm">Need a New System? Don't Buy — Get It Included.</p>
-              <p className="text-surface-400 text-xs">Low monthly payment covers everything. No up-front cost.</p>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-brand-600 text-xs font-bold">Comfort Connect Premier Program®</span>
+                <span className="text-xs text-surface-400">· Sponsored</span>
+              </div>
+              <p className="text-surface-900 font-bold text-sm">Need a New System? Don't Buy — Get It Included.</p>
+              <p className="text-surface-500 text-xs mt-0.5">Low monthly payment covers everything. No up-front cost.</p>
             </div>
-            <button className="bg-[#003478] border border-[#4da6ff]/40 text-surface-900 font-bold py-2 px-3 rounded-xl text-xs flex-shrink-0 group-hover:bg-[#00449e] transition-all">
+            <button className="btn-primary py-2 px-3 text-xs flex-shrink-0 whitespace-nowrap">
               See If I Qualify
             </button>
           </div>

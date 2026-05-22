@@ -164,20 +164,20 @@ export default function CustomerHome() {
         <div className="space-y-3">
           <div
             onClick={() => navigate('/comfort-connect')}
-            className="cursor-pointer group relative overflow-hidden rounded-2xl border border-[#4da6ff]/30 hover:border-[#4da6ff]/60 transition-all"
+            className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-md transition-all"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#003478]/90 via-[#00449e]/70 to-[#001a3d]/90" />
-            <div className="absolute top-0 right-0 w-32 h-full bg-[#4da6ff]/10 blur-2xl" />
-            <div className="relative flex items-center gap-3 px-4 py-3.5">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-xl flex-shrink-0">❄️</div>
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
+            <div className="flex items-center gap-3 px-4 py-3.5">
+              <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-xl flex-shrink-0">❄️</div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-[#4da6ff] text-xs font-bold">Comfort Connect Premier</span>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#4da6ff]/15 text-[#4da6ff]">#1 Partner</span>
+                  <span className="text-brand-600 text-xs font-bold">Comfort Connect Premier</span>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-brand-100 text-brand-700">#1 Partner</span>
+                  <span className="text-xs text-surface-400">· Sponsored</span>
                 </div>
-                <p className="text-white font-bold text-sm">Equipment Included — Zero Up-Front Cost</p>
+                <p className="text-surface-900 font-bold text-sm">Equipment Included — Zero Up-Front Cost</p>
               </div>
-              <ArrowRight size={15} className="text-[#4da6ff] group-hover:translate-x-0.5 transition-transform flex-shrink-0" />
+              <ArrowRight size={15} className="text-brand-500 group-hover:translate-x-0.5 transition-transform flex-shrink-0" />
             </div>
           </div>
 

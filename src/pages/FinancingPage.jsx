@@ -274,43 +274,39 @@ export default function FinancingPage() {
         {/* ── Comfort Connect — ALWAYS #1 FEATURED ── */}
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-px flex-1 bg-white/10" />
-            <span className="text-[#4da6ff] text-xs font-bold uppercase tracking-widest">#1 Recommended — Most Popular Choice</span>
-            <div className="h-px flex-1 bg-white/10" />
+            <div className="h-px flex-1 bg-surface-200" />
+            <span className="text-brand-600 text-xs font-bold uppercase tracking-widest">#1 Recommended — Most Popular Choice</span>
+            <div className="h-px flex-1 bg-surface-200" />
           </div>
 
           <div
             onClick={() => navigate('/comfort-connect')}
-            className="cursor-pointer rounded-2xl border-2 border-[#003478] bg-gradient-to-br from-[#003478]/40 to-[#001a3d]/60 overflow-hidden hover:border-[#4da6ff] transition-all group"
+            className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-lg transition-all"
           >
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
             {/* Header bar */}
-            <div className="bg-[#003478] px-5 py-3 flex items-center justify-between flex-wrap gap-2">
+            <div className="bg-brand-50 border-b border-brand-100 px-5 py-3 flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-3">
-                <svg width="22" height="22" viewBox="0 0 40 40" fill="none"><path d="M20 4L4 16v20h10V24h12v12h10V16L20 4z" fill="white" opacity="0.9"/></svg>
-                <span className="text-white font-bold tracking-wide">Comfort Connect</span>
-                <span className="badge bg-[#4da6ff]/30 text-[#4da6ff] border-0 font-bold">Premier Program®</span>
+                <span className="text-brand-700 font-bold tracking-wide">Comfort Connect</span>
+                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-brand-100 text-brand-700">Premier Program®</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Star size={14} className="text-amber-400 fill-amber-400" />
-                <Star size={14} className="text-amber-400 fill-amber-400" />
-                <Star size={14} className="text-amber-400 fill-amber-400" />
-                <Star size={14} className="text-amber-400 fill-amber-400" />
-                <Star size={14} className="text-amber-400 fill-amber-400" />
-                <span className="text-white text-xs font-semibold ml-1">4.9 · 2,400+ members</span>
+              <div className="flex items-center gap-1.5">
+                {[1,2,3,4,5].map(i => <Star key={i} size={13} className="text-amber-400 fill-amber-400" />)}
+                <span className="text-surface-600 text-xs font-semibold ml-1">4.9 · 2,400+ members</span>
               </div>
             </div>
 
             <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <h2 className="text-white font-extrabold text-2xl mb-2">
+                <h2 className="text-surface-900 font-extrabold text-2xl mb-2">
                   Don't Buy — Get It All Included for One Monthly Payment
                 </h2>
-                <p className="text-surface-300 mb-4">Equipment + professional installation + all repairs + annual maintenance + consumable parts. No up-front cost. No surprise bills. Ever.</p>
+                <p className="text-surface-500 mb-4">Equipment + professional installation + all repairs + annual maintenance + consumable parts. No up-front cost. No surprise bills. Ever.</p>
                 <div className="grid grid-cols-2 gap-2">
                   {featured.highlights.map(h => (
                     <div key={h} className="flex items-center gap-2 text-sm">
-                      <CheckCircle size={14} className="text-[#4da6ff] flex-shrink-0" />
-                      <span className="text-surface-300">{h}</span>
+                      <CheckCircle size={14} className="text-brand-500 flex-shrink-0" />
+                      <span className="text-surface-600">{h}</span>
                     </div>
                   ))}
                 </div>
@@ -324,13 +320,13 @@ export default function FinancingPage() {
                     { label: 'Credit Required', value: 'All considered', icon: CreditCard },
                   ].map(s => (
                     <div key={s.label} className="flex items-center gap-2">
-                      <s.icon size={14} className="text-[#4da6ff] flex-shrink-0" />
+                      <s.icon size={14} className="text-brand-500 flex-shrink-0" />
                       <span className="text-surface-500">{s.label}:</span>
-                      <span className="text-white font-semibold">{s.value}</span>
+                      <span className="text-surface-900 font-semibold">{s.value}</span>
                     </div>
                   ))}
                 </div>
-                <button className="w-full bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/40 text-surface-900 font-bold py-3.5 px-5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
+                <button className="btn-primary w-full py-3.5 px-5 text-sm">
                   See If I Qualify <ArrowRight size={16} />
                 </button>
               </div>

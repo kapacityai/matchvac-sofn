@@ -255,23 +255,21 @@ export default function Website() {
         <div className="max-w-5xl mx-auto">
           <div
             onClick={() => navigate('/comfort-connect')}
-            className="cursor-pointer group relative overflow-hidden rounded-2xl border border-[#4da6ff]/30 hover:border-[#4da6ff]/60 transition-all duration-300"
+            className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-md transition-all duration-300"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#003478]/90 via-[#00449e]/70 to-[#001a3d]/90" />
-            <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#4da6ff]/20 rounded-full blur-2xl" />
-            </div>
-            <div className="relative flex flex-col sm:flex-row items-center gap-5 p-5">
-              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-2xl flex-shrink-0">❄️</div>
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
+            <div className="flex flex-col sm:flex-row items-center gap-5 p-5">
+              <div className="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center text-2xl flex-shrink-0">❄️</div>
               <div className="flex-1 text-center sm:text-left">
                 <div className="flex items-center gap-2 justify-center sm:justify-start mb-1">
-                  <span className="text-[#4da6ff] text-xs font-bold uppercase tracking-wider">Comfort Connect Premier</span>
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#4da6ff]/20 text-[#4da6ff]">#1 Partner</span>
+                  <span className="text-brand-600 text-xs font-bold uppercase tracking-wider">Comfort Connect Premier</span>
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-100 text-brand-700">#1 Partner</span>
+                  <span className="text-xs text-surface-400">· Sponsored</span>
                 </div>
-                <p className="text-white font-bold text-lg">Don't Buy Your HVAC — Get It All Included</p>
-                <p className="text-blue-200 text-sm mt-0.5">Equipment + install + repairs + maintenance for one low monthly payment. Zero up-front cost.</p>
+                <p className="text-surface-900 font-bold text-lg">Don't Buy Your HVAC — Get It All Included</p>
+                <p className="text-surface-500 text-sm mt-0.5">Equipment + install + repairs + maintenance for one low monthly payment. Zero up-front cost.</p>
               </div>
-              <button className="bg-[#4da6ff]/20 hover:bg-[#4da6ff]/30 border border-[#4da6ff]/40 text-white font-bold py-2.5 px-5 rounded-xl transition-all flex-shrink-0 flex items-center gap-2 whitespace-nowrap group-hover:border-[#4da6ff]/70">
+              <button className="btn-primary py-2.5 px-5 flex-shrink-0 whitespace-nowrap">
                 See If I Qualify <ArrowRight size={15} />
               </button>
             </div>
