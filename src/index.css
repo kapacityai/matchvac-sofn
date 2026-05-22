@@ -70,19 +70,19 @@
     @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
   }
   .badge-green {
-    @apply badge bg-emerald-500/12 text-emerald-600;
+    @apply badge bg-emerald-500/10 text-emerald-600;
   }
   .badge-yellow {
-    @apply badge bg-amber-500/12 text-amber-600;
+    @apply badge bg-amber-500/10 text-amber-600;
   }
   .badge-red {
-    @apply badge bg-rose-500/12 text-rose-600;
+    @apply badge bg-rose-500/10 text-rose-600;
   }
   .badge-blue {
-    @apply badge bg-brand-500/12 text-brand-600;
+    @apply badge bg-brand-500/10 text-brand-600;
   }
   .badge-purple {
-    @apply badge bg-accent-500/12 text-accent-600;
+    @apply badge bg-accent-500/10 text-accent-600;
   }
   .sidebar-item {
     @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-surface-500 hover:text-surface-900 hover:bg-surface-150 transition-all duration-200 font-medium text-sm cursor-pointer;
