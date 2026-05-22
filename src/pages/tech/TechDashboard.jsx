@@ -28,7 +28,7 @@ export default function TechDashboard() {
         <div
           onClick={() => navigate('/tech/subscription')}
           className="cursor-pointer group relative overflow-hidden flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-accent-500/25 hover:border-accent-500/50 transition-all"
-          style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(15,23,42,0.8) 100%)' }}
+          style={{ background: 'linear-gradient(135deg, rgba(20,184,166,0.12) 0%, rgba(12,10,9,0.8) 100%)' }}
         >
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-400/40 to-transparent" />
           <div className="w-9 h-9 rounded-xl bg-accent-500/15 flex items-center justify-center flex-shrink-0">
@@ -87,7 +87,7 @@ export default function TechDashboard() {
                 <Tooltip
                   contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: 12, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}
                   formatter={v => [`$${v}`, 'Net Earnings']}
-                  cursor={{ stroke: 'rgba(14,165,233,0.2)', strokeWidth: 1 }}
+                  cursor={{ stroke: 'rgba(249,115,22,0.2)', strokeWidth: 1 }}
                 />
                 <Area type="monotone" dataKey="earnings" stroke="#f97316" fill="url(#earningsGrad)" strokeWidth={2.5} dot={false} activeDot={{ r: 4, fill: '#f97316', strokeWidth: 0 }} />
               </AreaChart>
@@ -146,7 +146,7 @@ export default function TechDashboard() {
         </div>
 
         {/* Active job */}
-        <div className="relative overflow-hidden rounded-2xl border border-brand-500/25 p-5" style={{ background: 'linear-gradient(135deg, rgba(14,165,233,0.08) 0%, rgba(15,23,42,0.9) 100%)' }}>
+        <div className="relative overflow-hidden rounded-2xl border border-brand-500/25 p-5" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(12,10,9,0.9) 100%)' }}>
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-400/40 to-transparent" />
           <div className="flex items-center gap-2 mb-3">
             <div className="w-2 h-2 bg-brand-400 rounded-full animate-pulse" />

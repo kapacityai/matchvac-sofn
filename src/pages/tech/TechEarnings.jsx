@@ -110,7 +110,7 @@ export default function TechEarnings() {
                 />
                 <Bar dataKey="gross" fill="#334155" radius={[4,4,0,0]} name="Gross" />
                 <Bar dataKey="fee"   fill="#f43f5e" radius={[4,4,0,0]} name={`Fee (${feePct}%)`} />
-                <Bar dataKey="net"   fill="#0ea5e9" radius={[4,4,0,0]} name="Net Earned" />
+                <Bar dataKey="net"   fill="#f97316" radius={[4,4,0,0]} name="Net Earned" />
               </BarChart>
             </ResponsiveContainer>
           </div>

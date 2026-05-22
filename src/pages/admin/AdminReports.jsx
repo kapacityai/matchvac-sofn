@@ -18,8 +18,8 @@ const monthlyData = [
 
 const STREAM_COLORS = {
   serviceFees:    '#f97316',
-  contractorSubs: '#8b5cf6',
-  techSubs:       '#06b6d4',
+  contractorSubs: '#14b8a6',
+  techSubs:       '#34d399',
   adRevenue:      '#f59e0b',
   storeComm:      '#10b981',
   financingRef:   '#f43f5e',
@@ -45,7 +45,7 @@ const techPayoutMonthly = [
   { month: 'May', marcus: 2140, deja: 980, jordan: 0, total: 3120 },
 ]
 
-const TECH_COLORS = { marcus: '#f97316', deja: '#8b5cf6', jordan: '#f59e0b' }
+const TECH_COLORS = { marcus: '#f97316', deja: '#14b8a6', jordan: '#f59e0b' }
 
 // Per-job payout data for the transaction log
 const JOB_PAYOUTS = MOCK_JOBS.filter(j => j.status === 'completed' || j.status === 'in_progress').map(j => ({
@@ -683,7 +683,7 @@ export default function AdminReports() {
                     <XAxis type="number" stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
                     <YAxis type="category" dataKey="company" stroke="#475569" tick={{ fontSize: 10 }} width={130} />
                     <Tooltip contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} formatter={v => `$${v.toLocaleString()}`} />
-                    <Bar dataKey="monthlyFee" fill="#8b5cf6" name="Subscription Fee" radius={[0,0,0,0]} stackId="a" />
+                    <Bar dataKey="monthlyFee" fill="#14b8a6" name="Subscription Fee" radius={[0,0,0,0]} stackId="a" />
                     <Bar dataKey="referralRevenue" fill="#10b981" name="Referral Revenue" radius={[0,4,4,0]} stackId="a" />
                   </BarChart>
                 </ResponsiveContainer>
