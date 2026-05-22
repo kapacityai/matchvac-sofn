@@ -19,7 +19,7 @@ export default function AdminUsers() {
 
       <div className="flex-1 p-6 max-w-5xl space-y-5">
         {/* Tabs */}
-        <div className="flex gap-2 border-b border-white/10 pb-0">
+        <div className="flex gap-2 border-b border-surface-200 pb-0">
           {['techs', 'customers'].map(t => (
             <button
               key={t}
@@ -39,7 +39,7 @@ export default function AdminUsers() {
               return (
                 <div key={tech.id} className={`card ${isPending ? 'border-amber-500/30 bg-amber-500/5' : ''}`}>
                   <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
+                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-sm font-bold text-surface-900 flex-shrink-0">
                       {tech.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -83,14 +83,14 @@ export default function AdminUsers() {
                   </div>
 
                   {expanded === tech.id && (
-                    <div className="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm animate-fade-in">
+                    <div className="mt-4 pt-4 border-t border-surface-200 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm animate-fade-in">
                       {[
                         { label: "Driver's License", icon: FileText, status: 'uploaded' },
                         { label: 'W-9 Form', icon: FileText, status: 'uploaded' },
                         { label: 'HVAC Certs', icon: FileText, status: 'uploaded' },
                         { label: 'Bank Info', icon: FileText, status: status === 'active' ? 'verified' : 'pending' },
                       ].map(doc => (
-                        <div key={doc.label} className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-surface-800/50">
+                        <div key={doc.label} className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-surface-150/50">
                           <doc.icon size={14} className={doc.status === 'verified' ? 'text-emerald-400' : doc.status === 'uploaded' ? 'text-brand-400' : 'text-surface-500'} />
                           <div>
                             <p className="text-white text-xs font-medium">{doc.label}</p>
@@ -110,7 +110,7 @@ export default function AdminUsers() {
           <div className="card overflow-hidden p-0">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-surface-200">
                   <th className="text-left px-5 py-3 text-surface-400 font-medium">Customer</th>
                   <th className="text-right px-5 py-3 text-surface-400 font-medium">Jobs</th>
                   <th className="text-right px-5 py-3 text-surface-400 font-medium">Total Spent</th>
@@ -120,10 +120,10 @@ export default function AdminUsers() {
               </thead>
               <tbody>
                 {MOCK_CUSTOMERS.map((c, i) => (
-                  <tr key={c.id} className={`${i < MOCK_CUSTOMERS.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors`}>
+                  <tr key={c.id} className={`${i < MOCK_CUSTOMERS.length - 1 ? 'border-b border-surface-150' : ''} hover:bg-white/5 transition-colors`}>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                           {c.name.split(' ').map(n => n[0]).join('')}
                         </div>
                         <div>
@@ -132,7 +132,7 @@ export default function AdminUsers() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-3 text-right text-white">{c.jobs}</td>
+                    <td className="px-5 py-3 text-right text-surface-900">{c.jobs}</td>
                     <td className="px-5 py-3 text-right text-emerald-400 font-semibold">${c.spent.toLocaleString()}</td>
                     <td className="px-5 py-3 text-right text-surface-400 hidden sm:table-cell">{c.joinDate}</td>
                     <td className="px-5 py-3 text-right"><span className="badge badge-green">Active</span></td>

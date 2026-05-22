@@ -43,12 +43,12 @@ export default function ServiceRequest() {
           {STEPS.map((s, i) => (
             <React.Fragment key={s}>
               <div className={`flex items-center gap-2 ${i <= step ? 'text-brand-400' : 'text-surface-600'}`}>
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border ${i < step ? 'bg-brand-500 border-brand-500 text-white' : i === step ? 'border-brand-400 text-brand-400' : 'border-surface-700 text-surface-600'}`}>
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border ${i < step ? 'bg-brand-500 border-brand-500 text-surface-900' : i === step ? 'border-brand-400 text-brand-400' : 'border-surface-700 text-surface-600'}`}>
                   {i < step ? <Check size={14} /> : i + 1}
                 </div>
                 <span className={`text-sm font-medium hidden sm:block ${i === step ? 'text-white' : ''}`}>{s}</span>
               </div>
-              {i < STEPS.length - 1 && <div className={`flex-1 h-px ${i < step ? 'bg-brand-500' : 'bg-surface-800'}`} />}
+              {i < STEPS.length - 1 && <div className={`flex-1 h-px ${i < step ? 'bg-brand-500' : 'bg-surface-150'}`} />}
             </React.Fragment>
           ))}
         </div>
@@ -169,7 +169,7 @@ export default function ServiceRequest() {
         {step === 2 && selected && (
           <div className="space-y-5 animate-slide-up">
             <div className="card space-y-3">
-              <h3 className="font-bold text-white">Order Summary</h3>
+              <h3 className="font-bold text-surface-900">Order Summary</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-surface-400">{selected.name} ({tier})</span>
@@ -183,7 +183,7 @@ export default function ServiceRequest() {
                   <span className="text-surface-400">CA Sales Tax (8.75%)</span>
                   <span className="text-white">${tax}</span>
                 </div>
-                <div className="border-t border-white/10 pt-2 flex justify-between font-bold">
+                <div className="border-t border-surface-200 pt-2 flex justify-between font-bold">
                   <span className="text-white">Total</span>
                   <span className="text-brand-400 text-lg">${total.toFixed(2)}</span>
                 </div>
@@ -191,7 +191,7 @@ export default function ServiceRequest() {
             </div>
 
             <div className="card space-y-2 text-sm">
-              <h3 className="font-bold text-white mb-3">Job Details</h3>
+              <h3 className="font-bold text-surface-900 mb-3">Job Details</h3>
               <div className="flex justify-between"><span className="text-surface-400">Address</span><span className="text-white text-right max-w-[60%]">{details.address}</span></div>
               <div className="flex justify-between"><span className="text-surface-400">Availability</span><span className="text-white">{details.availability.replace('_', ' ')}</span></div>
             </div>
@@ -204,7 +204,7 @@ export default function ServiceRequest() {
             <div className="card space-y-2 text-sm">
               <p className="text-surface-400">Payment method</p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-6 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">VISA</div>
+                <div className="w-10 h-6 bg-blue-600 rounded flex items-center justify-center text-surface-900 text-xs font-bold">VISA</div>
                 <span className="text-white">•••• 4242</span>
               </div>
             </div>
@@ -226,7 +226,7 @@ export default function ServiceRequest() {
             <div className="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-6">
               <Check size={40} className="text-emerald-400" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">Job Posted!</h2>
+            <h2 className="text-2xl font-bold text-surface-900 mb-2">Job Posted!</h2>
             <p className="text-surface-400 mb-6">Your request has been broadcast to all certified techs in your area. You'll get a notification when someone accepts.</p>
             <div className="card text-left space-y-3 mb-6">
               <div className="flex items-center gap-3 text-sm">

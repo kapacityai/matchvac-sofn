@@ -61,14 +61,14 @@ export default function AdminAds() {
                 </div>
 
                 {placementAds.length === 0 ? (
-                  <div className="border border-dashed border-white/10 rounded-xl py-6 text-center">
+                  <div className="border border-dashed border-surface-200 rounded-xl py-6 text-center">
                     <p className="text-surface-500 text-sm">No campaigns — slot available</p>
                     <button onClick={() => setShowModal(true)} className="text-brand-400 text-sm mt-1 hover:text-brand-300">+ Add partner</button>
                   </div>
                 ) : (
                   <div className="space-y-2">
                     {placementAds.map(ad => (
-                      <div key={ad.id} className="flex items-center gap-4 px-4 py-3 bg-surface-800/50 rounded-xl">
+                      <div key={ad.id} className="flex items-center gap-4 px-4 py-3 bg-surface-150/50 rounded-xl">
                         <div className={`w-2 h-2 rounded-full flex-shrink-0 ${ad.active ? 'bg-emerald-400' : 'bg-surface-600'}`} />
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-medium">{ad.partner}</p>

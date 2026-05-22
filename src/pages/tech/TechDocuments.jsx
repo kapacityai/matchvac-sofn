@@ -223,7 +223,7 @@ export default function TechDocuments() {
                 <X size={16} className="text-surface-300" />
               </button>
             </div>
-            <div className="rounded-xl bg-surface-800 p-8 flex flex-col items-center gap-3">
+            <div className="rounded-xl bg-surface-150 p-8 flex flex-col items-center gap-3">
               <FileText size={40} className="text-brand-400" />
               <p className="text-white font-semibold text-sm">{preview.fileName}</p>
               <span className={`badge ${statusConfig[preview.status]?.badge}`}>{statusConfig[preview.status]?.label}</span>

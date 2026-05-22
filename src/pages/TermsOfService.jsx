@@ -12,16 +12,16 @@ const CONTACT_EMAIL = 'legal@serviceconnect.io'
 function Section({ title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen)
   return (
-    <div className="border border-white/10 rounded-2xl overflow-hidden">
+    <div className="border border-surface-200 rounded-2xl overflow-hidden">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-6 py-4 bg-surface-900 hover:bg-surface-800 transition-colors text-left"
+        className="w-full flex items-center justify-between px-6 py-4 bg-white hover:bg-surface-150 transition-colors text-left"
       >
         <span className="text-white font-semibold">{title}</span>
         {open ? <ChevronUp size={16} className="text-surface-400 flex-shrink-0" /> : <ChevronDown size={16} className="text-surface-400 flex-shrink-0" />}
       </button>
       {open && (
-        <div className="px-6 py-5 bg-surface-900/50 border-t border-white/10 prose-custom">
+        <div className="px-6 py-5 bg-white/50 border-t border-surface-200 prose-custom">
           {children}
         </div>
       )}
@@ -369,9 +369,9 @@ export default function TermsOfService() {
   const active = TABS.find(t => t.id === activeTab)
 
   return (
-    <div className="min-h-screen bg-surface-950 text-white">
+    <div className="min-h-screen bg-surface-100 text-surface-900">
       {/* Header */}
-      <div className="border-b border-white/10 bg-surface-900/80 backdrop-blur-xl sticky top-0 z-40">
+      <div className="border-b border-surface-200 bg-white/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <button onClick={() => window.history.length > 1 ? navigate(-1) : navigate('/')} className="text-surface-400 hover:text-white transition-colors flex items-center gap-1.5 text-sm">
@@ -393,7 +393,7 @@ export default function TermsOfService() {
           <div className="inline-flex items-center gap-2 badge badge-blue mb-4 text-sm px-4 py-1.5">
             <Shield size={14} /> Terms of Service
           </div>
-          <h1 className="text-4xl font-extrabold text-white mb-3">ServiceConnect Terms of Service</h1>
+          <h1 className="text-4xl font-extrabold text-surface-900 mb-3">ServiceConnect Terms of Service</h1>
           <p className="text-surface-400 text-lg max-w-2xl mx-auto leading-relaxed">
             Please read these terms carefully. They govern your use of the ServiceConnect platform and vary by your role. Select your category below.
           </p>
@@ -411,8 +411,8 @@ export default function TermsOfService() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all flex-shrink-0 ${
                   isActive
-                    ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/20'
-                    : 'bg-surface-800 text-surface-400 border border-white/10 hover:text-white hover:bg-surface-700'
+                    ? 'bg-brand-500 text-surface-900 shadow-lg shadow-brand-500/20'
+                    : 'bg-surface-150 text-surface-400 border border-surface-200 hover:text-white hover:bg-surface-700'
                 }`}
               >
                 <Icon size={15} />
@@ -424,7 +424,7 @@ export default function TermsOfService() {
         </div>
 
         {/* Quick-jump notice */}
-        <div className="flex items-start gap-3 px-4 py-3 bg-surface-900 border border-white/10 rounded-xl mb-6">
+        <div className="flex items-start gap-3 px-4 py-3 bg-white border border-surface-200 rounded-xl mb-6">
           <Shield size={16} className="text-brand-400 flex-shrink-0 mt-0.5" />
           <p className="text-surface-400 text-sm leading-relaxed">
             <strong className="text-white">You are viewing: {active?.label}.</strong>{' '}

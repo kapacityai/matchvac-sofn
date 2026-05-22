@@ -39,7 +39,7 @@ export default function CustomerReviews() {
         {/* Summary stats */}
         <div className="grid grid-cols-3 gap-3">
           <div className="stat-card text-center">
-            <p className="text-3xl font-extrabold text-white">{avgRating.toFixed(1)}</p>
+            <p className="text-3xl font-extrabold text-surface-900">{avgRating.toFixed(1)}</p>
             <div className="flex justify-center gap-0.5 mt-1">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} size={11} className={i < Math.round(avgRating) ? 'text-amber-400 fill-amber-400' : 'text-surface-700'} />
@@ -48,7 +48,7 @@ export default function CustomerReviews() {
             <p className="text-surface-400 text-xs mt-1">Avg Rating Given</p>
           </div>
           <div className="stat-card text-center">
-            <p className="text-3xl font-extrabold text-white">{COMPLETED_JOBS.length}</p>
+            <p className="text-3xl font-extrabold text-surface-900">{COMPLETED_JOBS.length}</p>
             <p className="text-surface-400 text-xs mt-1.5">Reviews Written</p>
           </div>
           <div className="stat-card text-center">
@@ -92,7 +92,7 @@ export default function CustomerReviews() {
             {COMPLETED_JOBS.map(job => (
               <div key={job.id} className="card">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                     {job.techAvatar}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -127,7 +127,7 @@ export default function CustomerReviews() {
       {active && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="card w-full max-w-sm text-center space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xl font-bold text-white mx-auto">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xl font-bold text-surface-900 mx-auto">
               {active.techAvatar}
             </div>
             <div>
@@ -165,13 +165,13 @@ export default function CustomerReviews() {
             />
 
             <div className="flex gap-2">
-              <button onClick={() => setActive(null)} className="btn-ghost flex-1 py-2.5 text-sm border border-white/10">
+              <button onClick={() => setActive(null)} className="btn-ghost flex-1 py-2.5 text-sm border border-surface-200">
                 Cancel
               </button>
               <button
                 disabled={draft.rating === 0}
                 onClick={submitReview}
-                className={`flex-1 py-2.5 rounded-xl font-bold text-sm transition-all ${draft.rating > 0 ? 'btn-primary' : 'bg-surface-800 text-surface-500 cursor-not-allowed'}`}
+                className={`flex-1 py-2.5 rounded-xl font-bold text-sm transition-all ${draft.rating > 0 ? 'btn-primary' : 'bg-surface-150 text-surface-500 cursor-not-allowed'}`}
               >
                 Submit Review
               </button>

@@ -26,7 +26,7 @@ export default function AdminInventory() {
         <div className="card overflow-hidden p-0">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10">
+              <tr className="border-b border-surface-200">
                 <th className="text-left px-5 py-3 text-surface-400 font-medium">Product</th>
                 <th className="text-left px-5 py-3 text-surface-400 font-medium hidden md:table-cell">Category</th>
                 <th className="text-right px-5 py-3 text-surface-400 font-medium">Price</th>
@@ -36,7 +36,7 @@ export default function AdminInventory() {
             </thead>
             <tbody>
               {products.map((p, i) => (
-                <tr key={p.id} className={`${i < products.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors`}>
+                <tr key={p.id} className={`${i < products.length - 1 ? 'border-b border-surface-150' : ''} hover:bg-white/5 transition-colors`}>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-3">
                       <span className="text-xl">{p.image}</span>
@@ -47,7 +47,7 @@ export default function AdminInventory() {
                     </div>
                   </td>
                   <td className="px-5 py-3 text-surface-400 hidden md:table-cell">{p.category}</td>
-                  <td className="px-5 py-3 text-right text-white font-semibold">${p.price}</td>
+                  <td className="px-5 py-3 text-right text-surface-900 font-semibold">${p.price}</td>
                   <td className="px-5 py-3 text-right">
                     <span className={`font-semibold ${p.stock < 10 ? 'text-amber-400' : 'text-emerald-400'}`}>{p.stock}</span>
                   </td>

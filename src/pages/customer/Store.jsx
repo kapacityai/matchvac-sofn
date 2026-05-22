@@ -39,7 +39,7 @@ export default function Store() {
             <button
               key={c}
               onClick={() => setActiveCategory(c)}
-              className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${activeCategory === c ? 'bg-brand-500 text-white' : 'bg-surface-800 text-surface-400 hover:text-white border border-white/10'}`}
+              className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${activeCategory === c ? 'bg-brand-500 text-surface-900' : 'bg-surface-150 text-surface-400 hover:text-white border border-surface-200'}`}
             >
               {c}
             </button>
@@ -47,7 +47,7 @@ export default function Store() {
           {cartCount > 0 && (
             <button
               onClick={() => setCartOpen(true)}
-              className="ml-auto flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-brand-500 text-white"
+              className="ml-auto flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-brand-500 text-surface-900"
             >
               <ShoppingCart size={16} />
               {cartCount} · ${total.toFixed(2)}
@@ -91,7 +91,7 @@ export default function Store() {
                 ))}
               </div>
             </div>
-            <button className="flex-shrink-0 bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/40 text-white font-bold py-3 px-5 rounded-xl transition-all flex items-center gap-2 text-sm whitespace-nowrap">
+            <button className="flex-shrink-0 bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/40 text-surface-900 font-bold py-3 px-5 rounded-xl transition-all flex items-center gap-2 text-sm whitespace-nowrap">
               See If I Qualify <ArrowRight size={16} />
             </button>
           </div>
@@ -133,11 +133,11 @@ export default function Store() {
                 <div className="space-y-2">
                   <button
                     onClick={() => addToCart(product)}
-                    className={`w-full flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-semibold transition-all ${addedId === product.id ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-brand-500 hover:bg-brand-600 text-white'}`}
+                    className={`w-full flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-semibold transition-all ${addedId === product.id ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-brand-500 hover:bg-brand-600 text-surface-900'}`}
                   >
                     {addedId === product.id ? <><Check size={15} /> Added</> : <><Plus size={15} /> Add to Cart</>}
                   </button>
-                  <button className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-medium text-surface-400 hover:text-white border border-white/10 hover:border-brand-500/30 transition-all">
+                  <button className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-medium text-surface-400 hover:text-white border border-surface-200 hover:border-brand-500/30 transition-all">
                     <Wrench size={13} /> + Add Installation
                   </button>
                 </div>
@@ -151,8 +151,8 @@ export default function Store() {
       {cartOpen && (
         <div className="fixed inset-0 z-50 flex">
           <div className="flex-1 bg-black/60" onClick={() => setCartOpen(false)} />
-          <div className="w-full max-w-sm bg-surface-900 border-l border-white/10 flex flex-col h-full overflow-auto">
-            <div className="flex items-center justify-between p-5 border-b border-white/10">
+          <div className="w-full max-w-sm bg-white border-l border-surface-200 flex flex-col h-full overflow-auto">
+            <div className="flex items-center justify-between p-5 border-b border-surface-200">
               <h3 className="text-white font-bold text-lg">Cart ({cartCount})</h3>
               <button onClick={() => setCartOpen(false)} className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/[15%] transition-colors">
                 <X size={16} className="text-white" />
@@ -167,14 +167,14 @@ export default function Store() {
                     <p className="text-brand-400 text-sm font-bold">${(item.price * item.qty).toFixed(2)}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button onClick={() => setCart(c => c.map(i => i.id === item.id && i.qty > 1 ? {...i, qty: i.qty - 1} : i).filter(i => i.qty > 0))} className="w-6 h-6 rounded-lg bg-white/10 text-white text-sm flex items-center justify-center">-</button>
+                    <button onClick={() => setCart(c => c.map(i => i.id === item.id && i.qty > 1 ? {...i, qty: i.qty - 1} : i).filter(i => i.qty > 0))} className="w-6 h-6 rounded-lg bg-white/10 text-surface-900 text-sm flex items-center justify-center">-</button>
                     <span className="text-white text-sm w-4 text-center">{item.qty}</span>
-                    <button onClick={() => addToCart(item)} className="w-6 h-6 rounded-lg bg-white/10 text-white text-sm flex items-center justify-center">+</button>
+                    <button onClick={() => addToCart(item)} className="w-6 h-6 rounded-lg bg-white/10 text-surface-900 text-sm flex items-center justify-center">+</button>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="p-5 border-t border-white/10">
+            <div className="p-5 border-t border-surface-200">
               <div className="flex justify-between text-sm mb-3">
                 <span className="text-surface-400">Subtotal</span>
                 <span className="text-white font-bold">${total.toFixed(2)}</span>

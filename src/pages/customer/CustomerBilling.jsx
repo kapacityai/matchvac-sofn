@@ -15,8 +15,8 @@ const TRANSACTIONS = [
 ]
 
 const BRAND_STYLES = {
-  Visa: { bg: 'bg-blue-600', label: 'VISA', font: 'font-black italic text-white' },
-  Mastercard: { bg: 'bg-orange-500', label: 'MC', font: 'font-black text-white' },
+  Visa: { bg: 'bg-blue-600', label: 'VISA', font: 'font-black italic text-surface-900' },
+  Mastercard: { bg: 'bg-orange-500', label: 'MC', font: 'font-black text-surface-900' },
 }
 
 function CardChip() {
@@ -91,7 +91,7 @@ export default function CustomerBilling() {
         {/* Quick stats */}
         <div className="grid grid-cols-3 gap-3">
           <div className="stat-card text-center">
-            <p className="text-2xl font-extrabold text-white">${totalSpent.toLocaleString()}</p>
+            <p className="text-2xl font-extrabold text-surface-900">${totalSpent.toLocaleString()}</p>
             <p className="text-surface-400 text-xs mt-1">Total Spent</p>
           </div>
           <div className="stat-card text-center">
@@ -171,7 +171,7 @@ export default function CustomerBilling() {
           <div className="card overflow-hidden p-0">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-surface-200">
                   <th className="text-left px-5 py-3 text-surface-400 font-medium">Service</th>
                   <th className="text-right px-5 py-3 text-surface-400 font-medium hidden sm:table-cell">Date</th>
                   <th className="text-right px-5 py-3 text-surface-400 font-medium">Amount</th>
@@ -180,13 +180,13 @@ export default function CustomerBilling() {
               </thead>
               <tbody>
                 {TRANSACTIONS.map((tx, i) => (
-                  <tr key={tx.id} className={`${i < TRANSACTIONS.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/[0.03] transition-colors`}>
+                  <tr key={tx.id} className={`${i < TRANSACTIONS.length - 1 ? 'border-b border-surface-150' : ''} hover:bg-white/[0.03] transition-colors`}>
                     <td className="px-5 py-3">
                       <p className="text-white font-medium text-xs leading-tight">{tx.description}</p>
                       <p className="text-surface-500 text-xs">{tx.tech} · {tx.method}</p>
                     </td>
                     <td className="px-5 py-3 text-right text-surface-400 text-xs hidden sm:table-cell">{tx.date}</td>
-                    <td className="px-5 py-3 text-right text-white font-bold">${tx.amount.toFixed(2)}</td>
+                    <td className="px-5 py-3 text-right text-surface-900 font-bold">${tx.amount.toFixed(2)}</td>
                     <td className="px-5 py-3 text-right">
                       {tx.status === 'paid'
                         ? <span className="badge badge-green"><CheckCircle size={10} /> Paid</span>
@@ -263,7 +263,7 @@ export default function CustomerBilling() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 px-3 py-2.5 bg-surface-800/50 rounded-xl border border-white/10">
+              <div className="flex items-center gap-2 px-3 py-2.5 bg-surface-150/50 rounded-xl border border-surface-200">
                 <Shield size={13} className="text-emerald-400 flex-shrink-0" />
                 <p className="text-surface-500 text-xs">Secured by Stripe · 256-bit SSL encryption</p>
               </div>

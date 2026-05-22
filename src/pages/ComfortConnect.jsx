@@ -77,9 +77,9 @@ export default function ComfortConnect() {
   if (submitted) return <ConfirmationScreen form={form} navigate={navigate} />
 
   return (
-    <div className="min-h-screen bg-surface-950">
+    <div className="min-h-screen bg-surface-100">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-surface-950/90 backdrop-blur-xl border-b border-white/10">
+      <nav className="sticky top-0 z-50 bg-surface-100/90 backdrop-blur-xl border-b border-surface-200">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-surface-400 hover:text-white transition-colors text-sm">
             <ChevronLeft size={18} /> Back
@@ -90,12 +90,12 @@ export default function ComfortConnect() {
       </nav>
 
       {/* Hero */}
-      <section className="py-14 px-6 text-center bg-gradient-to-b from-[#003478]/20 to-surface-950 border-b border-white/10">
+      <section className="py-14 px-6 text-center bg-gradient-to-b from-[#003478]/20 to-surface-950 border-b border-surface-200">
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-center mb-5">
             <CCLogo size="lg" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-3 leading-tight">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-surface-900 mb-3 leading-tight">
             Our Home Comfort Solution:<br />
             <span className="text-[#4da6ff]">The Premier Program®</span>
           </h1>
@@ -150,7 +150,7 @@ export default function ComfortConnect() {
             <h3 className="text-white font-bold text-xl text-center mb-6">Equipment Premier Program Covers</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {EQUIPMENT.map(eq => (
-                <div key={eq.label} className="text-center p-4 bg-surface-800/60 rounded-2xl">
+                <div key={eq.label} className="text-center p-4 bg-surface-100 rounded-2xl">
                   <div className="text-4xl mb-2">{eq.icon}</div>
                   <p className="text-white text-xs font-semibold leading-tight whitespace-pre-line">{eq.label}</p>
                 </div>
@@ -164,7 +164,7 @@ export default function ComfortConnect() {
               <div className="inline-flex items-center gap-2 badge badge-blue px-4 py-2 text-sm mb-3">
                 <Shield size={14} /> Soft credit check — won't affect your score
               </div>
-              <h2 className="text-3xl font-extrabold text-white mb-2">Find an Authorized Dealer Near You</h2>
+              <h2 className="text-3xl font-extrabold text-surface-900 mb-2">Find an Authorized Dealer Near You</h2>
               <p className="text-surface-400">Fill out the form below and a local Premier Program Authorized Contractor will contact you to schedule your free consultation.</p>
             </div>
 
@@ -241,14 +241,14 @@ export default function ComfortConnect() {
               </div>
 
               {/* Consent */}
-              <div className="px-4 py-3 bg-surface-800/50 rounded-xl text-xs text-surface-400 leading-relaxed">
+              <div className="px-4 py-3 bg-surface-150/50 rounded-xl text-xs text-surface-400 leading-relaxed">
                 By submitting this form, you agree to be contacted by a Comfort Connect Premier Program Authorized Contractor in your area. Your information is kept confidential and is not sold to third parties. This is a soft inquiry and will <strong className="text-white">not</strong> impact your credit score.
               </div>
 
               <button
                 type="submit"
                 disabled={!canSubmit}
-                className={`w-full py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2 transition-all ${canSubmit ? 'bg-[#003478] hover:bg-[#00449e] text-white' : 'bg-surface-800 text-surface-500 cursor-not-allowed'}`}
+                className={`w-full py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2 transition-all ${canSubmit ? 'bg-[#003478] hover:bg-[#00449e] text-surface-900' : 'bg-surface-150 text-surface-500 cursor-not-allowed'}`}
               >
                 Find My Authorized Dealer <ArrowRight size={18} />
               </button>
@@ -258,7 +258,7 @@ export default function ComfortConnect() {
       </section>
 
       {/* Footer note */}
-      <footer className="border-t border-white/10 py-8 px-6 text-center text-surface-500 text-xs">
+      <footer className="border-t border-surface-200 py-8 px-6 text-center text-surface-500 text-xs">
         <p>Comfort Connect Premier Program® is a registered service. All equipment and services provided by authorized contractors.</p>
         <p className="mt-1">© 2026 Comfort Connect. All rights reserved.</p>
       </footer>
@@ -269,7 +269,7 @@ export default function ComfortConnect() {
 // ── Confirmation Screen ──────────────────────────────────────────────────────
 function ConfirmationScreen({ form, navigate }) {
   return (
-    <div className="min-h-screen bg-surface-950 flex flex-col items-center justify-center px-6 py-16 text-center">
+    <div className="min-h-screen bg-surface-100 flex flex-col items-center justify-center px-6 py-16 text-center">
       <div className="max-w-lg w-full">
         {/* Animated success icon */}
         <div className="relative mx-auto mb-8 w-24 h-24">
@@ -283,7 +283,7 @@ function ConfirmationScreen({ form, navigate }) {
           <CCLogo size="md" />
         </div>
 
-        <h2 className="text-3xl font-extrabold text-white mb-3">
+        <h2 className="text-3xl font-extrabold text-surface-900 mb-3">
           We're Locating Your Nearest<br />Authorized Premier Program Dealer
         </h2>
         <p className="text-surface-400 text-lg mb-8 leading-relaxed">
@@ -315,7 +315,7 @@ function ConfirmationScreen({ form, navigate }) {
           <button onClick={() => navigate('/')} className="btn-secondary py-3 px-6">
             Return to Website
           </button>
-          <button onClick={() => navigate(-2)} className="bg-[#003478] hover:bg-[#00449e] text-white font-bold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2">
+          <button onClick={() => navigate(-2)} className="bg-[#003478] hover:bg-[#00449e] text-surface-900 font-bold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2">
             Back to Store <ArrowRight size={16} />
           </button>
         </div>

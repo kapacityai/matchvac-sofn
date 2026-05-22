@@ -3,7 +3,7 @@ import Header from '../../components/Header'
 import { useAuth } from '../../context/AuthContext'
 import { User, Mail, Phone, MapPin, Home, Building2, Hash, Check, Lock, ChevronRight, Camera, Shield } from 'lucide-react'
 
-const INPUT = 'w-full bg-surface-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-surface-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors text-sm'
+const INPUT = 'w-full bg-surface-150 border border-surface-200 rounded-xl px-4 py-3 text-surface-900 placeholder-surface-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors text-sm'
 const LABEL = 'block text-surface-400 text-xs font-semibold uppercase tracking-wider mb-1.5'
 
 export default function CustomerProfile() {
@@ -65,7 +65,7 @@ export default function CustomerProfile() {
         {/* Avatar + name hero */}
         <div className="card flex items-center gap-5">
           <div className="relative flex-shrink-0">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-2xl font-extrabold text-white">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-2xl font-extrabold text-surface-900">
               {initials}
             </div>
             <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-surface-700 border border-white/20 flex items-center justify-center hover:bg-surface-600 transition-colors">
@@ -145,7 +145,7 @@ export default function CustomerProfile() {
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-5">
+          <div className="border-t border-surface-200 pt-5">
             <h4 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
               <MapPin size={15} className="text-brand-400" /> Service Address
             </h4>

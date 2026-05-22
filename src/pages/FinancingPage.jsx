@@ -12,14 +12,14 @@ function PreQualModal({ partner, onClose }) {
 
   if (step === 1) return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-surface-900 border border-white/10 rounded-2xl max-w-md w-full p-8 text-center">
+      <div className="bg-white border border-surface-200 rounded-2xl max-w-md w-full p-8 text-center">
         <div className="relative mx-auto mb-6 w-16 h-16">
           <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping" />
           <div className="relative w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
             <CheckCircle size={32} className="text-emerald-400" />
           </div>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-2">Application Received!</h3>
+        <h3 className="text-2xl font-bold text-surface-900 mb-2">Application Received!</h3>
         <p className="text-surface-400 mb-4">
           <strong className="text-white">{partner.name}</strong> will contact <strong className="text-white">{form.firstName}</strong> at <strong className="text-white">{form.phone}</strong> within 1 business day to discuss your options.
         </p>
@@ -35,9 +35,9 @@ function PreQualModal({ partner, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-surface-900 border border-white/10 rounded-2xl max-w-lg w-full my-4">
+      <div className="bg-white border border-surface-200 rounded-2xl max-w-lg w-full my-4">
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-white/10">
+        <div className="flex items-center justify-between p-5 border-b border-surface-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style={{ background: partner.bgColor }}>
               {partner.icon}
@@ -87,11 +87,11 @@ function PreQualModal({ partner, onClose }) {
               </select>
             </div>
           )}
-          <div className="px-3 py-2.5 bg-surface-800/60 rounded-xl text-xs text-surface-400 leading-relaxed">
+          <div className="px-3 py-2.5 bg-surface-100 rounded-xl text-xs text-surface-400 leading-relaxed">
             By submitting you authorize {partner.name} to perform a soft credit inquiry and contact you about financing options. This does not affect your credit score.
           </div>
           <button type="submit" disabled={!canSubmit}
-            className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${canSubmit ? 'text-white' : 'bg-surface-800 text-surface-500 cursor-not-allowed'}`}
+            className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${canSubmit ? 'text-white' : 'bg-surface-150 text-surface-500 cursor-not-allowed'}`}
             style={canSubmit ? { background: partner.btnColor || '#0284c7' } : {}}>
             Get Pre-Qualified <ArrowRight size={16} />
           </button>
@@ -244,9 +244,9 @@ export default function FinancingPage() {
   const others = PARTNERS.filter(p => !p.featured)
 
   return (
-    <div className="min-h-screen bg-surface-950">
+    <div className="min-h-screen bg-surface-100">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-surface-950/90 backdrop-blur-xl border-b border-white/10">
+      <nav className="sticky top-0 z-50 bg-surface-100/90 backdrop-blur-xl border-b border-surface-200">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-surface-400 hover:text-white transition-colors text-sm">
             <ChevronLeft size={18} /> Back
@@ -262,7 +262,7 @@ export default function FinancingPage() {
           <div className="badge badge-blue px-4 py-1.5 text-sm mb-4 inline-flex items-center gap-2">
             <DollarSign size={14} /> HVAC Financing Options
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-3">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-surface-900 mb-3">
             Flexible Financing<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">For Every Situation</span>
           </h1>
@@ -330,7 +330,7 @@ export default function FinancingPage() {
                     </div>
                   ))}
                 </div>
-                <button className="w-full bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/40 text-white font-bold py-3.5 px-5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
+                <button className="w-full bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/40 text-surface-900 font-bold py-3.5 px-5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
                   See If I Qualify <ArrowRight size={16} />
                 </button>
               </div>
@@ -371,7 +371,7 @@ export default function FinancingPage() {
                     { label: 'Term', value: partner.term },
                     { label: 'Min Credit', value: partner.minCredit },
                   ].map(s => (
-                    <div key={s.label} className="bg-surface-800/50 rounded-lg px-2.5 py-2">
+                    <div key={s.label} className="bg-surface-150/50 rounded-lg px-2.5 py-2">
                       <p className="text-surface-500 text-xs">{s.label}</p>
                       <p className="text-white font-semibold text-xs">{s.value}</p>
                     </div>
@@ -390,7 +390,7 @@ export default function FinancingPage() {
 
                 <button
                   onClick={() => setSelected(partner)}
-                  className="w-full py-3 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 transition-all hover:opacity-90"
+                  className="w-full py-3 rounded-xl font-bold text-sm text-surface-900 flex items-center justify-center gap-2 transition-all hover:opacity-90"
                   style={{ background: partner.btnColor }}
                 >
                   {partner.cta} <ArrowRight size={14} />

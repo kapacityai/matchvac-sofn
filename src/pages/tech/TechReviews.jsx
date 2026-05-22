@@ -23,7 +23,7 @@ function StarRow({ count, total, value }) {
     <div className="flex items-center gap-3 text-sm">
       <span className="text-surface-400 text-xs w-4 text-right">{value}</span>
       <Star size={12} className="text-amber-400 fill-amber-400 flex-shrink-0" />
-      <div className="flex-1 h-2 bg-surface-800 rounded-full overflow-hidden">
+      <div className="flex-1 h-2 bg-surface-150 rounded-full overflow-hidden">
         <div className="h-full bg-amber-400 rounded-full" style={{ width: `${pct}%` }} />
       </div>
       <span className="text-surface-500 text-xs w-8 text-right">{pct}%</span>
@@ -50,7 +50,7 @@ export default function TechReviews() {
           <div className="flex items-start gap-8 flex-wrap">
             {/* Big number */}
             <div className="text-center flex-shrink-0">
-              <p className="text-6xl font-extrabold text-white leading-none">{avgRating}</p>
+              <p className="text-6xl font-extrabold text-surface-900 leading-none">{avgRating}</p>
               <div className="flex items-center justify-center gap-0.5 mt-2">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} size={16} className={i < Math.round(avgRating) ? 'text-amber-400 fill-amber-400' : 'text-surface-700'} />
@@ -105,7 +105,7 @@ export default function TechReviews() {
             {REVIEWS.map(review => (
               <div key={review.id} className="card">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                     {review.avatar}
                   </div>
                   <div className="flex-1 min-w-0">

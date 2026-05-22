@@ -15,8 +15,8 @@ function CustomerSignup({ onBack }) {
 
   return (
     <div className="w-full max-w-sm mx-auto animate-slide-up">
-      <button onClick={onBack} className="text-surface-400 hover:text-white text-sm mb-6 flex items-center gap-1">← Back to sign in</button>
-      <h2 className="text-2xl font-bold text-white mb-1">Create Customer Account</h2>
+      <button onClick={onBack} className="text-surface-400 hover:text-surface-900 text-sm mb-6 flex items-center gap-1">← Back to sign in</button>
+      <h2 className="text-2xl font-bold text-surface-900 mb-1">Create Customer Account</h2>
       <p className="text-surface-400 text-sm mb-6">Book HVAC service in minutes</p>
 
       {step === 0 && (
@@ -76,8 +76,8 @@ function TechSignup({ onBack }) {
 
   return (
     <div className="w-full max-w-sm mx-auto animate-slide-up">
-      <button onClick={onBack} className="text-surface-400 hover:text-white text-sm mb-6 flex items-center gap-1">← Back to sign in</button>
-      <h2 className="text-2xl font-bold text-white mb-1">Apply as HVAC Tech</h2>
+      <button onClick={onBack} className="text-surface-400 hover:text-surface-900 text-sm mb-6 flex items-center gap-1">← Back to sign in</button>
+      <h2 className="text-2xl font-bold text-surface-900 mb-1">Apply as HVAC Tech</h2>
       <p className="text-surface-400 text-sm mb-5">Start earning in your area</p>
 
       <div className="flex gap-1 mb-6">
@@ -146,8 +146,8 @@ function TechSignup({ onBack }) {
 
       {step === 3 && (
         <div className="space-y-4">
-          <div className="card bg-surface-800/50 text-sm text-surface-300 h-28 overflow-y-auto leading-relaxed">
-            <p className="font-semibold text-white mb-1">Independent Contractor Agreement</p>
+          <div className="card bg-surface-150/50 text-sm text-surface-600 h-28 overflow-y-auto leading-relaxed">
+            <p className="font-semibold text-surface-900 mb-1">Independent Contractor Agreement</p>
             You are an independent contractor, not an employee of ServiceConnect. You will receive a 1099-NEC at year-end for earnings over $600. Platform fee: {form.plan === 'subscription' ? '8% + $149/mo' : '15%'} per job. Off-platform solicitation of customers obtained through ServiceConnect is strictly prohibited and subject to liquidated damages of $5,000 per violation. By clicking Submit you e-sign this agreement and the full Technician Terms of Service.
           </div>
           <div className="flex items-center gap-2 px-3 py-2 bg-brand-500/10 border border-brand-500/20 rounded-xl">
@@ -200,21 +200,21 @@ export default function LoginPage() {
   const handleSubmit = (e) => { e.preventDefault(); doLogin(email, password) }
 
   if (mode === 'customer_signup') return (
-    <div className="min-h-screen bg-surface-950 flex items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-surface-100 flex items-center justify-center px-6 py-12">
       <CustomerSignup onBack={() => { setMode('login'); setError('') }} />
     </div>
   )
 
   if (mode === 'tech_signup') return (
-    <div className="min-h-screen bg-surface-950 flex items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-surface-100 flex items-center justify-center px-6 py-12">
       <TechSignup onBack={() => { setMode('login'); setError('') }} />
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-surface-950 flex">
+    <div className="min-h-screen bg-surface-100 flex">
       {/* Left hero */}
-      <div className="hidden lg:flex flex-col flex-1 relative overflow-hidden bg-gradient-to-br from-surface-900 to-surface-950 border-r border-white/10">
+      <div className="hidden lg:flex flex-col flex-1 relative overflow-hidden bg-gradient-to-br from-surface-900 to-surface-950 border-r border-surface-200">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-20 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
@@ -227,7 +227,7 @@ export default function LoginPage() {
           <div className="flex-1 flex flex-col justify-center">
             <div className="max-w-md">
               <div className="badge badge-blue mb-4">🔧 HVAC On-Demand Marketplace</div>
-              <h2 className="text-4xl font-extrabold text-white leading-tight mb-4">
+              <h2 className="text-4xl font-extrabold text-surface-900 leading-tight mb-4">
                 Fast, Verified HVAC<br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">Service On Demand</span>
               </h2>
@@ -259,7 +259,7 @@ export default function LoginPage() {
         <div className="w-full max-w-sm mx-auto">
           <div className="lg:hidden mb-8"><Logo size="md" /></div>
 
-          <h2 className="text-2xl font-bold text-white mb-1">Welcome back</h2>
+          <h2 className="text-2xl font-bold text-surface-900 mb-1">Welcome back</h2>
           <p className="text-surface-400 text-sm mb-6">Sign in to your account</p>
 
           {/* One-click demo access */}
@@ -272,7 +272,7 @@ export default function LoginPage() {
                 { role: 'HVAC Tech', email: 'tech@demo.com',     color: 'from-emerald-400 to-emerald-600' },
               ].map(c => (
                 <button key={c.role} onClick={() => doLogin(c.email, 'demo1234')} disabled={loading}
-                  className={`py-3 px-2 rounded-xl bg-gradient-to-br ${c.color} text-white text-xs font-bold text-center hover:opacity-90 active:scale-95 transition-all disabled:opacity-50`}>
+                  className={`py-3 px-2 rounded-xl bg-gradient-to-br ${c.color} text-surface-900 text-xs font-bold text-center hover:opacity-90 active:scale-95 transition-all disabled:opacity-50`}>
                   {loading ? '…' : c.role}
                 </button>
               ))}

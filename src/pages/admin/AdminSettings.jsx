@@ -15,7 +15,7 @@ function Toggle({ value, onChange, disabled }) {
 
 function SettingRow({ label, description, children }) {
   return (
-    <div className="flex items-center justify-between gap-4 py-4 border-b border-white/10 last:border-0">
+    <div className="flex items-center justify-between gap-4 py-4 border-b border-surface-200 last:border-0">
       <div className="flex-1 min-w-0">
         <p className="text-white text-sm font-semibold">{label}</p>
         {description && <p className="text-surface-400 text-xs mt-0.5 leading-relaxed">{description}</p>}
@@ -28,7 +28,7 @@ function SettingRow({ label, description, children }) {
 function Section({ icon: Icon, title, children }) {
   return (
     <div className="card space-y-0">
-      <div className="flex items-center gap-3 pb-4 border-b border-white/10 mb-0">
+      <div className="flex items-center gap-3 pb-4 border-b border-surface-200 mb-0">
         <div className="w-9 h-9 rounded-xl bg-brand-500/10 flex items-center justify-center flex-shrink-0">
           <Icon size={17} className="text-brand-400" />
         </div>
@@ -92,7 +92,7 @@ export default function AdminSettings() {
                 max={30}
                 value={platformFee}
                 onChange={e => setPlatformFee(Number(e.target.value))}
-                className="w-16 bg-surface-800 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm text-center focus:outline-none focus:border-brand-500"
+                className="w-16 bg-surface-150 border border-surface-200 rounded-lg px-2 py-1.5 text-surface-900 text-sm text-center focus:outline-none focus:border-brand-500"
               />
               <span className="text-surface-400 text-sm">%</span>
             </div>
@@ -120,7 +120,7 @@ export default function AdminSettings() {
                 max={100}
                 value={maxJobRadius}
                 onChange={e => setMaxJobRadius(Number(e.target.value))}
-                className="w-16 bg-surface-800 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm text-center focus:outline-none focus:border-brand-500"
+                className="w-16 bg-surface-150 border border-surface-200 rounded-lg px-2 py-1.5 text-surface-900 text-sm text-center focus:outline-none focus:border-brand-500"
               />
               <span className="text-surface-400 text-sm">mi</span>
             </div>
@@ -136,7 +136,7 @@ export default function AdminSettings() {
                 max={7}
                 value={escrowDays}
                 onChange={e => setEscrowDays(Number(e.target.value))}
-                className="w-16 bg-surface-800 border border-white/10 rounded-lg px-2 py-1.5 text-white text-sm text-center focus:outline-none focus:border-brand-500"
+                className="w-16 bg-surface-150 border border-surface-200 rounded-lg px-2 py-1.5 text-surface-900 text-sm text-center focus:outline-none focus:border-brand-500"
               />
               <span className="text-surface-400 text-sm">days</span>
             </div>
@@ -175,7 +175,7 @@ export default function AdminSettings() {
               <select
                 value={sessionTimeout}
                 onChange={e => setSessionTimeout(Number(e.target.value))}
-                className="bg-surface-800 border border-white/10 rounded-lg px-3 py-1.5 text-white text-sm focus:outline-none focus:border-brand-500"
+                className="bg-surface-150 border border-surface-200 rounded-lg px-3 py-1.5 text-surface-900 text-sm focus:outline-none focus:border-brand-500"
               >
                 {[15, 30, 60, 120, 240].map(v => (
                   <option key={v} value={v}>{v} min</option>

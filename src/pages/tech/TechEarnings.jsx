@@ -142,7 +142,7 @@ export default function TechEarnings() {
           <div className="card overflow-hidden p-0">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10 bg-surface-800/40">
+                <tr className="border-b border-surface-200 bg-surface-150/40">
                   <th className="text-left px-5 py-3 text-surface-400 font-medium">Service</th>
                   <th className="text-left px-5 py-3 text-surface-400 font-medium hidden sm:table-cell">Date</th>
                   <th className="text-right px-5 py-3 text-surface-400 font-medium">Gross</th>
@@ -155,11 +155,11 @@ export default function TechEarnings() {
                 {allTechJobs.map((job, i) => (
                   <tr
                     key={job.id}
-                    className={`${i < allTechJobs.length - 1 ? 'border-b border-white/5' : ''} hover:bg-white/5 transition-colors ${job.status === 'in_progress' ? 'opacity-60' : ''}`}
+                    className={`${i < allTechJobs.length - 1 ? 'border-b border-surface-150' : ''} hover:bg-white/5 transition-colors ${job.status === 'in_progress' ? 'opacity-60' : ''}`}
                   >
-                    <td className="px-5 py-3 text-white font-medium">{job.service}</td>
+                    <td className="px-5 py-3 text-surface-900 font-medium">{job.service}</td>
                     <td className="px-5 py-3 text-surface-400 hidden sm:table-cell">{job.date}</td>
-                    <td className="px-5 py-3 text-right text-white">${job.price.toFixed(2)}</td>
+                    <td className="px-5 py-3 text-right text-surface-900">${job.price.toFixed(2)}</td>
                     <td className="px-5 py-3 text-right text-rose-400">−${job.calcFee.toFixed(2)}</td>
                     <td className="px-5 py-3 text-right text-emerald-400 font-bold">${job.calcNet.toFixed(2)}</td>
                     <td className="px-5 py-3 text-center">
@@ -171,9 +171,9 @@ export default function TechEarnings() {
                 ))}
               </tbody>
               <tfoot>
-                <tr className="border-t-2 border-white/20 bg-surface-800/50">
-                  <td colSpan={2} className="px-5 py-3 text-white font-bold">Totals (completed)</td>
-                  <td className="px-5 py-3 text-right font-bold text-white">${totalGross.toFixed(2)}</td>
+                <tr className="border-t-2 border-white/20 bg-surface-150/50">
+                  <td colSpan={2} className="px-5 py-3 text-surface-900 font-bold">Totals (completed)</td>
+                  <td className="px-5 py-3 text-right font-bold text-surface-900">${totalGross.toFixed(2)}</td>
                   <td className="px-5 py-3 text-right font-bold text-rose-400">−${totalFees.toFixed(2)}</td>
                   <td className="px-5 py-3 text-right font-extrabold text-emerald-400 text-base">${totalNet.toFixed(2)}</td>
                   <td />

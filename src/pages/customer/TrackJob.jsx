@@ -80,7 +80,7 @@ export default function TrackJob() {
         )}
 
         {/* Map placeholder */}
-        <div className="relative h-52 rounded-2xl overflow-hidden border border-white/10">
+        <div className="relative h-52 rounded-2xl overflow-hidden border border-surface-200">
           <div className="absolute inset-0 bg-gradient-to-br from-surface-800 to-surface-900 flex items-center justify-center">
             <div className="absolute inset-0 opacity-10">
               {Array.from({length: 8}).map((_, i) => (
@@ -114,7 +114,7 @@ export default function TrackJob() {
 
         {/* Tech card */}
         <div className="card flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xl font-bold text-white flex-shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xl font-bold text-surface-900 flex-shrink-0">
             MR
           </div>
           <div className="flex-1">
@@ -139,7 +139,7 @@ export default function TrackJob() {
 
         {/* Timeline */}
         <div className="card">
-          <h3 className="font-bold text-white mb-4">Job Status</h3>
+          <h3 className="font-bold text-surface-900 mb-4">Job Status</h3>
           <div className="space-y-4">
             {TIMELINE.map((item, i) => {
               const done = i < currentStep
@@ -147,11 +147,11 @@ export default function TrackJob() {
               return (
                 <div key={item.key} className="flex items-start gap-3">
                   <div className="flex flex-col items-center">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${done ? `${item.bg} text-white` : active ? `border-2 border-current ${item.color}` : 'bg-surface-800 text-surface-600'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${done ? `${item.bg} text-surface-900` : active ? `border-2 border-current ${item.color}` : 'bg-surface-150 text-surface-600'}`}>
                       <item.icon size={15} />
                     </div>
                     {i < TIMELINE.length - 1 && (
-                      <div className={`w-px flex-1 mt-1 ${done ? item.bg : 'bg-surface-800'}`} style={{ minHeight: 16 }} />
+                      <div className={`w-px flex-1 mt-1 ${done ? item.bg : 'bg-surface-150'}`} style={{ minHeight: 16 }} />
                     )}
                   </div>
                   <div className="pb-4">
@@ -180,7 +180,7 @@ export default function TrackJob() {
             </div>
 
             {/* Escrow summary */}
-            <div className="bg-surface-800/60 rounded-xl p-4 mb-4 space-y-2 text-sm">
+            <div className="bg-surface-100 rounded-xl p-4 mb-4 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-surface-400">Service</span>
                 <span className="text-white">Thermostat Installation (Standard)</span>
@@ -193,7 +193,7 @@ export default function TrackJob() {
                 <span className="text-surface-400">Escrow Hold</span>
                 <span className="text-amber-400 font-semibold flex items-center gap-1"><Shield size={12} /> $149.00 secured</span>
               </div>
-              <div className="border-t border-white/10 pt-2 flex justify-between font-bold">
+              <div className="border-t border-surface-200 pt-2 flex justify-between font-bold">
                 <span className="text-white">Total to Release</span>
                 <span className="text-emerald-400 text-base">$149.00</span>
               </div>
@@ -206,7 +206,7 @@ export default function TrackJob() {
             <button
               onClick={handleReleasePayment}
               disabled={releasing}
-              className={`w-full py-4 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all text-base ${releasing ? 'bg-emerald-700 cursor-not-allowed' : 'bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98]'}`}
+              className={`w-full py-4 rounded-xl font-bold text-surface-900 flex items-center justify-center gap-2 transition-all text-base ${releasing ? 'bg-emerald-700 cursor-not-allowed' : 'bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98]'}`}
             >
               {releasing ? (
                 <>
@@ -226,10 +226,10 @@ export default function TrackJob() {
         {/* Completion photos preview (shown at step 4+) */}
         {currentStep >= 4 && (
           <div className="card">
-            <h3 className="font-bold text-white mb-3 text-sm">Completion Photos from Marcus</h3>
+            <h3 className="font-bold text-surface-900 mb-3 text-sm">Completion Photos from Marcus</h3>
             <div className="grid grid-cols-3 gap-2">
               {['Before', 'During', 'After'].map((label, i) => (
-                <div key={label} className="aspect-square rounded-xl bg-surface-800 flex flex-col items-center justify-center border border-white/10">
+                <div key={label} className="aspect-square rounded-xl bg-surface-150 flex flex-col items-center justify-center border border-surface-200">
                   <Camera size={18} className="text-surface-500 mb-1" />
                   <span className="text-surface-600 text-xs">{label}</span>
                 </div>
@@ -253,14 +253,14 @@ export default function TrackJob() {
               <p className="text-white font-bold text-sm">Need a New System? Don't Buy — Get It Included.</p>
               <p className="text-surface-400 text-xs">Low monthly payment covers everything. No up-front cost.</p>
             </div>
-            <button className="bg-[#003478] border border-[#4da6ff]/40 text-white font-bold py-2 px-3 rounded-xl text-xs flex-shrink-0 group-hover:bg-[#00449e] transition-all">
+            <button className="bg-[#003478] border border-[#4da6ff]/40 text-surface-900 font-bold py-2 px-3 rounded-xl text-xs flex-shrink-0 group-hover:bg-[#00449e] transition-all">
               See If I Qualify
             </button>
           </div>
         </div>
 
         {/* Demo controls */}
-        <div className="card border-dashed border-white/10">
+        <div className="card border-dashed border-surface-200">
           <p className="text-surface-500 text-xs font-semibold uppercase tracking-widest mb-3">Demo Controls</p>
           <div className="flex gap-2 flex-wrap">
             <button disabled={currentStep === 0} onClick={() => { setCurrentStep(s => s - 1); setPaymentReleased(false); setReviewDone(false) }} className="btn-secondary text-sm py-2">← Prev Step</button>
@@ -275,10 +275,10 @@ export default function TrackJob() {
       {showRating && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="card max-w-sm w-full text-center">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-2xl font-bold text-white mx-auto mb-4">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-2xl font-bold text-surface-900 mx-auto mb-4">
               MR
             </div>
-            <h3 className="text-xl font-bold text-white mb-1">Rate Your Experience</h3>
+            <h3 className="text-xl font-bold text-surface-900 mb-1">Rate Your Experience</h3>
             <p className="text-surface-400 text-sm mb-1">How was Marcus Rivera?</p>
             <p className="text-surface-500 text-xs mb-5">Thermostat Installation · $149.00</p>
             <div className="flex justify-center gap-3 mb-4">
@@ -301,7 +301,7 @@ export default function TrackJob() {
             <button
               disabled={rating === 0}
               onClick={handleSubmitReview}
-              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${rating > 0 ? 'btn-primary' : 'bg-surface-800 text-surface-500 cursor-not-allowed'}`}
+              className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${rating > 0 ? 'btn-primary' : 'bg-surface-150 text-surface-500 cursor-not-allowed'}`}
             >
               Submit Review
             </button>

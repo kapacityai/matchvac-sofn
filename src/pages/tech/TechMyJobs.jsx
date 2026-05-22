@@ -37,10 +37,10 @@ export default function TechMyJobs() {
               </div>
 
               {isActive && !completedJob && (
-                <div className="space-y-2 pt-3 border-t border-white/10">
+                <div className="space-y-2 pt-3 border-t border-surface-200">
                   <button
                     onClick={() => setUploadedJob(job.id)}
-                    className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all ${uploadedJob === job.id ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/20' : 'bg-surface-800 text-surface-300 hover:bg-surface-700 border border-white/10'}`}
+                    className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all ${uploadedJob === job.id ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/20' : 'bg-surface-150 text-surface-300 hover:bg-surface-700 border border-surface-200'}`}
                   >
                     {uploadedJob === job.id ? <><Check size={15} /> Photos Uploaded</> : <><Camera size={15} /> Upload Completion Photos</>}
                   </button>
@@ -56,7 +56,7 @@ export default function TechMyJobs() {
               )}
 
               {completedJob === job.id && (
-                <div className="mt-3 pt-3 border-t border-white/10 text-center">
+                <div className="mt-3 pt-3 border-t border-surface-200 text-center">
                   <div className="flex items-center justify-center gap-2 text-emerald-400">
                     <CheckCircle size={18} />
                     <span className="font-semibold">Job marked complete. Awaiting customer confirmation.</span>

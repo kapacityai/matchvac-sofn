@@ -59,7 +59,7 @@ export default function AdminNotifications() {
               <button
                 key={k}
                 onClick={() => setFilter(k)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${filter === k ? 'bg-brand-500 text-white' : 'bg-surface-800 text-surface-400 border border-white/10 hover:text-white'}`}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${filter === k ? 'bg-brand-500 text-surface-900' : 'bg-surface-150 text-surface-400 border border-surface-200 hover:text-white'}`}
               >
                 {v}
               </button>
@@ -88,7 +88,7 @@ export default function AdminNotifications() {
                 <div
                   key={note.id}
                   onClick={() => markRead(note.id)}
-                  className={`card cursor-pointer transition-all hover:border-brand-500/30 ${!note.read ? 'border-white/15 bg-white/[0.04]' : 'opacity-70'}`}
+                  className={`card cursor-pointer transition-all hover:border-brand-500/30 ${!note.read ? 'border-surface-300 bg-white/[0.04]' : 'opacity-70'}`}
                 >
                   <div className="flex items-start gap-4">
                     {/* Unread dot */}
@@ -121,7 +121,7 @@ export default function AdminNotifications() {
         )}
 
         {/* Notification prefs teaser */}
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-800/50 border border-white/10">
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-150/50 border border-surface-200">
           <Settings size={15} className="text-surface-500 flex-shrink-0" />
           <p className="text-surface-400 text-xs flex-1">Manage notification preferences in <span className="text-brand-400 cursor-pointer hover:underline">Platform Settings</span></p>
         </div>

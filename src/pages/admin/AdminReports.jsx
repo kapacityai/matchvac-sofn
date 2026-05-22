@@ -71,7 +71,7 @@ const YTD_TOTAL = Object.values(YTD).reduce((a, b) => a + b, 0)
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-surface-800 border border-white/10 rounded-xl p-3 text-xs shadow-xl min-w-[180px]">
+    <div className="bg-surface-150 border border-surface-200 rounded-xl p-3 text-xs shadow-xl min-w-[180px]">
       <p className="text-white font-bold mb-2">{label}</p>
       {payload.map(p => (
         <div key={p.dataKey} className="flex justify-between gap-4">
@@ -90,7 +90,7 @@ export default function AdminReports() {
   const tierBadge = (tier) => ({
     Featured: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
     Verified: 'bg-brand-500/20 text-brand-400 border border-brand-500/30',
-    Free: 'bg-surface-700 text-surface-400 border border-white/10',
+    Free: 'bg-surface-700 text-surface-400 border border-surface-200',
   }[tier] || '')
 
   const tabs = [
@@ -106,7 +106,7 @@ export default function AdminReports() {
       <Header title="Reports" subtitle="Platform financials, revenue streams & tax exports" />
 
       <div className="px-6 pt-2 pb-0">
-        <div className="flex gap-1 border-b border-white/10">
+        <div className="flex gap-1 border-b border-surface-200">
           {tabs.map(t => (
             <button
               key={t.id}
@@ -129,7 +129,7 @@ export default function AdminReports() {
               {Object.entries(STREAM_LABELS).map(([key, label]) => (
                 <div key={key} className="stat-card relative overflow-hidden">
                   <div className="absolute top-0 left-0 w-1 h-full rounded-l-xl" style={{ background: STREAM_COLORS[key] }} />
-                  <p className="text-xl font-bold text-white pl-2">${YTD[key].toLocaleString()}</p>
+                  <p className="text-xl font-bold text-surface-900 pl-2">${YTD[key].toLocaleString()}</p>
                   <p className="text-surface-400 text-xs pl-2 leading-tight">{label}</p>
                   <p className="text-surface-600 text-xs pl-2">YTD 2026</p>
                 </div>
@@ -155,7 +155,7 @@ export default function AdminReports() {
                   </div>
                 )
               })}
-              <div className="text-center px-3 border-l border-white/10">
+              <div className="text-center px-3 border-l border-surface-200">
                 <p className="text-cyan-400 font-extrabold text-xl">
                   ${MOCK_TECHS.filter(t => t.status === 'active').reduce((s, t) => s + (TECH_SUBSCRIPTION_TIERS[t.subscription]?.price || 0), 0)}/mo
                 </p>
@@ -266,19 +266,19 @@ export default function AdminReports() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/10">
+                    <tr className="border-b border-surface-200">
                       <th className="text-left text-surface-500 font-medium pb-3 pr-4">Revenue Stream</th>
                       <th className="text-right text-surface-500 font-medium pb-3 px-3">Jan</th>
                       <th className="text-right text-surface-500 font-medium pb-3 px-3">Feb</th>
                       <th className="text-right text-surface-500 font-medium pb-3 px-3">Mar</th>
                       <th className="text-right text-surface-500 font-medium pb-3 px-3">Apr</th>
                       <th className="text-right text-surface-500 font-medium pb-3 px-3">May</th>
-                      <th className="text-right text-surface-500 font-medium pb-3 pl-3 text-white">YTD</th>
+                      <th className="text-right text-surface-500 font-medium pb-3 pl-3 text-surface-900">YTD</th>
                     </tr>
                   </thead>
                   <tbody>
                     {Object.entries(STREAM_LABELS).map(([key, label]) => (
-                      <tr key={key} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                      <tr key={key} className="border-b border-surface-150 hover:bg-white/5 transition-colors">
                         <td className="py-3 pr-4">
                           <div className="flex items-center gap-2">
                             <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STREAM_COLORS[key] }} />
@@ -288,11 +288,11 @@ export default function AdminReports() {
                         {monthlyData.map(m => (
                           <td key={m.month} className="py-3 px-3 text-right text-surface-300">${m[key]}</td>
                         ))}
-                        <td className="py-3 pl-3 text-right font-bold text-white">${YTD[key].toLocaleString()}</td>
+                        <td className="py-3 pl-3 text-right font-bold text-surface-900">${YTD[key].toLocaleString()}</td>
                       </tr>
                     ))}
-                    <tr className="bg-surface-800/30">
-                      <td className="py-3 pr-4 font-bold text-white">Total</td>
+                    <tr className="bg-surface-150/30">
+                      <td className="py-3 pr-4 font-bold text-surface-900">Total</td>
                       {monthlyData.map(m => (
                         <td key={m.month} className="py-3 px-3 text-right font-bold text-brand-400">${m.total.toLocaleString()}</td>
                       ))}
@@ -367,7 +367,7 @@ export default function AdminReports() {
                 return (
                   <div key={tech.id} className="card">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
+                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-sm font-bold text-surface-900 flex-shrink-0">
                         {tech.name.split(' ').map(n => n[0]).join('')}
                       </div>
                       <div>
@@ -387,12 +387,12 @@ export default function AdminReports() {
                         <span className="text-surface-400">Platform Fee (15%)</span>
                         <span className="text-rose-400 font-medium">−${fees.toFixed(2)}</span>
                       </div>
-                      <div className="border-t border-white/10 pt-2 flex justify-between font-bold">
+                      <div className="border-t border-surface-200 pt-2 flex justify-between font-bold">
                         <span className="text-surface-300">Net Paid Out</span>
                         <span className="text-emerald-400">${net.toFixed(2)}</span>
                       </div>
                     </div>
-                    <div className="mt-3 pt-3 border-t border-white/10 flex justify-between items-center">
+                    <div className="mt-3 pt-3 border-t border-surface-200 flex justify-between items-center">
                       <span className="text-surface-500 text-xs">YTD Earnings</span>
                       <span className="text-white font-extrabold text-lg">${tech.earnings.toLocaleString()}</span>
                     </div>
@@ -414,7 +414,7 @@ export default function AdminReports() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/10">
+                    <tr className="border-b border-surface-200">
                       {['Date', 'Job', 'Technician', 'Tier', 'Gross', 'Platform Fee', 'Net Paid', 'Status'].map(h => (
                         <th key={h} className="text-left text-surface-500 font-medium pb-3 pr-4 whitespace-nowrap">{h}</th>
                       ))}
@@ -422,14 +422,14 @@ export default function AdminReports() {
                   </thead>
                   <tbody>
                     {JOB_PAYOUTS.map(job => (
-                      <tr key={job.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                      <tr key={job.id} className="border-b border-surface-150 hover:bg-white/5 transition-colors">
                         <td className="py-3 pr-4 text-surface-400 whitespace-nowrap">{job.date}</td>
-                        <td className="py-3 pr-4 text-white font-medium">{job.service}</td>
+                        <td className="py-3 pr-4 text-surface-900 font-medium">{job.service}</td>
                         <td className="py-3 pr-4 text-surface-300 whitespace-nowrap">{job.tech}</td>
                         <td className="py-3 pr-4">
                           <span className={`badge ${job.tier === 'Premium' ? 'badge-purple' : job.tier === 'Standard' ? 'badge-blue' : 'badge-yellow'}`}>{job.tier}</span>
                         </td>
-                        <td className="py-3 pr-4 text-white font-semibold">${job.grossRevenue}</td>
+                        <td className="py-3 pr-4 text-surface-900 font-semibold">${job.grossRevenue}</td>
                         <td className="py-3 pr-4 text-rose-400">−${job.platformFee.toFixed(2)}</td>
                         <td className="py-3 pr-4 text-emerald-400 font-bold">${job.techPayout.toFixed(2)}</td>
                         <td className="py-3 pr-4">
@@ -441,9 +441,9 @@ export default function AdminReports() {
                     ))}
                   </tbody>
                   <tfoot>
-                    <tr className="bg-surface-800/30 border-t border-white/20">
-                      <td colSpan={4} className="py-3 pr-4 font-bold text-white">Totals</td>
-                      <td className="py-3 pr-4 font-bold text-white">${JOB_PAYOUTS.reduce((s,j) => s+j.grossRevenue, 0).toLocaleString()}</td>
+                    <tr className="bg-surface-150/30 border-t border-white/20">
+                      <td colSpan={4} className="py-3 pr-4 font-bold text-surface-900">Totals</td>
+                      <td className="py-3 pr-4 font-bold text-surface-900">${JOB_PAYOUTS.reduce((s,j) => s+j.grossRevenue, 0).toLocaleString()}</td>
                       <td className="py-3 pr-4 font-bold text-rose-400">−${JOB_PAYOUTS.reduce((s,j) => s+j.platformFee, 0).toFixed(2)}</td>
                       <td className="py-3 pr-4 font-extrabold text-emerald-400">${JOB_PAYOUTS.reduce((s,j) => s+j.techPayout, 0).toFixed(2)}</td>
                       <td />
@@ -471,8 +471,8 @@ export default function AdminReports() {
                 {MOCK_TECHS.filter(t => t.status === 'active').map(tech => {
                   const plan = TECH_SUBSCRIPTION_TIERS[tech.subscription]
                   return (
-                    <div key={tech.id} className="flex items-center gap-4 px-4 py-3 bg-surface-800/50 rounded-xl">
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                    <div key={tech.id} className="flex items-center gap-4 px-4 py-3 bg-surface-150/50 rounded-xl">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                         {tech.name.split(' ').map(n => n[0]).join('')}
                       </div>
                       <div className="flex-1">
@@ -493,7 +493,7 @@ export default function AdminReports() {
                   )
                 })}
               </div>
-              <div className="bg-surface-800/40 rounded-xl p-4 grid grid-cols-3 gap-4 text-center text-sm">
+              <div className="bg-surface-150/40 rounded-xl p-4 grid grid-cols-3 gap-4 text-center text-sm">
                 {Object.entries(TECH_SUBSCRIPTION_TIERS).map(([key, tier]) => {
                   const count = MOCK_TECHS.filter(t => t.subscription === key && t.status === 'active').length
                   return (
@@ -576,7 +576,7 @@ export default function AdminReports() {
               {[
                 { tier: 'Featured', fee: '$499/mo', rate: '5% referral', color: 'border-amber-500/40 from-amber-900/20', badge: 'bg-amber-500/20 text-amber-400' },
                 { tier: 'Verified', fee: '$299 setup + $99/mo', rate: '7% referral', color: 'border-brand-500/40 from-brand-900/20', badge: 'bg-brand-500/20 text-brand-400' },
-                { tier: 'Free', fee: '$0', rate: '10% referral', color: 'border-white/10 from-surface-800/20', badge: 'bg-surface-700 text-surface-400' },
+                { tier: 'Free', fee: '$0', rate: '10% referral', color: 'border-surface-200 from-surface-800/20', badge: 'bg-surface-700 text-surface-400' },
               ].map(t => {
                 const count = MOCK_CONTRACTORS.filter(c => c.tier === t.tier && c.status === 'active').length
                 const rev = MOCK_CONTRACTORS.filter(c => c.tier === t.tier).reduce((s, c) => s + c.monthlyFee + c.referralRevenue, 0)
@@ -585,7 +585,7 @@ export default function AdminReports() {
                     <span className={`text-xs font-bold px-2 py-1 rounded-lg ${t.badge}`}>{t.tier}</span>
                     <p className="text-white font-bold mt-2">{t.fee}</p>
                     <p className="text-surface-500 text-xs">{t.rate}</p>
-                    <div className="mt-3 border-t border-white/10 pt-3 flex justify-between text-xs">
+                    <div className="mt-3 border-t border-surface-200 pt-3 flex justify-between text-xs">
                       <span className="text-surface-400">{count} active</span>
                       <span className="text-emerald-400 font-semibold">${rev.toLocaleString()} revenue</span>
                     </div>
@@ -602,13 +602,13 @@ export default function AdminReports() {
               </div>
               <div className="space-y-2">
                 {MOCK_CONTRACTORS.map(c => (
-                  <div key={c.id} className="rounded-xl border border-white/10 bg-surface-800/40 overflow-hidden">
+                  <div key={c.id} className="rounded-xl border border-surface-200 bg-surface-150/40 overflow-hidden">
                     <div
                       className="flex items-center gap-4 p-4 cursor-pointer hover:bg-white/5 transition-colors"
                       onClick={() => setExpandedContractor(expandedContractor === c.id ? null : c.id)}
                     >
                       {/* Logo placeholder */}
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-500/30 to-brand-600/30 border border-white/10 flex items-center justify-center text-xs font-black text-white flex-shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-500/30 to-brand-600/30 border border-surface-200 flex items-center justify-center text-xs font-black text-surface-900 flex-shrink-0">
                         {c.company.split(' ').map(w => w[0]).join('').slice(0,2)}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -627,7 +627,7 @@ export default function AdminReports() {
                     </div>
 
                     {expandedContractor === c.id && (
-                      <div className="border-t border-white/10 p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 bg-surface-900/40">
+                      <div className="border-t border-surface-200 p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 bg-white/40">
                         <div>
                           <p className="text-surface-500 text-xs mb-1">Monthly Fee</p>
                           <p className="text-white font-bold">{c.monthlyFee > 0 ? `$${c.monthlyFee}/mo` : 'Free'}</p>
@@ -660,7 +660,7 @@ export default function AdminReports() {
                           <p className="text-surface-500 text-xs mb-1">Member Since</p>
                           <p className="text-white font-bold text-xs">{c.joinDate}</p>
                         </div>
-                        <div className="col-span-2 sm:col-span-4 pt-2 border-t border-white/10 flex gap-2">
+                        <div className="col-span-2 sm:col-span-4 pt-2 border-t border-surface-200 flex gap-2">
                           <button className="btn-secondary text-xs py-1.5">View Profile</button>
                           <button className="btn-secondary text-xs py-1.5"><Download size={12} /> Export Report</button>
                           <a href={`mailto:${c.email}`} className="btn-ghost text-xs py-1.5 flex items-center gap-1"><ExternalLink size={12} /> Contact</a>
@@ -727,7 +727,7 @@ export default function AdminReports() {
                 ].map(ad => {
                   const ctr = ad.impressions > 0 ? ((ad.clicks / ad.impressions) * 100).toFixed(1) : '0.0'
                   return (
-                    <div key={ad.id} className="flex items-center gap-4 px-4 py-3 bg-surface-800/50 rounded-xl">
+                    <div key={ad.id} className="flex items-center gap-4 px-4 py-3 bg-surface-150/50 rounded-xl">
                       <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center flex-shrink-0">
                         <Megaphone size={16} className="text-amber-400" />
                       </div>
@@ -786,8 +786,8 @@ export default function AdminReports() {
               </div>
               <div className="space-y-2">
                 {MOCK_TECHS.filter(t => t.status === 'active').map(tech => (
-                  <div key={tech.id} className="flex items-center gap-4 px-4 py-3 bg-surface-800/50 rounded-xl">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                  <div key={tech.id} className="flex items-center gap-4 px-4 py-3 bg-surface-150/50 rounded-xl">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                       {tech.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div className="flex-1">
@@ -818,8 +818,8 @@ export default function AdminReports() {
               </div>
               <div className="space-y-2">
                 {MOCK_CONTRACTORS.filter(c => c.referralRevenue > 0).map(c => (
-                  <div key={c.id} className="flex items-center gap-4 px-4 py-3 bg-surface-800/50 rounded-xl">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-500/30 to-brand-600/30 border border-white/10 flex items-center justify-center text-xs font-black text-white flex-shrink-0">
+                  <div key={c.id} className="flex items-center gap-4 px-4 py-3 bg-surface-150/50 rounded-xl">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-500/30 to-brand-600/30 border border-surface-200 flex items-center justify-center text-xs font-black text-surface-900 flex-shrink-0">
                       {c.company.split(' ').map(w => w[0]).join('').slice(0,2)}
                     </div>
                     <div className="flex-1">
@@ -845,7 +845,7 @@ export default function AdminReports() {
                   { code: 'NEWTECH', discount: '$25 off first service', uses: 12, active: true },
                   { code: 'SUMMER10', discount: '10% off A/C', uses: 0, active: false },
                 ].map(p => (
-                  <div key={p.code} className="flex items-center gap-3 px-4 py-3 bg-surface-800/50 rounded-xl text-sm">
+                  <div key={p.code} className="flex items-center gap-3 px-4 py-3 bg-surface-150/50 rounded-xl text-sm">
                     <code className="font-mono font-bold text-brand-400 text-sm">{p.code}</code>
                     <span className="text-surface-300 flex-1">{p.discount}</span>
                     <span className="text-surface-500">{p.uses} uses</span>

@@ -4,7 +4,7 @@ import { TECH_SUBSCRIPTION_TIERS } from '../../data/mockData'
 import { Check, Zap, Shield, Star, TrendingUp, ChevronRight, Crown, Award } from 'lucide-react'
 
 const TIER_STYLES = {
-  free:  { ring: 'border-white/10',          bg: 'from-surface-800/60 to-surface-900',   icon: Shield,  iconColor: 'text-surface-400', iconBg: 'bg-surface-700' },
+  free:  { ring: 'border-surface-200',          bg: 'from-surface-800/60 to-surface-900',   icon: Shield,  iconColor: 'text-surface-400', iconBg: 'bg-surface-700' },
   pro:   { ring: 'border-brand-500/50',       bg: 'from-brand-900/40 to-surface-900',     icon: Zap,     iconColor: 'text-brand-400',   iconBg: 'bg-brand-500/20' },
   elite: { ring: 'border-accent-500/50',      bg: 'from-accent-900/40 to-surface-900',    icon: Crown,   iconColor: 'text-accent-400',  iconBg: 'bg-accent-500/20' },
 }
@@ -18,7 +18,7 @@ function Breakeven({ current, upgrade }) {
   const savingsPerJob = (cur.platformFee - up.platformFee) * avgJob
   const breakevenJobs = Math.ceil(up.price / savingsPerJob)
   return (
-    <div className="mt-3 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-surface-400 leading-relaxed">
+    <div className="mt-3 p-3 rounded-xl bg-white/5 border border-surface-200 text-xs text-surface-400 leading-relaxed">
       <span className="text-white font-semibold">Break-even:</span> At avg $220/job, upgrading pays for itself after just{' '}
       <span className="text-emerald-400 font-bold">{breakevenJobs} jobs</span>. Every job after that is pure savings.
     </div>
@@ -103,12 +103,12 @@ export default function TechSubscription() {
             return (
               <div
                 key={key}
-                className={`relative rounded-2xl border-2 bg-gradient-to-b ${style.bg} ${isActive ? style.ring + ' ring-2 ring-offset-0' : 'border-white/10'} p-5 flex flex-col transition-all`}
+                className={`relative rounded-2xl border-2 bg-gradient-to-b ${style.bg} ${isActive ? style.ring + ' ring-2 ring-offset-0' : 'border-surface-200'} p-5 flex flex-col transition-all`}
                 style={isActive ? { boxShadow: '0 0 0 2px rgba(255,255,255,0.08)' } : {}}
               >
                 {/* Badge */}
                 {tier.badge && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent-500 to-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-lg">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent-500 to-brand-500 text-surface-900 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-lg">
                     {tier.badge}
                   </div>
                 )}
@@ -136,7 +136,7 @@ export default function TechSubscription() {
                 </div>
 
                 {/* Fee highlight */}
-                <div className={`rounded-xl px-3 py-2 mb-4 ${key === 'elite' ? 'bg-accent-500/15 border border-accent-500/30' : key === 'pro' ? 'bg-brand-500/15 border border-brand-500/30' : 'bg-surface-800 border border-white/10'}`}>
+                <div className={`rounded-xl px-3 py-2 mb-4 ${key === 'elite' ? 'bg-accent-500/15 border border-accent-500/30' : key === 'pro' ? 'bg-brand-500/15 border border-brand-500/30' : 'bg-surface-150 border border-surface-200'}`}>
                   <p className="text-surface-400 text-xs">Platform fee per job</p>
                   <p className={`text-xl font-extrabold ${style.iconColor}`}>{tier.platformFee * 100}%</p>
                   {tier.price > 0 && (
@@ -166,9 +166,9 @@ export default function TechSubscription() {
                     isActive
                       ? 'bg-surface-700 text-surface-400 cursor-default'
                       : key === 'elite'
-                      ? 'bg-accent-500 hover:bg-accent-600 text-white active:scale-[0.98]'
+                      ? 'bg-accent-500 hover:bg-accent-600 text-surface-900 active:scale-[0.98]'
                       : key === 'pro'
-                      ? 'bg-brand-500 hover:bg-brand-600 text-white active:scale-[0.98]'
+                      ? 'bg-brand-500 hover:bg-brand-600 text-surface-900 active:scale-[0.98]'
                       : 'btn-secondary'
                   }`}
                 >
@@ -194,7 +194,7 @@ export default function TechSubscription() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-surface-200">
                   <th className="text-left pb-3 text-surface-500 font-medium">Jobs/Month</th>
                   <th className="text-right pb-3 text-surface-500 font-medium">Avg Job Value</th>
                   <th className="text-right pb-3 text-surface-500 font-medium">Standard (15%)</th>
@@ -212,8 +212,8 @@ export default function TechSubscription() {
                   const eliteFee = gross * 0.08 + 99
                   const eliteSavings = stdFee - eliteFee
                   return (
-                    <tr key={jobs} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                      <td className="py-3 text-white font-medium">{jobs} jobs</td>
+                    <tr key={jobs} className="border-b border-surface-150 hover:bg-white/5 transition-colors">
+                      <td className="py-3 text-surface-900 font-medium">{jobs} jobs</td>
                       <td className="py-3 text-right text-surface-400">${avg}</td>
                       <td className="py-3 text-right text-rose-400 font-medium">−${stdFee.toLocaleString()}</td>
                       <td className="py-3 text-right text-brand-400 font-medium">−${proFee.toFixed(0)}</td>
@@ -241,7 +241,7 @@ export default function TechSubscription() {
             { q: 'When does the lower fee rate take effect?', a: 'Immediately after upgrading. Your very next job is billed at the new rate.' },
             { q: 'What does "Priority Dispatch" mean?', a: 'When a new job is posted in your area, Pro and Elite techs see it first and have a 60-second head start before Standard techs.' },
           ].map(({ q, a }) => (
-            <div key={q} className="border-b border-white/5 pb-4 last:border-0 last:pb-0">
+            <div key={q} className="border-b border-surface-150 pb-4 last:border-0 last:pb-0">
               <p className="text-white font-semibold text-sm mb-1">{q}</p>
               <p className="text-surface-400 text-sm leading-relaxed">{a}</p>
             </div>
@@ -264,7 +264,7 @@ export default function TechSubscription() {
                 ? `$${TECH_SUBSCRIPTION_TIERS[confirmTier].price}/month · ${TECH_SUBSCRIPTION_TIERS[confirmTier].platformFee * 100}% platform fee`
                 : `Free · 15% platform fee`}
             </p>
-            <div className="bg-surface-800/60 rounded-xl p-4 mb-5 space-y-2 text-sm">
+            <div className="bg-surface-100 rounded-xl p-4 mb-5 space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-surface-400">New fee rate</span>
                 <span className="text-emerald-400 font-bold">{TECH_SUBSCRIPTION_TIERS[confirmTier].platformFee * 100}% per job</span>

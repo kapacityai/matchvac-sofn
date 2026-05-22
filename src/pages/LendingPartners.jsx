@@ -15,7 +15,7 @@ const TIERS = [
     price: 299,
     period: '/mo',
     badge: null,
-    color: 'border-white/10',
+    color: 'border-surface-200',
     btnClass: 'btn-secondary',
     features: [
       'Branded listing on Financing page',
@@ -60,7 +60,7 @@ const TIERS = [
     period: '/mo',
     badge: 'Best Visibility',
     color: 'border-accent-500',
-    btnClass: 'bg-accent-500 hover:bg-accent-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-all active:scale-95 flex items-center gap-2 justify-center',
+    btnClass: 'bg-accent-500 hover:bg-accent-600 text-surface-900 font-semibold px-5 py-2.5 rounded-xl transition-all active:scale-95 flex items-center gap-2 justify-center',
     features: [
       'Everything in Growth',
       'Priority customer matching at booking',
@@ -107,7 +107,7 @@ function ApplicationForm({ tier, onClose }) {
       <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
         <CheckCircle size={32} className="text-emerald-400" />
       </div>
-      <h3 className="text-xl font-bold text-white mb-2">Application Received!</h3>
+      <h3 className="text-xl font-bold text-surface-900 mb-2">Application Received!</h3>
       <p className="text-surface-400 text-sm mb-6">
         Our partnerships team will review your application and reach out within 2 business days.
         You'll receive a confirmation at <span className="text-brand-400">{form.email}</span>.
@@ -188,7 +188,7 @@ function ApplicationForm({ tier, onClose }) {
 
       {step === 2 && (
         <div className="space-y-4">
-          <div className="card bg-surface-800/50 flex items-center justify-between">
+          <div className="card bg-surface-150/50 flex items-center justify-between">
             <div>
               <p className="text-surface-400 text-xs">Selected Plan</p>
               <p className="text-white font-bold">{selectedTier.name} — ${selectedTier.price.toLocaleString()}/mo</p>
@@ -225,10 +225,10 @@ export default function LendingPartners() {
   const openForm = (tier = null) => { setSelectedTier(tier); setShowForm(true) }
 
   return (
-    <div className="bg-surface-950 min-h-screen text-white">
+    <div className="bg-surface-100 min-h-screen text-surface-900">
 
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-surface-950/80 backdrop-blur-xl border-b border-white/10">
+      <nav className="sticky top-0 z-50 bg-surface-100/80 backdrop-blur-xl border-b border-surface-200">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <button onClick={() => navigate('/')}><Logo size="sm" /></button>
           <div className="flex items-center gap-3">
@@ -239,7 +239,7 @@ export default function LendingPartners() {
       </nav>
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-24 px-6 border-b border-white/10">
+      <section className="relative overflow-hidden py-24 px-6 border-b border-surface-200">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-500/8 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent-500/8 rounded-full blur-3xl" />
@@ -276,10 +276,10 @@ export default function LendingPartners() {
       </section>
 
       {/* Why partner */}
-      <section className="py-20 px-6 border-b border-white/10">
+      <section className="py-20 px-6 border-b border-surface-200">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-white mb-3">Why Partner With Us?</h2>
+            <h2 className="text-3xl font-extrabold text-surface-900 mb-3">Why Partner With Us?</h2>
             <p className="text-surface-400 max-w-xl mx-auto">Your offers reach homeowners at exactly the right moment — during an HVAC service booking, when financing is most relevant.</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-6">
@@ -319,10 +319,10 @@ export default function LendingPartners() {
       </section>
 
       {/* Placement examples */}
-      <section className="py-20 px-6 border-b border-white/10">
+      <section className="py-20 px-6 border-b border-surface-200">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-white mb-3">Where Your Ads Appear</h2>
+            <h2 className="text-3xl font-extrabold text-surface-900 mb-3">Where Your Ads Appear</h2>
             <p className="text-surface-400 max-w-xl mx-auto">Multiple high-visibility placements across the customer journey.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -333,7 +333,7 @@ export default function LendingPartners() {
               { label: 'Onboarding Emails', detail: 'Featured in the welcome email series sent to new customers', badge: 'Premier' },
             ].map(p => (
               <div key={p.label} className="card flex flex-col gap-2">
-                <div className="h-24 rounded-xl bg-surface-800 border border-white/5 flex items-center justify-center">
+                <div className="h-24 rounded-xl bg-surface-150 border border-surface-150 flex items-center justify-center">
                   <FileText size={28} className="text-surface-600" />
                 </div>
                 <p className="text-white text-sm font-semibold">{p.label}</p>
@@ -346,10 +346,10 @@ export default function LendingPartners() {
       </section>
 
       {/* Tiers */}
-      <section id="tiers" className="py-20 px-6 border-b border-white/10">
+      <section id="tiers" className="py-20 px-6 border-b border-surface-200">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-white mb-3">Advertising Tiers</h2>
+            <h2 className="text-3xl font-extrabold text-surface-900 mb-3">Advertising Tiers</h2>
             <p className="text-surface-400 max-w-xl mx-auto">Simple monthly pricing. No long-term contract required. Cancel anytime.</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-6">
@@ -392,10 +392,10 @@ export default function LendingPartners() {
       </section>
 
       {/* Current partners */}
-      <section className="py-20 px-6 border-b border-white/10">
+      <section className="py-20 px-6 border-b border-surface-200">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-extrabold text-white mb-3">Current Financing Partners</h2>
+            <h2 className="text-3xl font-extrabold text-surface-900 mb-3">Current Financing Partners</h2>
             <p className="text-surface-400 max-w-xl mx-auto">Join the lenders already reaching our homeowner base.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -416,7 +416,7 @@ export default function LendingPartners() {
       {/* CTA bottom */}
       <section className="py-24 px-6">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl font-extrabold text-white mb-4">Ready to reach motivated homeowners?</h2>
+          <h2 className="text-4xl font-extrabold text-surface-900 mb-4">Ready to reach motivated homeowners?</h2>
           <p className="text-surface-400 text-lg mb-8">Apply in minutes. Our partnerships team reviews all applications within 2 business days.</p>
           <button onClick={() => openForm()} className="btn-primary py-4 px-10 text-lg mx-auto">
             Apply as a Lending Partner <ArrowRight size={20} />
@@ -425,7 +425,7 @@ export default function LendingPartners() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-8 px-6">
+      <footer className="border-t border-surface-200 py-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-surface-500 text-xs">
           <Logo size="sm" />
           <p>© 2026 ServiceConnect. All rights reserved.</p>
@@ -440,11 +440,11 @@ export default function LendingPartners() {
       {/* Application Modal */}
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/70 backdrop-blur-sm">
-          <div className="bg-surface-900 border border-white/10 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 relative animate-slide-up">
+          <div className="bg-white border border-surface-200 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 relative animate-slide-up">
             <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 text-surface-500 hover:text-white">
               <X size={20} />
             </button>
-            <h2 className="text-xl font-bold text-white mb-1">Partner Application</h2>
+            <h2 className="text-xl font-bold text-surface-900 mb-1">Partner Application</h2>
             <p className="text-surface-400 text-sm mb-6">
               {selectedTier ? `Applying for ${selectedTier.name} tier — $${selectedTier.price.toLocaleString()}/mo` : 'Choose your plan after completing your company info.'}
             </p>

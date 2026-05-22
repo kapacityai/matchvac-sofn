@@ -52,7 +52,7 @@ export default function TaxCenter() {
               { label: 'Mileage Deduction', value: `-$${mileageDeduction}`, color: 'text-emerald-400' },
               { label: 'Est. Taxable Income', value: `$${(ytdNet - parseFloat(mileageDeduction)).toLocaleString()}`, color: 'text-white' },
             ].map(s => (
-              <div key={s.label} className="bg-surface-800/50 rounded-xl p-3">
+              <div key={s.label} className="bg-surface-150/50 rounded-xl p-3">
                 <p className="text-surface-400 text-xs mb-1">{s.label}</p>
                 <p className={`text-lg font-bold ${s.color}`}>{s.value}</p>
               </div>
@@ -83,7 +83,7 @@ export default function TaxCenter() {
               { label: '1099-NEC 2025', status: 'available', note: 'Available for download' },
               { label: '1099-NEC 2026', status: 'pending', note: 'Available January 31, 2027' },
             ].map(doc => (
-              <div key={doc.label} className="flex items-center gap-3 px-4 py-3 bg-surface-800/50 rounded-xl">
+              <div key={doc.label} className="flex items-center gap-3 px-4 py-3 bg-surface-150/50 rounded-xl">
                 <FileText size={18} className={doc.status === 'available' ? 'text-brand-400' : 'text-surface-600'} />
                 <div className="flex-1">
                   <p className={`text-sm font-medium ${doc.status === 'available' ? 'text-white' : 'text-surface-500'}`}>{doc.label}</p>
@@ -129,7 +129,7 @@ export default function TaxCenter() {
             ))}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-white/10 flex justify-between text-sm">
+          <div className="mt-4 pt-3 border-t border-surface-200 flex justify-between text-sm">
             <span className="text-surface-400">Total deduction</span>
             <span className="text-emerald-400 font-bold">${mileageDeduction}</span>
           </div>

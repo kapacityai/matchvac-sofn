@@ -42,9 +42,9 @@ const navConfig = {
 }
 
 const roleColors = {
-  customer: { from: 'from-brand-400',   to: 'to-accent-500',   badge: 'bg-brand-500/20 text-brand-300',   label: 'Customer' },
-  tech:     { from: 'from-emerald-400', to: 'to-brand-500',    badge: 'bg-emerald-500/20 text-emerald-300', label: 'Technician' },
-  admin:    { from: 'from-accent-400',  to: 'to-rose-500',     badge: 'bg-accent-500/20 text-accent-300',  label: 'Admin' },
+  customer: { from: 'from-brand-400',   to: 'to-accent-500',   badge: 'bg-brand-100 text-brand-700',     label: 'Customer' },
+  tech:     { from: 'from-emerald-400', to: 'to-brand-500',    badge: 'bg-emerald-100 text-emerald-700', label: 'Technician' },
+  admin:    { from: 'from-accent-400',  to: 'to-rose-500',     badge: 'bg-accent-500/10 text-accent-600', label: 'Admin' },
 }
 
 export default function Sidebar() {
@@ -58,14 +58,14 @@ export default function Sidebar() {
   const rc = roleColors[user.role] || roleColors.customer
 
   return (
-    <aside className={`${collapsed ? 'w-16' : 'w-60'} h-screen flex flex-col bg-surface-900/95 border-r border-white/[0.07] flex-shrink-0 transition-all duration-300 relative backdrop-blur-xl`}>
-      {/* Subtle side glow */}
-      <div className="absolute top-0 bottom-0 right-0 w-px bg-gradient-to-b from-transparent via-brand-500/20 to-transparent" />
+    <aside className={`${collapsed ? 'w-16' : 'w-60'} h-screen flex flex-col bg-white border-r border-surface-200 flex-shrink-0 transition-all duration-300 relative`}>
+      {/* Subtle top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-500 to-brand-500" />
 
       {/* Logo */}
-      <div className={`flex items-center ${collapsed ? 'justify-center px-3' : 'px-5'} py-[18px] border-b border-white/[0.07]`}>
+      <div className={`flex items-center ${collapsed ? 'justify-center px-3' : 'px-5'} py-[18px] border-b border-surface-200`}>
         {collapsed ? (
-          <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${rc.from} ${rc.to} flex items-center justify-center shadow-lg`}>
+          <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${rc.from} ${rc.to} flex items-center justify-center shadow-sm`}>
             <span className="text-white text-xs font-black">SC</span>
           </div>
         ) : (
@@ -77,18 +77,18 @@ export default function Sidebar() {
       {!collapsed && (
         <div
           onClick={() => user.role === 'customer' ? navigate('/customer/profile') : undefined}
-          className={`mx-3 mt-4 mb-2 px-3 py-3 rounded-xl bg-white/[0.04] border border-white/[0.07] ${user.role === 'customer' ? 'cursor-pointer hover:bg-white/[0.08] hover:border-brand-500/30 transition-all group' : ''}`}
+          className={`mx-3 mt-4 mb-2 px-3 py-3 rounded-xl bg-surface-100 border border-surface-200 ${user.role === 'customer' ? 'cursor-pointer hover:bg-surface-150 hover:border-brand-300 transition-all group' : ''}`}
         >
           <div className="flex items-center gap-3">
-            <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${rc.from} ${rc.to} flex items-center justify-center text-xs font-bold text-white flex-shrink-0 shadow-md`}>
+            <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${rc.from} ${rc.to} flex items-center justify-center text-xs font-bold text-white flex-shrink-0 shadow-sm`}>
               {user.avatar}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-white text-sm font-semibold truncate leading-tight">{user.name}</p>
+              <p className="text-surface-900 text-sm font-semibold truncate leading-tight">{user.name}</p>
               <span className={`inline-block text-xs px-2 py-0.5 rounded-full mt-0.5 font-medium ${rc.badge}`}>{rc.label}</span>
             </div>
             {user.role === 'customer' && (
-              <UserCircle size={14} className="text-surface-600 group-hover:text-brand-400 transition-colors flex-shrink-0" />
+              <UserCircle size={14} className="text-surface-400 group-hover:text-brand-500 transition-colors flex-shrink-0" />
             )}
           </div>
         </div>
@@ -110,23 +110,23 @@ export default function Sidebar() {
                 collapsed ? 'justify-center px-2' : ''
               } ${
                 active
-                  ? 'bg-brand-500/15 text-brand-300 border border-brand-500/20'
-                  : 'text-surface-400 hover:text-white hover:bg-white/[0.06] border border-transparent'
+                  ? 'bg-brand-50 text-brand-700 border border-brand-200'
+                  : 'text-surface-600 hover:text-surface-900 hover:bg-surface-100 border border-transparent'
               }`}
             >
-              <item.icon size={17} className={active ? 'text-brand-400' : ''} />
+              <item.icon size={17} className={active ? 'text-brand-500' : 'text-surface-400'} />
               {!collapsed && <span className="flex-1 text-left">{item.label}</span>}
-              {!collapsed && active && <ChevronRight size={13} className="text-brand-500 opacity-60" />}
+              {!collapsed && active && <ChevronRight size={13} className="text-brand-400 opacity-70" />}
             </button>
           )
         })}
       </nav>
 
       {/* Sign out */}
-      <div className="px-3 pb-4 pt-2 border-t border-white/[0.07]">
+      <div className="px-3 pb-4 pt-2 border-t border-surface-200">
         <button
           onClick={() => { logout(); navigate('/') }}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/15 transition-all ${collapsed ? 'justify-center' : ''}`}
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-rose-500 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-all ${collapsed ? 'justify-center' : ''}`}
         >
           <LogOut size={17} />
           {!collapsed && <span>Sign Out</span>}
@@ -136,9 +136,9 @@ export default function Sidebar() {
       {/* Collapse toggle */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute -right-3 top-[22px] w-6 h-6 bg-surface-800 border border-white/15 rounded-full flex items-center justify-center hover:bg-surface-700 hover:border-white/25 transition-all z-10 shadow-md"
+        className="absolute -right-3 top-[22px] w-6 h-6 bg-white border border-surface-200 rounded-full flex items-center justify-center hover:bg-surface-100 hover:border-surface-300 transition-all z-10 shadow-sm"
       >
-        <ChevronRight size={11} className={`text-surface-400 transition-transform ${collapsed ? '' : 'rotate-180'}`} />
+        <ChevronRight size={11} className={`text-surface-500 transition-transform ${collapsed ? '' : 'rotate-180'}`} />
       </button>
     </aside>
   )

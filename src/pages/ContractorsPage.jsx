@@ -91,19 +91,19 @@ function SignupModal({ tier, onClose }) {
 
   if (step === 1) return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-surface-900 border border-white/10 rounded-2xl max-w-md w-full p-8 text-center">
+      <div className="bg-white border border-surface-200 rounded-2xl max-w-md w-full p-8 text-center">
         <div className="relative mx-auto mb-6 w-16 h-16">
           <div className="absolute inset-0 bg-brand-500/20 rounded-full animate-ping" />
           <div className="relative w-16 h-16 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center">
             <CheckCircle size={32} className="text-brand-400" />
           </div>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-2">Application Submitted!</h3>
+        <h3 className="text-2xl font-bold text-surface-900 mb-2">Application Submitted!</h3>
         <p className="text-surface-400 mb-4">
           Thanks, <strong className="text-white">{form.bizName}</strong>! Our partnerships team will review your application and reach out to{' '}
           <strong className="text-white">{form.email}</strong> within 1–2 business days.
         </p>
-        <div className="bg-surface-800/60 rounded-xl p-4 text-left text-sm space-y-2 mb-6">
+        <div className="bg-surface-100 rounded-xl p-4 text-left text-sm space-y-2 mb-6">
           <p className="text-surface-400">Plan: <span className="text-white font-medium">{tier.name}</span></p>
           <p className="text-surface-400">Trade: <span className="text-white font-medium">{form.trade}</span></p>
           <p className="text-surface-400">Coverage area: <span className="text-white font-medium">{form.zip}</span></p>
@@ -115,9 +115,9 @@ function SignupModal({ tier, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-start justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-surface-900 border border-white/10 rounded-2xl w-full max-w-lg my-8">
+      <div className="bg-white border border-surface-200 rounded-2xl w-full max-w-lg my-8">
         {/* Modal header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-surface-200">
           <div>
             <p className="text-white font-bold text-base">Apply for {tier.name}</p>
             <p className="text-surface-400 text-sm">{tier.billing}</p>
@@ -178,14 +178,14 @@ function SignupModal({ tier, onClose }) {
               <input className="input" placeholder="www.yourbiz.com" value={form.website} onChange={set('website')} />
             </div>
           </div>
-          <p className="text-xs text-surface-500 bg-surface-800/40 rounded-xl px-4 py-3 leading-relaxed">
+          <p className="text-xs text-surface-500 bg-surface-150/40 rounded-xl px-4 py-3 leading-relaxed">
             By applying you agree to ServiceConnect's Contractor Partner Terms. Featured listings require a valid contractor's license and proof of insurance.
           </p>
           <button
             type="submit"
             disabled={!canNext}
             className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${
-              canNext ? 'bg-brand-500 hover:bg-brand-600 text-white' : 'bg-surface-800 text-surface-500 cursor-not-allowed'
+              canNext ? 'bg-brand-500 hover:bg-brand-600 text-surface-900' : 'bg-surface-150 text-surface-500 cursor-not-allowed'
             }`}
           >
             Submit Application <ArrowRight size={16} />
@@ -201,10 +201,10 @@ export default function ContractorsPage() {
   const [selectedTier, setSelectedTier] = useState(null)
 
   return (
-    <div className="min-h-screen bg-surface-950 text-white">
+    <div className="min-h-screen bg-surface-100 text-surface-900">
 
       {/* Nav */}
-      <nav className="sticky top-0 z-40 bg-surface-950/95 backdrop-blur-xl border-b border-white/10">
+      <nav className="sticky top-0 z-40 bg-surface-100/95 backdrop-blur-xl border-b border-surface-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           <button
             onClick={() => navigate('/')}
@@ -232,7 +232,7 @@ export default function ContractorsPage() {
           <div className="inline-flex items-center gap-2 badge badge-purple px-4 py-1.5 text-sm mb-5">
             <Wrench size={14} /> For Contractors &amp; Trade Partners
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4 leading-tight">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-surface-900 mb-4 leading-tight">
             Grow Your Business With<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">
               ServiceConnect Referrals
@@ -248,7 +248,7 @@ export default function ContractorsPage() {
               { icon: MapPin, text: '15 cities & growing', color: 'text-emerald-400' },
               { icon: TrendingUp, text: 'Avg. 12 leads/mo per partner', color: 'text-accent-400' },
             ].map(({ icon: Icon, text, color }) => (
-              <div key={text} className="flex items-center gap-2 bg-surface-800/60 px-4 py-2 rounded-xl border border-white/10">
+              <div key={text} className="flex items-center gap-2 bg-surface-100 px-4 py-2 rounded-xl border border-surface-200">
                 <Icon size={14} className={color} />
                 <span className="text-surface-300">{text}</span>
               </div>
@@ -293,7 +293,7 @@ export default function ContractorsPage() {
         {/* Pricing tiers */}
         <div>
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-white mb-2">Partner Plans</h2>
+            <h2 className="text-3xl font-extrabold text-surface-900 mb-2">Partner Plans</h2>
             <p className="text-surface-400">Choose the right level of visibility for your business</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -305,7 +305,7 @@ export default function ContractorsPage() {
                     ? 'border-brand-500 shadow-lg shadow-brand-500/10'
                     : tier.id === 'featured'
                     ? 'border-accent-500/50'
-                    : 'border-white/10'
+                    : 'border-surface-200'
                 }`}
               >
                 {tier.badge && (
@@ -346,7 +346,7 @@ export default function ContractorsPage() {
                     tier.highlight
                       ? 'btn-primary'
                       : tier.id === 'featured'
-                      ? 'bg-accent-500 hover:bg-accent-600 text-white'
+                      ? 'bg-accent-500 hover:bg-accent-600 text-surface-900'
                       : 'btn-secondary'
                   }`}
                 >
@@ -362,7 +362,7 @@ export default function ContractorsPage() {
         </div>
 
         {/* Revenue model */}
-        <div className="card bg-surface-800/30">
+        <div className="card bg-surface-150/30">
           <h2 className="text-white font-bold text-xl mb-5 text-center">How ServiceConnect Earns — Full Transparency</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
             {[
@@ -386,7 +386,7 @@ export default function ContractorsPage() {
 
         {/* CTA */}
         <div className="card bg-gradient-to-br from-brand-900/30 to-accent-900/20 border-brand-500/20 py-12 text-center">
-          <h2 className="text-3xl font-extrabold text-white mb-3">Ready to Start Getting Referrals?</h2>
+          <h2 className="text-3xl font-extrabold text-surface-900 mb-3">Ready to Start Getting Referrals?</h2>
           <p className="text-surface-400 mb-6">Listings are reviewed and approved within 2 business days.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button onClick={() => setSelectedTier(TIERS[1])} className="btn-primary py-3 px-8 text-base">
