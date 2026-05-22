@@ -17,7 +17,7 @@ const monthlyData = [
 ].map(m => ({ ...m, total: Object.keys(m).filter(k => k !== 'month').reduce((s, k) => s + m[k], 0) }))
 
 const STREAM_COLORS = {
-  serviceFees:    '#0ea5e9',
+  serviceFees:    '#f97316',
   contractorSubs: '#8b5cf6',
   techSubs:       '#06b6d4',
   adRevenue:      '#f59e0b',
@@ -45,7 +45,7 @@ const techPayoutMonthly = [
   { month: 'May', marcus: 2140, deja: 980, jordan: 0, total: 3120 },
 ]
 
-const TECH_COLORS = { marcus: '#0ea5e9', deja: '#8b5cf6', jordan: '#f59e0b' }
+const TECH_COLORS = { marcus: '#f97316', deja: '#8b5cf6', jordan: '#f59e0b' }
 
 // Per-job payout data for the transaction log
 const JOB_PAYOUTS = MOCK_JOBS.filter(j => j.status === 'completed' || j.status === 'in_progress').map(j => ({
@@ -221,15 +221,15 @@ export default function AdminReports() {
                     <AreaChart data={monthlyData}>
                       <defs>
                         <linearGradient id="totalGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                          <stop offset="5%" stopColor="#f97316" stopOpacity={0.3} />
+                          <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                       <XAxis dataKey="month" stroke="#475569" tick={{ fontSize: 11 }} />
                       <YAxis stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
-                      <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, color: '#fff', fontSize: 12 }} formatter={v => `$${v.toLocaleString()}`} />
-                      <Area type="monotone" dataKey="total" stroke="#0ea5e9" strokeWidth={2} fill="url(#totalGrad)" name="Total Revenue" />
+                      <Tooltip contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, color: '#fff', fontSize: 12 }} formatter={v => `$${v.toLocaleString()}`} />
+                      <Area type="monotone" dataKey="total" stroke="#f97316" strokeWidth={2} fill="url(#totalGrad)" name="Total Revenue" />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -245,7 +245,7 @@ export default function AdminReports() {
                       <Pie data={PIE_DATA} cx="40%" cy="50%" innerRadius={45} outerRadius={70} paddingAngle={2} dataKey="value">
                         {PIE_DATA.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                       </Pie>
-                      <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} formatter={v => `$${v.toLocaleString()}`} />
+                      <Tooltip contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} formatter={v => `$${v.toLocaleString()}`} />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
@@ -338,7 +338,7 @@ export default function AdminReports() {
                     <XAxis dataKey="month" stroke="#475569" tick={{ fontSize: 11 }} />
                     <YAxis stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
                     <Tooltip
-                      contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }}
+                      contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }}
                       formatter={(v, name) => [`$${v.toLocaleString()}`, name.charAt(0).toUpperCase() + name.slice(1)]}
                     />
                     <Bar dataKey="marcus" fill={TECH_COLORS.marcus} name="Marcus Rivera" stackId="a" />
@@ -522,8 +522,8 @@ export default function AdminReports() {
                   ]}>
                     <defs>
                       <linearGradient id="grossGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.25} />
-                        <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#f97316" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
                       </linearGradient>
                       <linearGradient id="payoutGrad" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
@@ -534,10 +534,10 @@ export default function AdminReports() {
                     <XAxis dataKey="month" stroke="#475569" tick={{ fontSize: 11 }} />
                     <YAxis stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
                     <Tooltip
-                      contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }}
+                      contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }}
                       formatter={v => `$${v.toLocaleString()}`}
                     />
-                    <Area type="monotone" dataKey="gross" stroke="#0ea5e9" strokeWidth={2} fill="url(#grossGrad)" name="Gross Revenue" />
+                    <Area type="monotone" dataKey="gross" stroke="#f97316" strokeWidth={2} fill="url(#grossGrad)" name="Gross Revenue" />
                     <Area type="monotone" dataKey="payouts" stroke="#10b981" strokeWidth={2} fill="url(#payoutGrad)" name="Tech Payouts" />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -682,7 +682,7 @@ export default function AdminReports() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" horizontal={false} />
                     <XAxis type="number" stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
                     <YAxis type="category" dataKey="company" stroke="#475569" tick={{ fontSize: 10 }} width={130} />
-                    <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} formatter={v => `$${v.toLocaleString()}`} />
+                    <Tooltip contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} formatter={v => `$${v.toLocaleString()}`} />
                     <Bar dataKey="monthlyFee" fill="#8b5cf6" name="Subscription Fee" radius={[0,0,0,0]} stackId="a" />
                     <Bar dataKey="referralRevenue" fill="#10b981" name="Referral Revenue" radius={[0,4,4,0]} stackId="a" />
                   </BarChart>
@@ -765,7 +765,7 @@ export default function AdminReports() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                     <XAxis dataKey="month" stroke="#475569" tick={{ fontSize: 11 }} />
                     <YAxis stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
-                    <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} formatter={v => `$${v}`} />
+                    <Tooltip contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} formatter={v => `$${v}`} />
                     <Area type="monotone" dataKey="adRevenue" stroke="#f59e0b" strokeWidth={2} fill="url(#adGrad)" name="Ad Revenue" />
                   </AreaChart>
                 </ResponsiveContainer>

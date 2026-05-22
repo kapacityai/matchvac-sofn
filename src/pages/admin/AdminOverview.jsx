@@ -9,7 +9,7 @@ const revenueData = [
   { month: 'Mar', revenue: 8900, jobs: 60 }, { month: 'Apr', revenue: 11200, jobs: 75 },
   { month: 'May', revenue: 4800, jobs: 32 },
 ]
-const PIE_COLORS = ['#0ea5e9', '#8b5cf6', '#10b981', '#f59e0b']
+const PIE_COLORS = ['#f97316', '#14b8a6', '#10b981', '#f59e0b']
 
 export default function AdminOverview() {
   const activeJobs    = MOCK_JOBS.filter(j => j.status === 'in_progress').length
@@ -83,14 +83,14 @@ export default function AdminOverview() {
                 <AreaChart data={revenueData}>
                   <defs>
                     <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%"  stopColor="#0ea5e9" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                      <stop offset="5%"  stopColor="#f97316" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <XAxis dataKey="month" stroke="#334155" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-                  <YAxis stroke="#334155" tick={{ fontSize: 11, fill: '#64748b' }} tickFormatter={v => `$${(v/1000).toFixed(0)}k`} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: 12 }} formatter={v => [`$${v.toLocaleString()}`, 'Revenue']} />
-                  <Area type="monotone" dataKey="revenue" stroke="#0ea5e9" fill="url(#revGrad)" strokeWidth={2.5} dot={false} activeDot={{ r: 4, fill: '#0ea5e9', strokeWidth: 0 }} />
+                  <XAxis dataKey="month" stroke="#44403c" tick={{ fontSize: 11, fill: '#78716c' }} axisLine={false} tickLine={false} />
+                  <YAxis stroke="#44403c" tick={{ fontSize: 11, fill: '#78716c' }} tickFormatter={v => `$${(v/1000).toFixed(0)}k`} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: 12 }} formatter={v => [`$${v.toLocaleString()}`, 'Revenue']} />
+                  <Area type="monotone" dataKey="revenue" stroke="#f97316" fill="url(#revGrad)" strokeWidth={2.5} dot={false} activeDot={{ r: 4, fill: '#f97316', strokeWidth: 0 }} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>

@@ -123,21 +123,21 @@
 .animate-float      { animation: float 3s ease-in-out infinite; }
 .animate-pulse-slow { animation: pulse-slow 2s ease-in-out infinite; }
 
-.glow-blue   { box-shadow: 0 0 30px rgba(14, 165, 233, 0.15); }
-.glow-purple { box-shadow: 0 0 30px rgba(139, 92, 246, 0.15); }
-.glow-blue-lg  { box-shadow: 0 0 60px rgba(14, 165, 233, 0.25), 0 0 120px rgba(14, 165, 233, 0.1); }
-.glow-brand    { box-shadow: 0 4px 32px rgba(14, 165, 233, 0.3); }
+.glow-blue   { box-shadow: 0 0 30px rgba(249, 115, 22, 0.15); }
+.glow-purple { box-shadow: 0 0 30px rgba(20, 184, 166, 0.15); }
+.glow-blue-lg  { box-shadow: 0 0 60px rgba(249, 115, 22, 0.25), 0 0 120px rgba(249, 115, 22, 0.1); }
+.glow-brand    { box-shadow: 0 4px 32px rgba(249, 115, 22, 0.35); }
 
 /* Dot grid pattern */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(148,163,184,0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(168,162,158,0.10) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
 /* Gradient border card */
 .card-gradient-border {
   position: relative;
-  background: #0f172a;
+  background: #1c1917;
   border-radius: 16px;
 }
 .card-gradient-border::before {
@@ -146,7 +146,7 @@
   inset: 0;
   border-radius: 16px;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(14,165,233,0.4), rgba(139,92,246,0.2), transparent);
+  background: linear-gradient(135deg, rgba(249,115,22,0.45), rgba(20,184,166,0.25), transparent);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;

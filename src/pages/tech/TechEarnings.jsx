@@ -105,7 +105,7 @@ export default function TechEarnings() {
                 <XAxis dataKey="month" stroke="#475569" tick={{ fontSize: 11 }} />
                 <YAxis stroke="#475569" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}`} />
                 <Tooltip
-                  contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, color: '#fff', fontSize: 12 }}
+                  contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, color: '#fff', fontSize: 12 }}
                   formatter={(v, name) => [`$${v.toLocaleString()}`, name]}
                 />
                 <Bar dataKey="gross" fill="#334155" radius={[4,4,0,0]} name="Gross" />
@@ -115,7 +115,7 @@ export default function TechEarnings() {
             </ResponsiveContainer>
           </div>
           <div className="flex gap-4 mt-3 flex-wrap">
-            {[['Gross', '#334155'], [`Fee (${feePct}%)`, '#f43f5e'], ['Net Earned', '#0ea5e9']].map(([label, color]) => (
+            {[['Gross', '#334155'], [`Fee (${feePct}%)`, '#f43f5e'], ['Net Earned', '#f97316']].map(([label, color]) => (
               <div key={label} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-sm" style={{ background: color }} />
                 <span className="text-surface-400 text-xs">{label}</span>

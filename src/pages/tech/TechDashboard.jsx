@@ -78,18 +78,18 @@ export default function TechDashboard() {
               <AreaChart data={earningsData}>
                 <defs>
                   <linearGradient id="earningsGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%"  stopColor="#0ea5e9" stopOpacity={0.35} />
-                    <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                    <stop offset="5%"  stopColor="#f97316" stopOpacity={0.35} />
+                    <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="day" stroke="#334155" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-                <YAxis stroke="#334155" tick={{ fontSize: 11, fill: '#64748b' }} tickFormatter={v => `$${v}`} axisLine={false} tickLine={false} />
+                <XAxis dataKey="day" stroke="#44403c" tick={{ fontSize: 11, fill: '#78716c' }} axisLine={false} tickLine={false} />
+                <YAxis stroke="#44403c" tick={{ fontSize: 11, fill: '#78716c' }} tickFormatter={v => `$${v}`} axisLine={false} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: 12, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}
+                  contentStyle={{ background: '#292524', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#fff', fontSize: 12, boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}
                   formatter={v => [`$${v}`, 'Net Earnings']}
                   cursor={{ stroke: 'rgba(14,165,233,0.2)', strokeWidth: 1 }}
                 />
-                <Area type="monotone" dataKey="earnings" stroke="#0ea5e9" fill="url(#earningsGrad)" strokeWidth={2.5} dot={false} activeDot={{ r: 4, fill: '#0ea5e9', strokeWidth: 0 }} />
+                <Area type="monotone" dataKey="earnings" stroke="#f97316" fill="url(#earningsGrad)" strokeWidth={2.5} dot={false} activeDot={{ r: 4, fill: '#f97316', strokeWidth: 0 }} />
               </AreaChart>
             </ResponsiveContainer>
           </div>

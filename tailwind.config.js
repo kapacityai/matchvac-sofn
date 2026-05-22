@@ -1,5 +1,4 @@
 function withOpacity(hex) {
-  // Convert hex to r g b for Tailwind opacity modifier support
   const r = parseInt(hex.slice(1, 3), 16)
   const g = parseInt(hex.slice(3, 5), 16)
   const b = parseInt(hex.slice(5, 7), 16)
@@ -15,35 +14,35 @@ export default {
     extend: {
       colors: {
         brand: {
-          50:  withOpacity('#f0f9ff'),
-          100: withOpacity('#e0f2fe'),
-          200: withOpacity('#bae6fd'),
-          300: withOpacity('#7dd3fc'),
-          400: withOpacity('#38bdf8'),
-          500: withOpacity('#0ea5e9'),
-          600: withOpacity('#0284c7'),
-          700: withOpacity('#0369a1'),
-          800: withOpacity('#075985'),
-          900: withOpacity('#0c4a6e'),
+          50:  withOpacity('#fff7ed'),
+          100: withOpacity('#ffedd5'),
+          200: withOpacity('#fed7aa'),
+          300: withOpacity('#fdba74'),
+          400: withOpacity('#fb923c'),
+          500: withOpacity('#f97316'),
+          600: withOpacity('#ea580c'),
+          700: withOpacity('#c2410c'),
+          800: withOpacity('#9a3412'),
+          900: withOpacity('#7c2d12'),
         },
         surface: {
-          50:  withOpacity('#f8fafc'),
-          100: withOpacity('#f1f5f9'),
-          200: withOpacity('#e2e8f0'),
-          300: withOpacity('#cbd5e1'),
-          400: withOpacity('#94a3b8'),
-          500: withOpacity('#64748b'),
-          600: withOpacity('#475569'),
-          700: withOpacity('#334155'),
-          800: withOpacity('#1e293b'),
-          900: withOpacity('#0f172a'),
-          950: withOpacity('#020617'),
+          50:  withOpacity('#fafaf9'),
+          100: withOpacity('#f5f5f4'),
+          200: withOpacity('#e7e5e4'),
+          300: withOpacity('#d6d3d1'),
+          400: withOpacity('#a8a29e'),
+          500: withOpacity('#78716c'),
+          600: withOpacity('#57534e'),
+          700: withOpacity('#44403c'),
+          800: withOpacity('#292524'),
+          900: withOpacity('#1c1917'),
+          950: withOpacity('#0c0a09'),
         },
         accent: {
-          400: withOpacity('#a78bfa'),
-          500: withOpacity('#8b5cf6'),
-          600: withOpacity('#7c3aed'),
-          900: withOpacity('#2e1065'),
+          400: withOpacity('#2dd4bf'),
+          500: withOpacity('#14b8a6'),
+          600: withOpacity('#0d9488'),
+          900: withOpacity('#042f2e'),
         },
         emerald: {
           400: withOpacity('#34d399'),
@@ -69,10 +68,10 @@ export default {
         display: ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
-        'card': '16px',
+        'card':    '16px',
         'card-sm': '12px',
-        'btn':  '10px',
-        'pill': '100px',
+        'btn':     '10px',
+        'pill':    '100px',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
