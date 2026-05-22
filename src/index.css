@@ -125,6 +125,65 @@
 
 .glow-blue   { box-shadow: 0 0 30px rgba(14, 165, 233, 0.15); }
 .glow-purple { box-shadow: 0 0 30px rgba(139, 92, 246, 0.15); }
+.glow-blue-lg  { box-shadow: 0 0 60px rgba(14, 165, 233, 0.25), 0 0 120px rgba(14, 165, 233, 0.1); }
+.glow-brand    { box-shadow: 0 4px 32px rgba(14, 165, 233, 0.3); }
+
+/* Dot grid pattern */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(148,163,184,0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Gradient border card */
+.card-gradient-border {
+  position: relative;
+  background: #0f172a;
+  border-radius: 16px;
+}
+.card-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(14,165,233,0.4), rgba(139,92,246,0.2), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in { animation: scale-in 0.5s ease-out forwards; }
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-right { animation: slide-right 0.4s ease-out forwards; }
 
 /* Location ticker */
 @keyframes ticker-up {

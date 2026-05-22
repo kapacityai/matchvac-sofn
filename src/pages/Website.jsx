@@ -1,99 +1,75 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo'
 import LocationTicker from '../components/LocationTicker'
 import { SERVICES, PRODUCTS } from '../data/mockData'
 import {
   Zap, Shield, MapPin, Star, ChevronRight, Menu, X,
-  CheckCircle, Clock, Wrench, Camera, Phone, ArrowRight,
-  ShoppingBag, DollarSign, FileText, Users
+  CheckCircle, Clock, Wrench, Camera, ArrowRight,
+  DollarSign, FileText, Users, Thermometer, Wind,
+  Droplets, Flame, Activity, Phone, Play, Lock
 } from 'lucide-react'
 
-// ── Ad Banner Component ──────────────────────────────────────────────────────
-function AdBanner({ slot }) {
-  const ads = {
-    hero: {
-      partner: 'Comfort Connect Premier',
-      headline: '0% APR Financing on New HVAC Systems',
-      sub: 'Get approved in 60 seconds. Up to $15,000 in financing.',
-      cta: 'Check My Rate',
-      badge: 'Featured Partner',
-      gradient: 'from-brand-900/60 to-accent-900/40',
-      border: 'border-brand-500/30',
-    },
-    sidebar: {
-      partner: 'GreenLeaf Financing',
-      headline: 'HVAC Loans from 5.9% APR',
-      sub: 'For qualified customers. Terms apply.',
-      cta: 'Apply Now',
-      badge: 'Sponsored',
-      gradient: 'from-emerald-900/40 to-surface-900',
-      border: 'border-emerald-500/20',
-    },
-    strip: {
-      partner: 'ProElectric Services',
-      headline: 'Need an Electrician Too?',
-      sub: 'Partner trade — same trusted marketplace.',
-      cta: 'Learn More',
-      badge: 'Partner Ad',
-      gradient: 'from-amber-900/30 to-surface-900',
-      border: 'border-amber-500/20',
-    },
-  }
-  const ad = ads[slot] || ads.hero
-  return (
-    <div className={`rounded-2xl border bg-gradient-to-r ${ad.gradient} ${ad.border} p-4 flex items-center gap-4`}>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="badge badge-purple text-xs">{ad.badge}</span>
-          <span className="text-surface-500 text-xs">{ad.partner}</span>
-        </div>
-        <p className="text-white font-bold text-sm">{ad.headline}</p>
-        <p className="text-surface-400 text-xs mt-0.5">{ad.sub}</p>
-      </div>
-      <button className="btn-primary text-xs py-2 px-3 flex-shrink-0 whitespace-nowrap">
-        {ad.cta}
-      </button>
-    </div>
-  )
+// ── Intersection observer hook for scroll animations ─────────────────────────
+function useInView(threshold = 0.15) {
+  const ref = useRef(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true) }, { threshold })
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [threshold])
+  return [ref, inView]
 }
 
-// ── Nav ──────────────────────────────────────────────────────────────────────
+// ── Nav ───────────────────────────────────────────────────────────────────────
 function Nav({ onLogin }) {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', fn)
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
+
   return (
-    <nav className="sticky top-0 z-50 bg-surface-950/80 backdrop-blur-xl border-b border-white/10">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-surface-950/95 backdrop-blur-xl border-b border-white/10 shadow-xl shadow-black/20' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Logo size="sm" />
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-surface-400">
-          <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
-          <a href="#services" className="hover:text-white transition-colors">Services</a>
-          <a href="#store" className="hover:text-white transition-colors">Store</a>
-          <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
-          <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
-          <button onClick={() => navigate('/lending-partners')} className="hover:text-white transition-colors">Lending Partners</button>
-          <a href="#techs" className="hover:text-white transition-colors">For Technicians</a>
+        <div className="hidden md:flex items-center gap-1 text-sm font-medium">
+          {[
+            { label: 'How It Works', href: '#how-it-works' },
+            { label: 'Services', href: '#services' },
+            { label: 'Store', href: '#store' },
+            { label: 'For Techs', href: '#techs' },
+          ].map(l => (
+            <a key={l.label} href={l.href} className="px-3 py-2 text-surface-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">{l.label}</a>
+          ))}
+          <button onClick={() => navigate('/financing')} className="px-3 py-2 text-surface-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">Financing</button>
+          <button onClick={() => navigate('/contractors')} className="px-3 py-2 text-surface-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">Contractors</button>
         </div>
         <div className="hidden md:flex items-center gap-3">
-          <button onClick={onLogin} className="btn-ghost text-sm">Sign In</button>
-          <button onClick={() => navigate('/login?signup=customer')} className="btn-primary text-sm py-2">Get Started</button>
+          <button onClick={onLogin} className="px-4 py-2 text-surface-300 hover:text-white text-sm font-medium transition-colors">Sign In</button>
+          <button onClick={() => navigate('/login?signup=customer')} className="btn-primary text-sm py-2 px-5 glow-brand">
+            Get Started <ArrowRight size={15} />
+          </button>
         </div>
-        <button className="md:hidden" onClick={() => setOpen(!open)}>
+        <button className="md:hidden p-2" onClick={() => setOpen(!open)}>
           {open ? <X size={22} className="text-white" /> : <Menu size={22} className="text-white" />}
         </button>
       </div>
       {open && (
-        <div className="md:hidden bg-surface-900 border-t border-white/10 px-6 py-4 space-y-3 text-sm">
-          {['How It Works','Services','Store','For Technicians'].map(l => (
-            <a key={l} href={`#${l.toLowerCase().replace(/ /g,'-')}`} className="block text-surface-300 hover:text-white py-1" onClick={() => setOpen(false)}>{l}</a>
+        <div className="md:hidden bg-surface-900/98 backdrop-blur-xl border-t border-white/10 px-6 py-4 space-y-1">
+          {['How It Works','Services','Store','For Techs'].map(l => (
+            <a key={l} href={`#${l.toLowerCase().replace(/ /g,'-')}`} className="block px-3 py-2.5 text-surface-300 hover:text-white rounded-lg hover:bg-white/5 transition-all" onClick={() => setOpen(false)}>{l}</a>
           ))}
-          <button onClick={() => { navigate('/financing'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">Financing</button>
-          <button onClick={() => { navigate('/contractors'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">For Contractors</button>
-          <button onClick={() => { navigate('/lending-partners'); setOpen(false) }} className="block text-surface-300 hover:text-white py-1 w-full text-left">Lending Partners</button>
-          <div className="flex gap-2 pt-2">
-            <button onClick={onLogin} className="btn-secondary flex-1 text-sm py-2">Sign In</button>
-            <button onClick={() => navigate('/login?signup=customer')} className="btn-primary flex-1 text-sm py-2">Sign Up</button>
+          <button onClick={() => { navigate('/financing'); setOpen(false) }} className="block w-full text-left px-3 py-2.5 text-surface-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">Financing</button>
+          <button onClick={() => { navigate('/contractors'); setOpen(false) }} className="block w-full text-left px-3 py-2.5 text-surface-300 hover:text-white rounded-lg hover:bg-white/5 transition-all">For Contractors</button>
+          <div className="flex gap-2 pt-3 border-t border-white/10 mt-2">
+            <button onClick={onLogin} className="btn-secondary flex-1 text-sm py-2.5">Sign In</button>
+            <button onClick={() => navigate('/login?signup=customer')} className="btn-primary flex-1 text-sm py-2.5">Get Started</button>
           </div>
         </div>
       )}
@@ -101,105 +77,243 @@ function Nav({ onLogin }) {
   )
 }
 
-// ── Main Website ─────────────────────────────────────────────────────────────
+// ── Floating mock job card ────────────────────────────────────────────────────
+function MockJobCard() {
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    const t = setInterval(() => setStep(s => (s + 1) % 4), 2200)
+    return () => clearInterval(t)
+  }, [])
+  const steps = [
+    { icon: '🔧', label: 'Job Requested', sub: 'Thermostat Installation', color: 'text-brand-400', badge: 'Broadcast to 14 techs', badgeClass: 'badge-blue' },
+    { icon: '⚡', label: 'Tech Accepted', sub: 'Marcus Rivera • 4.9★', color: 'text-amber-400', badge: 'ETA 11 min', badgeClass: 'badge-yellow' },
+    { icon: '📍', label: 'En Route', sub: '2.4 mi away • Live GPS', color: 'text-emerald-400', badge: 'Tracking live', badgeClass: 'badge-green' },
+    { icon: '✅', label: 'Job Complete', sub: '$149 released from escrow', color: 'text-emerald-400', badge: 'Paid instantly', badgeClass: 'badge-green' },
+  ]
+  const s = steps[step]
+  return (
+    <div className="relative w-full max-w-sm mx-auto">
+      {/* Glow base */}
+      <div className="absolute inset-0 bg-brand-500/20 blur-3xl rounded-3xl" />
+
+      {/* Main card */}
+      <div className="relative bg-surface-900 border border-white/15 rounded-2xl p-5 shadow-2xl animate-float">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs text-surface-400 font-medium">Live Job Feed</span>
+          </div>
+          <span className={`badge ${s.badgeClass} text-xs`}>{s.badge}</span>
+        </div>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-surface-800 border border-white/10 flex items-center justify-center text-2xl flex-shrink-0">
+            {s.icon}
+          </div>
+          <div>
+            <p className={`font-bold text-sm ${s.color}`}>{s.label}</p>
+            <p className="text-surface-400 text-xs mt-0.5">{s.sub}</p>
+          </div>
+        </div>
+        {/* Progress bar */}
+        <div className="h-1 bg-surface-800 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-brand-500 to-accent-500 rounded-full transition-all duration-700"
+            style={{ width: `${(step + 1) * 25}%` }}
+          />
+        </div>
+        <div className="flex justify-between mt-1.5">
+          {['Request','Match','Track','Complete'].map((l, i) => (
+            <span key={l} className={`text-xs ${i <= step ? 'text-brand-400' : 'text-surface-700'}`}>{l}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Secondary floating card — escrow */}
+      <div className="absolute -bottom-5 -right-4 bg-surface-800 border border-emerald-500/30 rounded-xl px-3 py-2 shadow-lg animate-float" style={{ animationDelay: '1s' }}>
+        <div className="flex items-center gap-2">
+          <Lock size={13} className="text-emerald-400" />
+          <div>
+            <p className="text-white text-xs font-bold">$149 Escrowed</p>
+            <p className="text-emerald-400 text-xs">Released on confirm</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Secondary floating card — rating */}
+      <div className="absolute -top-4 -left-4 bg-surface-800 border border-amber-500/30 rounded-xl px-3 py-2 shadow-lg animate-float" style={{ animationDelay: '0.5s' }}>
+        <div className="flex items-center gap-1.5">
+          <div className="flex gap-0.5">
+            {[1,2,3,4,5].map(i => <Star key={i} size={10} className="text-amber-400 fill-amber-400" />)}
+          </div>
+          <span className="text-white text-xs font-bold">4.9</span>
+        </div>
+        <p className="text-surface-400 text-xs">247 reviews</p>
+      </div>
+    </div>
+  )
+}
+
+// ── Main Website ──────────────────────────────────────────────────────────────
 export default function Website() {
   const navigate = useNavigate()
   const goLogin = () => navigate('/login')
 
+  const [heroRef, heroIn] = useInView(0.1)
+  const [howRef, howIn] = useInView(0.1)
+  const [statsRef, statsIn] = useInView(0.2)
+  const [servicesRef, servicesIn] = useInView(0.1)
+  const [techRef, techIn] = useInView(0.1)
+  const [reviewsRef, reviewsIn] = useInView(0.1)
+
   return (
-    <div className="bg-surface-950 min-h-screen text-white">
+    <div className="bg-surface-950 min-h-screen text-white overflow-x-hidden">
       <Nav onLogin={goLogin} />
 
-      {/* ── HERO ── */}
-      <section className="relative overflow-hidden py-24 px-6">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brand-500/8 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-500/8 rounded-full blur-3xl" />
+      {/* ── HERO ─────────────────────────────────────────────────────────── */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center pt-16 px-6 overflow-hidden">
+        {/* Background layers */}
+        <div className="absolute inset-0 dot-grid opacity-40" />
+        <div className="absolute top-1/4 left-1/3 w-[700px] h-[700px] bg-brand-500/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent-500/8 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-brand-500/4 rounded-full blur-[150px] pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center py-20">
+          {/* Left — copy */}
+          <div className={`transition-all duration-700 ${heroIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="flex mb-6">
+              <LocationTicker />
+            </div>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-6">
+              HVAC Service<br />
+              <span className="relative">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-brand-400 to-accent-400 animate-gradient">
+                  On Demand.
+                </span>
+              </span>
+            </h1>
+            <p className="text-surface-400 text-xl leading-relaxed mb-8 max-w-lg">
+              Book a certified technician in minutes. Real-time GPS tracking, AI-powered diagnostics, and escrow-protected payments — all in one platform.
+            </p>
+            <div className="flex flex-wrap gap-3 mb-10">
+              <button onClick={() => navigate('/login?signup=customer')} className="btn-primary py-4 px-8 text-base glow-brand">
+                Book a Technician <ArrowRight size={18} />
+              </button>
+              <button onClick={goLogin} className="btn-secondary py-4 px-8 text-base">
+                Sign In
+              </button>
+            </div>
+            {/* Trust badges */}
+            <div className="flex flex-wrap gap-4">
+              {[
+                { icon: Shield, text: 'Escrow Protected', color: 'text-emerald-400' },
+                { icon: CheckCircle, text: 'Background Checked', color: 'text-brand-400' },
+                { icon: Zap, text: '< 15 Min Response', color: 'text-amber-400' },
+              ].map(({ icon: Icon, text, color }) => (
+                <div key={text} className="flex items-center gap-2 text-sm text-surface-400">
+                  <Icon size={15} className={color} />
+                  <span>{text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — animated mock */}
+          <div className={`transition-all duration-700 delay-200 ${heroIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <MockJobCard />
+          </div>
         </div>
-        <div className="relative max-w-5xl mx-auto text-center">
-          <div className="flex justify-center mb-6">
-            <LocationTicker />
-          </div>
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6">
-            HVAC Service,<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-300 to-accent-400">
-              On Demand
-            </span>
-          </h1>
-          <p className="text-surface-400 text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Book a certified HVAC technician in minutes. Real-time tracking, escrow payments, and guaranteed quality — all in one app.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
-            <button onClick={() => navigate('/login?signup=customer')} className="btn-primary py-4 px-8 text-lg">
-              Book a Technician <ArrowRight size={20} />
-            </button>
-            <button onClick={goLogin} className="btn-secondary py-4 px-8 text-lg">
-              Sign In
-            </button>
-          </div>
-          <div className="flex items-center justify-center gap-8 flex-wrap text-sm text-surface-400">
+
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-950 to-transparent pointer-events-none" />
+      </section>
+
+      {/* ── STATS BAR ──────────────────────────────────────────────────────── */}
+      <section ref={statsRef} className="py-12 px-6 border-y border-white/8 bg-surface-900/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { value: '500+', label: 'Jobs Completed' },
-              { value: '4.9★', label: 'Average Rating' },
-              { value: '< 15 min', label: 'Avg. Acceptance' },
-              { value: '100%', label: 'Escrow Protected' },
-            ].map(s => (
-              <div key={s.label} className="text-center">
-                <p className="text-white font-bold text-lg">{s.value}</p>
-                <p className="text-surface-500 text-xs">{s.label}</p>
+              { value: '500+', label: 'Jobs Completed', icon: Wrench, color: 'text-brand-400' },
+              { value: '4.9★', label: 'Average Rating', icon: Star, color: 'text-amber-400' },
+              { value: '< 15m', label: 'Avg. Response', icon: Zap, color: 'text-emerald-400' },
+              { value: '100%', label: 'Escrow Safe', icon: Shield, color: 'text-accent-400' },
+            ].map((s, i) => (
+              <div
+                key={s.label}
+                className={`text-center transition-all duration-500 ${statsIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
+                <s.icon size={20} className={`${s.color} mx-auto mb-2`} />
+                <p className="text-3xl font-black text-white tracking-tight">{s.value}</p>
+                <p className="text-surface-500 text-sm mt-1">{s.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── COMFORT CONNECT HERO AD ── */}
-      <section className="max-w-5xl mx-auto px-6 mb-12">
-        <div
-          onClick={() => navigate('/comfort-connect')}
-          className="cursor-pointer rounded-2xl border-2 border-[#003478] bg-gradient-to-r from-[#003478]/50 to-[#001a3d]/70 overflow-hidden hover:border-[#4da6ff] transition-all group"
-        >
-          <div className="bg-[#003478] px-5 py-2 flex items-center justify-between flex-wrap gap-2">
-            <div className="flex items-center gap-2">
-              <svg width="18" height="18" viewBox="0 0 40 40" fill="none"><path d="M20 4L4 16v20h10V24h12v12h10V16L20 4z" fill="white" opacity="0.9"/></svg>
-              <span className="text-white font-bold text-sm tracking-wide">Comfort Connect</span>
-              <span className="badge bg-[#4da6ff]/30 text-[#4da6ff] border-0 text-xs">Premier Program®</span>
+      {/* ── COMFORT CONNECT AD ─────────────────────────────────────────────── */}
+      <section className="py-10 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div
+            onClick={() => navigate('/comfort-connect')}
+            className="cursor-pointer group relative overflow-hidden rounded-2xl border border-[#4da6ff]/30 hover:border-[#4da6ff]/60 transition-all duration-300"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#003478]/80 via-[#00449e]/60 to-[#001a3d]/80" />
+            <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#4da6ff]/20 rounded-full blur-2xl" />
             </div>
-            <span className="text-[#4da6ff] text-xs font-semibold">#1 Recommended Financing Partner</span>
-          </div>
-          <div className="p-6 flex flex-col sm:flex-row items-center gap-5">
-            <div className="text-5xl flex-shrink-0">❄️</div>
-            <div className="flex-1 text-center sm:text-left">
-              <h3 className="text-white font-bold text-xl mb-1">Don't Buy Your HVAC — Get It All Included</h3>
-              <p className="text-surface-300 text-sm">Equipment + installation + repairs + maintenance + consumable parts — all for one low monthly payment. No up-front cost, no hidden fees.</p>
+            <div className="relative flex flex-col sm:flex-row items-center gap-5 p-5">
+              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-2xl flex-shrink-0">❄️</div>
+              <div className="flex-1 text-center sm:text-left">
+                <div className="flex items-center gap-2 justify-center sm:justify-start mb-1">
+                  <span className="text-[#4da6ff] text-xs font-bold uppercase tracking-wider">Comfort Connect Premier</span>
+                  <span className="badge bg-[#4da6ff]/20 text-[#4da6ff] border-0 text-xs">#1 Partner</span>
+                </div>
+                <p className="text-white font-bold text-lg">Don't Buy Your HVAC — Get It All Included</p>
+                <p className="text-surface-300 text-sm mt-0.5">Equipment + install + repairs + maintenance for one low monthly payment. Zero up-front cost.</p>
+              </div>
+              <button className="bg-[#4da6ff]/20 hover:bg-[#4da6ff]/30 border border-[#4da6ff]/40 text-white font-bold py-2.5 px-5 rounded-xl transition-all flex-shrink-0 flex items-center gap-2 whitespace-nowrap group-hover:border-[#4da6ff]/70">
+                See If I Qualify <ArrowRight size={15} />
+              </button>
             </div>
-            <button className="bg-[#003478] group-hover:bg-[#00449e] border border-[#4da6ff]/50 text-white font-bold py-3 px-6 rounded-xl transition-all flex-shrink-0 flex items-center gap-2 whitespace-nowrap">
-              See If I Qualify <ArrowRight size={16} />
-            </button>
           </div>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" className="py-20 px-6 bg-surface-900/50">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-extrabold text-white mb-3">How It Works</h2>
-            <p className="text-surface-400 text-lg">From request to complete in 4 simple steps</p>
+      {/* ── HOW IT WORKS ───────────────────────────────────────────────────── */}
+      <section id="how-it-works" ref={howRef} className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 dot-grid opacity-20" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-accent-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto">
+          <div className={`text-center mb-16 transition-all duration-600 ${howIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            <span className="badge badge-blue px-4 py-1.5 text-xs uppercase tracking-widest mb-4">How It Works</span>
+            <h2 className="text-4xl sm:text-5xl font-black text-white mt-3 mb-4">Request to Complete<br />in 4 Steps</h2>
+            <p className="text-surface-400 text-lg">Built for speed. Designed for trust.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          {/* Steps */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-0 relative">
+            {/* Connecting line */}
+            <div className="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-brand-500/40 via-accent-500/40 to-brand-500/40" />
+
             {[
-              { step: '01', icon: Wrench, title: 'Pick Your Service', body: 'Browse services, choose a tier (Basic / Standard / Premium), and describe your issue.', color: 'text-brand-400', bg: 'bg-brand-400/10' },
-              { step: '02', icon: Zap, title: 'Instant Broadcast', body: 'Your job is broadcast to all certified techs in your area simultaneously — first to accept gets the job.', color: 'text-amber-400', bg: 'bg-amber-400/10' },
-              { step: '03', icon: MapPin, title: 'Live GPS Tracking', body: "See your tech's real-time location, name, photo, and ETA on a live map.", color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-              { step: '04', icon: Shield, title: 'Pay When Done', body: 'Funds are held in secure escrow and only released when you confirm the job is complete.', color: 'text-accent-400', bg: 'bg-accent-400/10' },
-            ].map(s => (
-              <div key={s.step} className="card relative">
-                <div className="absolute top-4 right-4 text-4xl font-black text-white/5">{s.step}</div>
-                <div className={`w-11 h-11 rounded-2xl ${s.bg} flex items-center justify-center mb-4`}>
-                  <s.icon size={22} className={s.color} />
+              { num: '01', icon: Wrench, title: 'Pick Your Service', body: 'Browse services, choose a tier, describe your issue and upload a photo.', color: 'from-brand-500 to-brand-400', glow: 'shadow-brand-500/30' },
+              { num: '02', icon: Zap, title: 'Instant Broadcast', body: 'Your job hits all certified techs nearby simultaneously. Fastest finger gets the job.', color: 'from-amber-500 to-amber-400', glow: 'shadow-amber-500/30' },
+              { num: '03', icon: MapPin, title: 'Live GPS Tracking', body: "See your tech's exact location, ETA, vehicle, and photo in real time.", color: 'from-emerald-500 to-emerald-400', glow: 'shadow-emerald-500/30' },
+              { num: '04', icon: Lock, title: 'Pay When Done', body: 'Funds sit in secure escrow. You release payment only after confirming the job.', color: 'from-accent-500 to-accent-400', glow: 'shadow-accent-500/30' },
+            ].map((s, i) => (
+              <div
+                key={s.num}
+                className={`flex flex-col items-center text-center px-6 transition-all duration-600 ${howIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                style={{ transitionDelay: `${i * 120}ms` }}
+              >
+                <div className={`relative w-20 h-20 rounded-2xl bg-gradient-to-br ${s.color} flex items-center justify-center mb-5 shadow-lg ${s.glow} flex-shrink-0`}>
+                  <s.icon size={28} className="text-white" />
+                  <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-surface-950 border border-white/10 flex items-center justify-center">
+                    <span className="text-white text-xs font-black">{i + 1}</span>
+                  </div>
                 </div>
-                <h3 className="text-white font-bold mb-2">{s.title}</h3>
+                <h3 className="text-white font-bold text-base mb-2">{s.title}</h3>
                 <p className="text-surface-400 text-sm leading-relaxed">{s.body}</p>
               </div>
             ))}
@@ -207,206 +321,278 @@ export default function Website() {
         </div>
       </section>
 
-      {/* ── EMERGENCY BANNER ── */}
-      <section className="py-10 px-6">
+      {/* ── EMERGENCY BANNER ───────────────────────────────────────────────── */}
+      <section className="py-6 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="rounded-2xl bg-gradient-to-r from-rose-900/40 to-surface-900 border border-rose-500/30 p-6 flex flex-col sm:flex-row items-center gap-5">
-            <div className="text-5xl">🚨</div>
-            <div className="flex-1 text-center sm:text-left">
-              <h3 className="text-white font-bold text-xl mb-1">No Heat? No A/C? We're 24/7</h3>
-              <p className="text-surface-400">Emergency services with priority dispatch. A tech is notified instantly.</p>
+          <div className="relative overflow-hidden rounded-2xl border border-rose-500/40 bg-gradient-to-r from-rose-950/80 via-rose-900/40 to-surface-900">
+            <div className="absolute top-0 right-0 w-48 h-full bg-rose-500/5 blur-2xl" />
+            <div className="relative flex flex-col sm:flex-row items-center gap-5 p-6">
+              <div className="text-4xl animate-pulse-slow">🚨</div>
+              <div className="flex-1 text-center sm:text-left">
+                <p className="text-rose-300 text-xs font-bold uppercase tracking-widest mb-1">24 / 7 Emergency Dispatch</p>
+                <h3 className="text-white font-bold text-xl">No Heat? No A/C? We're Always On.</h3>
+                <p className="text-surface-400 text-sm mt-1">Priority dispatch — a tech is notified the moment you submit. Day or night.</p>
+              </div>
+              <button onClick={() => navigate('/login')} className="bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-6 rounded-xl transition-all active:scale-95 flex items-center gap-2 flex-shrink-0 shadow-lg shadow-rose-500/20">
+                Request Emergency <Zap size={16} />
+              </button>
             </div>
-            <button onClick={() => navigate('/login')} className="bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-6 rounded-xl transition-colors flex-shrink-0">
-              Request Emergency
-            </button>
           </div>
         </div>
       </section>
 
-      {/* ── SERVICES ── */}
-      <section id="services" className="py-20 px-6 bg-surface-900/50">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-extrabold text-white mb-3">Services Offered</h2>
-            <p className="text-surface-400 text-lg">All major HVAC work covered — preset prices, no surprises</p>
+      {/* ── SERVICES ───────────────────────────────────────────────────────── */}
+      <section id="services" ref={servicesRef} className="py-24 px-6 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-surface-950 via-surface-900/20 to-surface-950 pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto">
+          <div className={`text-center mb-12 transition-all duration-600 ${servicesIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            <span className="badge badge-green px-4 py-1.5 text-xs uppercase tracking-widest mb-4">All Services</span>
+            <h2 className="text-4xl sm:text-5xl font-black text-white mt-3 mb-4">Every HVAC Job Covered</h2>
+            <p className="text-surface-400 text-lg">Transparent preset pricing — no surprise quotes</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-8">
-            {SERVICES.filter(s => !s.emergency).map(service => (
-              <button key={service.id} onClick={() => navigate('/login')}
-                className="card-hover text-left p-4">
-                <div className="text-3xl mb-2">{service.icon}</div>
-                <p className="text-white text-sm font-semibold leading-tight">{service.name}</p>
-                <p className="text-brand-400 text-xs font-medium mt-1">from ${service.tiers.basic}</p>
+            {SERVICES.filter(s => !s.emergency).map((service, i) => (
+              <button
+                key={service.id}
+                onClick={() => navigate('/login')}
+                className={`group relative overflow-hidden bg-surface-900 border border-white/8 rounded-2xl p-4 text-left hover:border-brand-500/50 hover:bg-surface-800 transition-all duration-200 hover:-translate-y-0.5 ${servicesIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                style={{ transitionDelay: `${i * 40}ms` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-500/0 to-brand-500/0 group-hover:from-brand-500/5 group-hover:to-accent-500/5 transition-all duration-300 rounded-2xl" />
+                <div className="relative">
+                  <div className="text-3xl mb-3">{service.icon}</div>
+                  <p className="text-white text-sm font-semibold leading-tight">{service.name}</p>
+                  <p className="text-brand-400 text-xs font-bold mt-1.5">from ${service.tiers.basic}</p>
+                </div>
               </button>
             ))}
           </div>
-          <AdBanner slot="strip" />
+
+          {/* Partner ad strip */}
+          <div
+            onClick={() => navigate('/contractors')}
+            className="cursor-pointer group rounded-2xl border border-amber-500/20 bg-gradient-to-r from-amber-900/20 to-surface-900/80 p-4 flex items-center gap-4 hover:border-amber-500/40 transition-all"
+          >
+            <span className="text-2xl">⚡</span>
+            <div className="flex-1 min-w-0">
+              <span className="badge badge-yellow text-xs mb-1">Partner Ad</span>
+              <p className="text-white font-bold text-sm">ProElectric Services — Need an Electrician Too?</p>
+              <p className="text-surface-400 text-xs">Partner trade on the same trusted marketplace.</p>
+            </div>
+            <ChevronRight size={18} className="text-surface-500 group-hover:text-white transition-colors flex-shrink-0" />
+          </div>
         </div>
       </section>
 
-      {/* ── STORE PREVIEW ── */}
-      <section id="store" className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
+      {/* ── STORE PREVIEW ──────────────────────────────────────────────────── */}
+      <section id="store" className="py-24 px-6 bg-surface-900/20 border-y border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
-              <h2 className="text-4xl font-extrabold text-white mb-2">HVAC Store</h2>
-              <p className="text-surface-400 text-lg">Filters, thermostats, furnaces & water heaters — delivered to your door</p>
+              <span className="badge badge-blue px-4 py-1.5 text-xs uppercase tracking-widest mb-3">HVAC Store</span>
+              <h2 className="text-4xl sm:text-5xl font-black text-white mt-3 mb-2">Equipment & Parts</h2>
+              <p className="text-surface-400 text-lg">Filters, thermostats, furnaces — delivered to your door</p>
             </div>
             <button onClick={() => navigate('/login')} className="btn-secondary text-sm flex-shrink-0">
-              Browse All Products <ChevronRight size={16} />
+              Browse All <ChevronRight size={16} />
             </button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {PRODUCTS.slice(0, 3).map(product => (
-              <div key={product.id} className="card-hover flex items-start gap-4">
-                <div className="text-4xl flex-shrink-0">{product.image}</div>
-                <div className="flex-1 min-w-0">
-                  {product.badge && <span className="badge badge-blue mb-1">{product.badge}</span>}
-                  <p className="text-white font-semibold text-sm leading-tight">{product.name}</p>
-                  <div className="flex items-center gap-1 my-1">
-                    {Array.from({length: 5}).map((_, i) => (
-                      <Star key={i} size={11} className={i < Math.round(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-surface-700'} />
-                    ))}
-                    <span className="text-surface-500 text-xs">({product.reviews.toLocaleString()})</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            {PRODUCTS.slice(0, 3).map((product, i) => (
+              <div
+                key={product.id}
+                className="group relative bg-surface-900 border border-white/8 rounded-2xl p-5 hover:border-brand-500/40 transition-all duration-200 hover:-translate-y-1 cursor-pointer overflow-hidden"
+                onClick={() => navigate('/login')}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-500/0 to-brand-500/0 group-hover:from-brand-500/5 group-hover:to-transparent transition-all duration-300 rounded-2xl" />
+                <div className="relative flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-surface-800 border border-white/10 flex items-center justify-center text-3xl flex-shrink-0">
+                    {product.image}
                   </div>
-                  <p className="text-brand-400 font-bold">${product.price}</p>
+                  <div className="flex-1 min-w-0">
+                    {product.badge && <span className="badge badge-blue mb-2">{product.badge}</span>}
+                    <p className="text-white font-semibold text-sm leading-tight">{product.name}</p>
+                    <div className="flex items-center gap-1 my-1.5">
+                      {Array.from({length: 5}).map((_, j) => (
+                        <Star key={j} size={11} className={j < Math.round(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-surface-700'} />
+                      ))}
+                      <span className="text-surface-500 text-xs">({product.reviews.toLocaleString()})</span>
+                    </div>
+                    <p className="text-brand-400 font-bold text-base">${product.price}</p>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          <AdBanner slot="sidebar" />
+
+          {/* GreenLeaf financing ad */}
+          <div className="rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-900/20 to-surface-900/60 p-4 flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <DollarSign size={18} className="text-emerald-400" />
+            </div>
+            <div className="flex-1">
+              <span className="badge badge-green text-xs mb-1">Sponsored · GreenLeaf Financing</span>
+              <p className="text-white font-bold text-sm">HVAC Loans from 5.9% APR</p>
+              <p className="text-surface-400 text-xs">For qualified customers. Terms apply.</p>
+            </div>
+            <button className="btn-secondary text-xs py-2 px-4 flex-shrink-0">Apply Now</button>
+          </div>
         </div>
       </section>
 
-      {/* ── FOR TECHS ── */}
-      <section id="techs" className="py-20 px-6 bg-surface-900/50">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="badge badge-green mb-4">For HVAC Technicians</div>
-              <h2 className="text-4xl font-extrabold text-white mb-4">
-                Earn More.<br />Work Your Way.
-              </h2>
-              <p className="text-surface-400 text-lg mb-6 leading-relaxed">
-                Join our network of certified techs. Set your coverage area, claim jobs first-come first-served, and get paid fast.
-              </p>
-              <div className="space-y-3 mb-8">
-                {[
-                  { icon: DollarSign, text: 'See your net payout before accepting every job', color: 'text-emerald-400' },
-                  { icon: Clock,      text: 'Instant payouts with monthly subscription plan', color: 'text-brand-400' },
-                  { icon: FileText,   text: '1099-NEC & quarterly tax estimates built-in',    color: 'text-amber-400' },
-                  { icon: Users,      text: '247 verified techs already on the platform',     color: 'text-accent-400' },
-                ].map(({ icon: Icon, text, color }) => (
-                  <div key={text} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
-                      <Icon size={16} className={color} />
-                    </div>
-                    <span className="text-surface-300 text-sm">{text}</span>
-                  </div>
-                ))}
-              </div>
-              <button onClick={() => navigate('/login?signup=tech')} className="btn-primary py-3 px-6 text-base">
-                Apply as a Tech <ArrowRight size={18} />
-              </button>
-            </div>
-            <div className="space-y-3">
+      {/* ── FOR TECHS ──────────────────────────────────────────────────────── */}
+      <section id="techs" ref={techRef} className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute top-1/2 left-0 w-72 h-72 bg-emerald-500/6 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+          <div className={`transition-all duration-700 ${techIn ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+            <span className="badge badge-green px-4 py-1.5 text-xs uppercase tracking-widest mb-5">For Technicians</span>
+            <h2 className="text-4xl sm:text-5xl font-black text-white mt-3 mb-4 leading-tight">
+              Earn More.<br />Work Your Way.
+            </h2>
+            <p className="text-surface-400 text-lg mb-8 leading-relaxed">
+              Join our network of certified HVAC techs. Set your radius, claim jobs first-come first-served, and get paid fast — on your schedule.
+            </p>
+            <div className="space-y-3 mb-8">
               {[
-                { label: 'Standard', detail: 'Free · 15% platform fee per job · Standard dispatch', badge: '' },
-                { label: 'Pro',      detail: '$49/mo · 11% fee · Priority dispatch queue', badge: 'Most Popular' },
-                { label: 'Elite',    detail: '$99/mo · 8% fee · First in queue + instant payouts', badge: 'Best Value' },
-              ].map(p => (
-                <div key={p.label} className={`card ${p.badge === 'Best Value' ? 'border-accent-500/40 bg-gradient-to-br from-accent-900/20 to-surface-900' : ''}`}>
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-white font-bold">{p.label}</p>
-                    {p.badge && <span className={`badge ${p.badge === 'Best Value' ? 'badge-purple' : 'badge-blue'}`}>{p.badge}</span>}
+                { icon: DollarSign, text: 'See net payout before accepting any job', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+                { icon: Zap,        text: 'Instant payouts with Pro or Elite plan', color: 'text-brand-400', bg: 'bg-brand-500/10' },
+                { icon: FileText,   text: '1099-NEC & quarterly tax estimates built-in', color: 'text-amber-400', bg: 'bg-amber-500/10' },
+                { icon: Users,      text: '247 verified techs already on the platform', color: 'text-accent-400', bg: 'bg-accent-500/10' },
+              ].map(({ icon: Icon, text, color, bg }) => (
+                <div key={text} className="flex items-center gap-3">
+                  <div className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center flex-shrink-0`}>
+                    <Icon size={16} className={color} />
                   </div>
-                  <p className="text-surface-400 text-sm">{p.detail}</p>
+                  <span className="text-surface-300 text-sm">{text}</span>
                 </div>
               ))}
-              <div className="card bg-gradient-to-br from-brand-900/40 to-surface-900 border-brand-500/20">
-                <p className="text-surface-400 text-xs font-semibold uppercase tracking-widest mb-3">Example Earnings This Week</p>
-                <p className="text-surface-600 text-xs mb-3">Elite plan · 8% fee applied</p>
-                <div className="space-y-3 text-sm">
-                  {[
-                    { service: 'Furnace Repair',   gross: 249, fee: 8 },
-                    { service: 'No A/C Emergency', gross: 499, fee: 8 },
-                    { service: 'Duct Cleaning',    gross: 549, fee: 8 },
-                  ].map(e => {
-                    const feeAmt = +(e.gross * e.fee / 100).toFixed(2)
-                    const net    = +(e.gross - feeAmt).toFixed(2)
-                    return (
-                      <div key={e.service} className="space-y-0.5">
-                        <div className="flex justify-between">
-                          <span className="text-white font-medium">{e.service}</span>
-                          <span className="text-white">${e.gross.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-surface-500 text-xs pl-2">Platform fee ({e.fee}%)</span>
-                          <span className="text-rose-400 text-xs">−${feeAmt.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-surface-500 text-xs pl-2">Your net</span>
-                          <span className="text-emerald-400 font-bold text-xs">${net.toFixed(2)}</span>
-                        </div>
+            </div>
+            <button onClick={() => navigate('/login?signup=tech')} className="btn-primary py-3.5 px-7 text-base">
+              Apply as a Tech <ArrowRight size={18} />
+            </button>
+          </div>
+
+          <div className={`space-y-3 transition-all duration-700 delay-200 ${techIn ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+            {[
+              { label: 'Standard', detail: 'Free · 15% platform fee per job · Standard dispatch', badge: '', highlight: false },
+              { label: 'Pro',      detail: '$49/mo · 11% fee · Priority dispatch queue', badge: 'Most Popular', highlight: true },
+              { label: 'Elite',    detail: '$99/mo · 8% fee · First in queue + instant payouts', badge: 'Best Value', highlight: false, accent: true },
+            ].map(p => (
+              <div
+                key={p.label}
+                className={`relative overflow-hidden rounded-2xl border p-4 transition-all ${
+                  p.highlight
+                    ? 'border-brand-500/50 bg-gradient-to-br from-brand-900/30 to-surface-900'
+                    : p.accent
+                    ? 'border-accent-500/40 bg-gradient-to-br from-accent-900/20 to-surface-900'
+                    : 'border-white/10 bg-surface-900'
+                }`}
+              >
+                {p.highlight && <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-400/60 to-transparent" />}
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-white font-bold">{p.label}</p>
+                  {p.badge && (
+                    <span className={`badge text-xs ${p.accent ? 'badge-purple' : 'badge-blue'}`}>{p.badge}</span>
+                  )}
+                </div>
+                <p className="text-surface-400 text-sm">{p.detail}</p>
+              </div>
+            ))}
+
+            {/* Earnings preview */}
+            <div className="relative overflow-hidden rounded-2xl border border-brand-500/20 bg-gradient-to-br from-brand-900/20 to-surface-900 p-4">
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-400/40 to-transparent" />
+              <p className="text-surface-400 text-xs font-bold uppercase tracking-widest mb-3">Sample Week · Elite Plan</p>
+              <div className="space-y-2.5 text-sm">
+                {[
+                  { service: 'Furnace Repair', gross: 249 },
+                  { service: 'No A/C Emergency', gross: 499 },
+                  { service: 'Duct Cleaning', gross: 549 },
+                ].map(e => {
+                  const fee = +(e.gross * 0.08).toFixed(2)
+                  const net = +(e.gross - fee).toFixed(2)
+                  return (
+                    <div key={e.service} className="flex items-center justify-between">
+                      <span className="text-surface-300">{e.service}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-rose-400 text-xs">−${fee}</span>
+                        <span className="text-emerald-400 font-bold">${net}</span>
                       </div>
-                    )
-                  })}
-                </div>
-                <div className="border-t border-white/10 mt-3 pt-3 space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-surface-400">Total gross</span>
-                    <span className="text-white font-medium">$1,297.00</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-surface-400">Total fees (8%)</span>
-                    <span className="text-rose-400 font-medium">−$103.76</span>
-                  </div>
-                  <div className="flex justify-between font-bold mt-1 pt-1 border-t border-white/10">
-                    <span className="text-white">3-Day Take-Home</span>
-                    <span className="text-emerald-400 text-lg">$1,193.24</span>
-                  </div>
-                </div>
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="border-t border-white/10 mt-3 pt-3 flex justify-between items-center">
+                <span className="text-surface-400 text-sm">3-Day Take-Home</span>
+                <span className="text-emerald-400 text-xl font-black">$1,193</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── REVIEWS ── */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto text-center mb-12">
-          <h2 className="text-4xl font-extrabold text-white mb-3">What Customers Say</h2>
-        </div>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {[
-            { name: 'Sarah K.',   text: 'Tech arrived in 18 minutes and fixed our furnace same day. Best app ever for home services!', rating: 5, service: 'Furnace Repair' },
-            { name: 'Diana P.',   text: 'No heat emergency at 11pm — a tech accepted in 6 minutes. Absolutely saved us.',               rating: 5, service: 'No Heat Emergency' },
-            { name: 'Robert M.', text: 'Transparent pricing, live tracking, and I only paid after the job was done. Will use again.',   rating: 5, service: 'A/C Tune-Up' },
-          ].map(r => (
-            <div key={r.name} className="card">
-              <div className="flex items-center gap-1 mb-3">
-                {Array.from({length: r.rating}).map((_, i) => (
-                  <Star key={i} size={16} className="text-amber-400 fill-amber-400" />
-                ))}
-              </div>
-              <p className="text-surface-300 text-sm leading-relaxed mb-4">"{r.text}"</p>
-              <div>
-                <p className="text-white font-semibold text-sm">{r.name}</p>
-                <p className="text-surface-500 text-xs">{r.service}</p>
-              </div>
+      {/* ── REVIEWS ────────────────────────────────────────────────────────── */}
+      <section ref={reviewsRef} className="py-24 px-6 bg-surface-900/20 border-t border-white/5 relative overflow-hidden">
+        <div className="absolute top-1/2 right-0 w-64 h-64 bg-accent-500/5 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
+        <div className="relative max-w-5xl mx-auto">
+          <div className={`text-center mb-12 transition-all duration-600 ${reviewsIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            <div className="flex justify-center gap-1 mb-3">
+              {[1,2,3,4,5].map(i => <Star key={i} size={22} className="text-amber-400 fill-amber-400" />)}
             </div>
-          ))}
+            <h2 className="text-4xl sm:text-5xl font-black text-white mb-3">Trusted by Homeowners</h2>
+            <p className="text-surface-400 text-lg">4.9 average across 500+ completed jobs</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {[
+              { name: 'Sarah K.',   text: 'Tech arrived in 18 minutes and fixed our furnace same day. Best home service app I\'ve ever used.', rating: 5, service: 'Furnace Repair', avatar: 'SK' },
+              { name: 'Diana P.',   text: 'No heat emergency at 11pm — a tech accepted in 6 minutes. Absolutely saved us. The live tracking is amazing.', rating: 5, service: 'No Heat Emergency', avatar: 'DP' },
+              { name: 'Robert M.', text: 'Transparent pricing, real-time tracking, and I only paid after the job was done. Will never use anything else.', rating: 5, service: 'A/C Tune-Up', avatar: 'RM' },
+            ].map((r, i) => (
+              <div
+                key={r.name}
+                className={`card-gradient-border p-5 hover:-translate-y-1 transition-all duration-200 cursor-default ${reviewsIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                style={{ transitionDelay: `${i * 100}ms` }}
+              >
+                <div className="flex items-center gap-1 mb-3">
+                  {Array.from({length: r.rating}).map((_, j) => (
+                    <Star key={j} size={14} className="text-amber-400 fill-amber-400" />
+                  ))}
+                </div>
+                <p className="text-surface-300 text-sm leading-relaxed mb-5">"{r.text}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                    {r.avatar}
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">{r.name}</p>
+                    <p className="text-surface-500 text-xs">{r.service}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-20 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="card bg-gradient-to-br from-brand-900/40 to-accent-900/30 border-brand-500/20 py-14 px-8">
-            <h2 className="text-4xl font-extrabold text-white mb-4">Ready to get started?</h2>
-            <p className="text-surface-400 text-lg mb-8">Join thousands of homeowners who trust ServiceConnect for fast, verified HVAC service.</p>
+      {/* ── FINAL CTA ──────────────────────────────────────────────────────── */}
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 dot-grid opacity-20" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative max-w-3xl mx-auto text-center">
+          <div className="card-gradient-border p-12">
+            <div className="inline-flex items-center gap-2 badge badge-blue px-4 py-1.5 text-xs uppercase tracking-widest mb-6">
+              <Zap size={12} /> Available Now in Your Area
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-black text-white mb-4 leading-tight">
+              Your home deserves<br />better than a wait list.
+            </h2>
+            <p className="text-surface-400 text-lg mb-8 max-w-lg mx-auto">
+              Join thousands of homeowners getting fast, verified HVAC service with real-time tracking and protected payments.
+            </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <button onClick={() => navigate('/login?signup=customer')} className="btn-primary py-4 px-8 text-base">
+              <button onClick={() => navigate('/login?signup=customer')} className="btn-primary py-4 px-8 text-base glow-brand">
                 Book a Service <ArrowRight size={18} />
               </button>
               <button onClick={goLogin} className="btn-secondary py-4 px-8 text-base">
@@ -417,18 +603,22 @@ export default function Website() {
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-white/10 py-10 px-6">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <Logo size="sm" />
-          <p className="text-surface-500 text-sm text-center">© 2026 ServiceConnect. All rights reserved. · Maryland · DMV &amp; Expanding Nationwide</p>
-          <div className="flex gap-4 text-surface-500 text-sm flex-wrap justify-center">
-            <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
-            <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
-            <button onClick={() => navigate('/terms')} className="hover:text-white transition-colors">Terms of Service</button>
-            <button onClick={() => navigate('/terms?tab=customer')} className="hover:text-white transition-colors">Customer Terms</button>
-            <span className="hover:text-white cursor-pointer transition-colors">Privacy</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Contact</span>
+      {/* ── FOOTER ─────────────────────────────────────────────────────────── */}
+      <footer className="border-t border-white/8 py-10 px-6 bg-surface-900/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-6">
+            <Logo size="sm" />
+            <div className="flex flex-wrap justify-center gap-5 text-surface-500 text-sm">
+              <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>
+              <button onClick={() => navigate('/contractors')} className="hover:text-white transition-colors">For Contractors</button>
+              <button onClick={() => navigate('/lending-partners')} className="hover:text-white transition-colors">Lending Partners</button>
+              <button onClick={() => navigate('/terms')} className="hover:text-white transition-colors">Terms of Service</button>
+              <span className="hover:text-white cursor-pointer transition-colors">Privacy</span>
+              <span className="hover:text-white cursor-pointer transition-colors">Contact</span>
+            </div>
+          </div>
+          <div className="border-t border-white/8 pt-6 text-center">
+            <p className="text-surface-600 text-sm">© 2026 ServiceConnect. All rights reserved. · Maryland · DMV &amp; Expanding Nationwide</p>
           </div>
         </div>
       </footer>
