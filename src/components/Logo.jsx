@@ -2,19 +2,32 @@ import React from 'react'
 import logoImg from '../assets/matchvac-logo.png'
 
 const sizes = {
-  sm: { height: 32 },
-  md: { height: 40 },
-  lg: { height: 56 },
+  sm: { height: 28 },
+  md: { height: 36 },
+  lg: { height: 52 },
 }
 
 export default function Logo({ size = 'md', dark = false }) {
   const { height } = sizes[size] || sizes.md
+
+  if (dark) {
+    // On dark backgrounds, show logo inside a white rounded pill
+    return (
+      <div className="bg-white rounded-xl px-3 py-1.5 inline-flex items-center shadow-sm">
+        <img
+          src={logoImg}
+          alt="MatcHvac — Certified Pros. On Demand."
+          style={{ height: height * 0.85, width: 'auto', objectFit: 'contain' }}
+        />
+      </div>
+    )
+  }
+
   return (
     <img
       src={logoImg}
       alt="MatcHvac — Certified Pros. On Demand."
       style={{ height, width: 'auto', objectFit: 'contain' }}
-      className={dark ? 'brightness-0 invert' : ''}
     />
   )
 }
