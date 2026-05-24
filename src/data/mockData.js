@@ -5,7 +5,7 @@ export const SERVICES = [
   { id: 's4', name: 'Water Heater Replacement', category: 'Plumbing', icon: '💧', emergency: false, tiers: { basic: 899, standard: 1499, premium: 2299 }, description: 'Replace old water heater' },
   { id: 's5', name: 'Outdoor Condenser Repair', category: 'Cooling', icon: '❄️', emergency: false, tiers: { basic: 179, standard: 279, premium: 449 }, description: 'Condenser unit diagnostics & repair' },
   { id: 's6', name: 'Outdoor Condenser Replacement', category: 'Cooling', icon: '❄️', emergency: false, tiers: { basic: 1999, standard: 3499, premium: 4999 }, description: 'Full condenser replacement' },
-  { id: 's7', name: 'A/C Tune-Up', category: 'Cooling', icon: '🌀', emergency: false, tiers: { basic: 89, standard: 149, premium: 229 }, description: 'Complete A/C maintenance & tune-up' },
+  { id: 's7', name: 'A/C Tune-Up', category: 'Cooling', icon: '🧊', emergency: false, tiers: { basic: 89, standard: 149, premium: 229 }, description: 'Complete A/C maintenance & tune-up' },
   { id: 's8', name: 'Duct Cleaning', category: 'Air Quality', icon: '🌬️', emergency: false, tiers: { basic: 199, standard: 349, premium: 549 }, description: 'Full duct system cleaning' },
   { id: 's9', name: 'Thermostat Installation', category: 'Controls', icon: '🌡️', emergency: false, tiers: { basic: 99, standard: 149, premium: 249 }, description: 'Smart or standard thermostat install' },
   { id: 's10', name: 'Air Quality Assessment', category: 'Air Quality', icon: '🍃', emergency: false, tiers: { basic: 79, standard: 129, premium: 199 }, description: 'Comprehensive indoor air quality test' },

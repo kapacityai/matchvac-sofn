@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CheckCircle, ArrowRight, Home, Droplets, Wind, Zap, Shield, Clock, Star, Phone, ChevronLeft, User, MapPin, CreditCard, Wrench } from 'lucide-react'
+import { CheckCircle, ArrowRight, Home, Droplets, Wind, Zap, Shield, Clock, Star, Phone, ChevronLeft, User, MapPin, CreditCard, Wrench, Thermometer, Flame } from 'lucide-react'
 
 // ── Comfort Connect Logo Component ──────────────────────────────────────────
 function CCLogo({ size = 'md' }) {
@@ -40,10 +40,10 @@ const BENEFITS_RIGHT = [
 ]
 
 const EQUIPMENT = [
-  { icon: '🌀', label: 'HVAC Systems &\nHeat Pumps' },
-  { icon: '💧', label: 'Tank, Tankless, &\nHeat Pump Water Heaters' },
-  { icon: '🚿', label: 'Water Purification\nSystems' },
-  { icon: '⚡', label: 'Standby\nGenerators' },
+  { Icon: Thermometer, label: 'HVAC Systems &\nHeat Pumps',               color: 'text-brand-400' },
+  { Icon: Droplets,   label: 'Tank, Tankless, &\nHeat Pump Water Heaters', color: 'text-accent-400' },
+  { Icon: Wind,       label: 'Water Purification\nSystems',                color: 'text-accent-300' },
+  { Icon: Zap,        label: 'Standby\nGenerators',                        color: 'text-amber-400' },
 ]
 
 const NEEDS = [
@@ -150,8 +150,10 @@ export default function ComfortConnect() {
             <h3 className="text-white font-bold text-xl text-center mb-6">Equipment Premier Program Covers</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {EQUIPMENT.map(eq => (
-                <div key={eq.label} className="text-center p-4 bg-surface-100 rounded-2xl">
-                  <div className="text-4xl mb-2">{eq.icon}</div>
+                <div key={eq.label} className="text-center p-4 bg-white/10 rounded-2xl">
+                  <div className="flex justify-center mb-2">
+                    <eq.Icon size={36} className={eq.color} />
+                  </div>
                   <p className="text-white text-xs font-semibold leading-tight whitespace-pre-line">{eq.label}</p>
                 </div>
               ))}
