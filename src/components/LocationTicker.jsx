@@ -7,7 +7,7 @@ export default function LocationTicker() {
   const items = [...SERVICE_LOCATIONS, ...SERVICE_LOCATIONS]
 
   return (
-    <div className="inline-flex items-center gap-2 bg-surface-900/80 border border-white/10 rounded-full px-4 py-1.5 overflow-hidden max-w-xs sm:max-w-sm">
+    <div className="inline-flex items-center gap-2 bg-navy-800/80 border border-white/10 rounded-full px-4 py-1.5 overflow-hidden max-w-xs sm:max-w-sm">
       {/* Static label */}
       <div className="flex items-center gap-1.5 flex-shrink-0 border-r border-white/10 pr-3">
         <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse flex-shrink-0" />

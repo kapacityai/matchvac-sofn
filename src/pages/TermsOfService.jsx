@@ -442,7 +442,7 @@ export default function TermsOfService() {
         </div>
 
         {/* Footer CTA */}
-        <div className="mt-12 card bg-gradient-to-br from-brand-900/40 to-surface-900 border-brand-500/20 text-center py-8">
+        <div className="mt-12 card bg-gradient-to-br from-brand-900/40 to-navy-900 border-brand-500/20 text-center py-8">
           <p className="text-white font-bold mb-2">Questions about these Terms?</p>
           <p className="text-surface-400 text-sm mb-4">Our legal team is available to clarify any provisions.</p>
           <a

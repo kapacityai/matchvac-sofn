@@ -57,7 +57,7 @@ export default function TrackJob() {
 
         {/* ── PAYMENT RELEASED BANNER ── */}
         {paymentReleased && !reviewDone && (
-          <div className="rounded-2xl bg-gradient-to-r from-emerald-900/50 to-surface-900 border border-emerald-500/40 p-5 text-center">
+          <div className="rounded-2xl bg-gradient-to-r from-emerald-900/50 to-navy-900 border border-emerald-500/40 p-5 text-center">
             <div className="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mx-auto mb-3">
               <CheckCircle size={28} className="text-emerald-400" />
             </div>
@@ -67,7 +67,7 @@ export default function TrackJob() {
         )}
 
         {reviewDone && (
-          <div className="rounded-2xl bg-gradient-to-r from-brand-900/40 to-surface-900 border border-brand-500/30 p-5 text-center">
+          <div className="rounded-2xl bg-gradient-to-r from-brand-900/40 to-navy-900 border border-brand-500/30 p-5 text-center">
             <div className="w-14 h-14 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center mx-auto mb-3">
               <Star size={28} className="text-amber-400 fill-amber-400" />
             </div>
@@ -81,7 +81,7 @@ export default function TrackJob() {
 
         {/* Map placeholder */}
         <div className="relative h-52 rounded-2xl overflow-hidden border border-surface-200">
-          <div className="absolute inset-0 bg-gradient-to-br from-surface-800 to-surface-900 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gradient-to-br from-navy-800 to-navy-900 flex items-center justify-center">
             <div className="absolute inset-0 opacity-10">
               {Array.from({length: 8}).map((_, i) => (
                 <div key={i} className="absolute w-full h-px bg-brand-400" style={{ top: `${i * 14}%` }} />
@@ -168,7 +168,7 @@ export default function TrackJob() {
 
         {/* ── CUSTOMER CONFIRM & RELEASE PAYMENT ── */}
         {techCompletedJob && !paymentReleased && (
-          <div className="rounded-2xl border-2 border-emerald-500/50 bg-gradient-to-br from-emerald-900/30 to-surface-900 p-5">
+          <div className="rounded-2xl border-2 border-emerald-500/50 bg-gradient-to-br from-emerald-900/30 to-navy-900 p-5">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-2xl bg-emerald-400/10 flex items-center justify-center flex-shrink-0">
                 <Lock size={20} className="text-emerald-400" />

@@ -4,9 +4,9 @@ import { TECH_SUBSCRIPTION_TIERS } from '../../data/mockData'
 import { Check, Zap, Shield, Star, TrendingUp, ChevronRight, Crown, Award } from 'lucide-react'
 
 const TIER_STYLES = {
-  free:  { ring: 'border-surface-200',          bg: 'from-surface-800/60 to-surface-900',   icon: Shield,  iconColor: 'text-surface-400', iconBg: 'bg-surface-700' },
-  pro:   { ring: 'border-brand-500/50',       bg: 'from-brand-900/40 to-surface-900',     icon: Zap,     iconColor: 'text-brand-400',   iconBg: 'bg-brand-500/20' },
-  elite: { ring: 'border-accent-500/50',      bg: 'from-accent-900/40 to-surface-900',    icon: Crown,   iconColor: 'text-accent-400',  iconBg: 'bg-accent-500/20' },
+  free:  { ring: 'border-surface-200',          bg: 'from-navy-800/60 to-navy-900',   icon: Shield,  iconColor: 'text-surface-400', iconBg: 'bg-surface-700' },
+  pro:   { ring: 'border-brand-500/50',       bg: 'from-brand-900/40 to-navy-900',     icon: Zap,     iconColor: 'text-brand-400',   iconBg: 'bg-brand-500/20' },
+  elite: { ring: 'border-accent-500/50',      bg: 'from-accent-900/40 to-navy-900',    icon: Crown,   iconColor: 'text-accent-400',  iconBg: 'bg-accent-500/20' },
 }
 
 // Breakeven calculator: at what monthly job volume does upgrading pay for itself?
@@ -58,7 +58,7 @@ export default function TechSubscription() {
         )}
 
         {/* Current plan callout */}
-        <div className="rounded-2xl bg-gradient-to-r from-accent-900/30 to-surface-900 border border-accent-500/30 p-5 flex items-center gap-4">
+        <div className="rounded-2xl bg-gradient-to-r from-accent-900/30 to-navy-900 border border-accent-500/30 p-5 flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-accent-500/20 flex items-center justify-center flex-shrink-0">
             <Crown size={24} className="text-accent-400" />
           </div>

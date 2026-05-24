@@ -90,7 +90,7 @@ export default function ComfortConnect() {
       </nav>
 
       {/* Hero */}
-      <section className="py-14 px-6 text-center bg-gradient-to-b from-[#003478]/20 to-surface-950 border-b border-surface-200">
+      <section className="py-14 px-6 text-center bg-gradient-to-b from-[#003478]/20 to-navy-950 border-b border-surface-200">
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-center mb-5">
             <CCLogo size="lg" />

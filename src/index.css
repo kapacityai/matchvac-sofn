@@ -37,7 +37,7 @@
     @apply bg-white/70 backdrop-blur-xl border border-surface-200;
   }
   .glass-dark {
-    @apply bg-surface-900/90 backdrop-blur-xl border border-white/10;
+    @apply bg-navy-800/90 backdrop-blur-xl border border-white/10;
   }
   .btn-primary {
     @apply bg-brand-500 hover:bg-brand-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-2 justify-center shadow-sm;
@@ -49,13 +49,13 @@
     @apply hover:bg-surface-200 text-surface-600 hover:text-surface-900 font-medium px-4 py-2 rounded-xl transition-all duration-200 flex items-center gap-2;
   }
   .btn-dark {
-    @apply bg-surface-900 hover:bg-surface-800 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-2 justify-center shadow-sm;
+    @apply bg-navy-800 hover:bg-navy-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-2 justify-center shadow-sm;
   }
   .card {
     @apply bg-white border border-surface-200 rounded-2xl p-5 shadow-sm;
   }
   .card-dark {
-    @apply bg-surface-900 border border-white/10 rounded-2xl p-5;
+    @apply bg-navy-800 border border-white/10 rounded-2xl p-5;
   }
   .card-hover {
     @apply card hover:border-brand-400/40 hover:shadow-md transition-all duration-200 cursor-pointer;
@@ -79,10 +79,13 @@
     @apply badge bg-rose-500/10 text-rose-600;
   }
   .badge-blue {
+    @apply badge bg-accent-500/10 text-accent-500;
+  }
+  .badge-orange {
     @apply badge bg-brand-500/10 text-brand-600;
   }
-  .badge-purple {
-    @apply badge bg-accent-500/10 text-accent-600;
+  .badge-navy {
+    @apply badge bg-navy-800/10 text-navy-800;
   }
   .sidebar-item {
     @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-surface-500 hover:text-surface-900 hover:bg-surface-150 transition-all duration-200 font-medium text-sm cursor-pointer;
@@ -123,10 +126,10 @@
 .animate-float      { animation: float 3s ease-in-out infinite; }
 .animate-pulse-slow { animation: pulse-slow 2s ease-in-out infinite; }
 
-.glow-blue   { box-shadow: 0 0 30px rgba(249, 115, 22, 0.10); }
-.glow-purple { box-shadow: 0 0 30px rgba(20, 184, 166, 0.10); }
-.glow-blue-lg  { box-shadow: 0 0 60px rgba(249, 115, 22, 0.15), 0 0 120px rgba(249, 115, 22, 0.06); }
-.glow-brand    { box-shadow: 0 4px 24px rgba(249, 115, 22, 0.25); }
+.glow-blue   { box-shadow: 0 0 30px rgba(244, 96, 30, 0.10); }
+.glow-purple { box-shadow: 0 0 30px rgba(30, 110, 200, 0.10); }
+.glow-blue-lg  { box-shadow: 0 0 60px rgba(244, 96, 30, 0.15), 0 0 120px rgba(244, 96, 30, 0.06); }
+.glow-brand    { box-shadow: 0 4px 24px rgba(244, 96, 30, 0.25); }
 
 /* Dot grid pattern — light version */
 .dot-grid {
@@ -148,7 +151,7 @@
   inset: 0;
   border-radius: 16px;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(249,115,22,0.35), rgba(20,184,166,0.20), transparent);
+  background: linear-gradient(135deg, rgba(244,96,30,0.35), rgba(30,110,200,0.20), transparent);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;

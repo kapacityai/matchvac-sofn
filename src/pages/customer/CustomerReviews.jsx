@@ -61,7 +61,7 @@ export default function CustomerReviews() {
         {!submitted[PENDING_REVIEW_JOB.id] && (
           <div
             onClick={() => openReview(PENDING_REVIEW_JOB)}
-            className="cursor-pointer rounded-2xl border-2 border-amber-500/40 bg-gradient-to-r from-amber-900/20 to-surface-900 hover:border-amber-400/60 transition-all p-4 flex items-center gap-4"
+            className="cursor-pointer rounded-2xl border-2 border-amber-500/40 bg-gradient-to-r from-amber-900/20 to-navy-900 hover:border-amber-400/60 transition-all p-4 flex items-center gap-4"
           >
             <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center flex-shrink-0">
               <Star size={18} className="text-amber-400" />

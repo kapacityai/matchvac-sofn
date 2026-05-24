@@ -8,3 +8,25 @@
   ➜  Local:   http://localhost:5173/
   ➜  Network: http://172.20.0.18:5173/
 7:40:55 PM [vite] hmr update /src/components/Logo.jsx, /src/index.css
+7:44:03 PM [vite] hmr update /src/components/Logo.jsx, /src/index.css
+7:44:46 PM [vite] page reload tailwind.config.js
+7:45:05 PM [vite] hmr update /src/index.css
+7:45:10 PM [vite] hmr update /src/index.css
+7:45:16 PM [vite] hmr update /src/index.css
+7:45:23 PM [vite] hmr update /src/index.css
+7:45:29 PM [vite] hmr update /src/index.css
+7:45:52 PM [vite] hmr update /src/pages/customer/CustomerHome.jsx, /src/index.css
+7:45:58 PM [vite] hmr update /src/pages/customer/CustomerHome.jsx, /src/index.css
+7:46:09 PM [vite] hmr update /src/pages/LoginPage.jsx, /src/index.css
+7:46:19 PM [vite] hmr update /src/components/Sidebar.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/components/LocationTicker.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/ComfortConnect.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/TermsOfService.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/admin/AdminReports.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/customer/CustomerReviews.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/customer/TrackJob.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/tech/TaxCenter.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/tech/TechDocuments.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/tech/TechEarnings.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/tech/TechReviews.jsx, /src/index.css
+7:46:44 PM [vite] hmr update /src/pages/tech/TechSubscription.jsx, /src/index.css

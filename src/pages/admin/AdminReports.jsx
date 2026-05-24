@@ -137,7 +137,7 @@ export default function AdminReports() {
             </div>
 
             {/* Tech subscription mini-breakdown */}
-            <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-cyan-900/20 to-surface-900 p-4 flex items-center gap-4 flex-wrap">
+            <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-cyan-900/20 to-navy-900 p-4 flex items-center gap-4 flex-wrap">
               <div className="w-9 h-9 rounded-xl bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
                 <Users size={18} className="text-cyan-400" />
               </div>
@@ -164,7 +164,7 @@ export default function AdminReports() {
             </div>
 
             {/* Total GMV callout */}
-            <div className="rounded-2xl bg-gradient-to-r from-brand-900/40 to-surface-900 border border-brand-500/30 p-5 flex items-center gap-5">
+            <div className="rounded-2xl bg-gradient-to-r from-brand-900/40 to-navy-900 border border-brand-500/30 p-5 flex items-center gap-5">
               <div className="w-14 h-14 rounded-2xl bg-brand-500/20 flex items-center justify-center flex-shrink-0">
                 <DollarSign size={28} className="text-brand-400" />
               </div>
@@ -576,12 +576,12 @@ export default function AdminReports() {
               {[
                 { tier: 'Featured', fee: '$499/mo', rate: '5% referral', color: 'border-amber-500/40 from-amber-900/20', badge: 'bg-amber-500/20 text-amber-400' },
                 { tier: 'Verified', fee: '$299 setup + $99/mo', rate: '7% referral', color: 'border-brand-500/40 from-brand-900/20', badge: 'bg-brand-500/20 text-brand-400' },
-                { tier: 'Free', fee: '$0', rate: '10% referral', color: 'border-surface-200 from-surface-800/20', badge: 'bg-surface-700 text-surface-400' },
+                { tier: 'Free', fee: '$0', rate: '10% referral', color: 'border-surface-200 from-navy-800/20', badge: 'bg-surface-700 text-surface-400' },
               ].map(t => {
                 const count = MOCK_CONTRACTORS.filter(c => c.tier === t.tier && c.status === 'active').length
                 const rev = MOCK_CONTRACTORS.filter(c => c.tier === t.tier).reduce((s, c) => s + c.monthlyFee + c.referralRevenue, 0)
                 return (
-                  <div key={t.tier} className={`rounded-2xl border bg-gradient-to-b ${t.color} to-surface-900 p-4`}>
+                  <div key={t.tier} className={`rounded-2xl border bg-gradient-to-b ${t.color} to-navy-900 p-4`}>
                     <span className={`text-xs font-bold px-2 py-1 rounded-lg ${t.badge}`}>{t.tier}</span>
                     <p className="text-white font-bold mt-2">{t.fee}</p>
                     <p className="text-surface-500 text-xs">{t.rate}</p>

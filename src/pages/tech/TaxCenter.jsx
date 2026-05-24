@@ -61,7 +61,7 @@ export default function TaxCenter() {
         </div>
 
         {/* Quarterly estimate */}
-        <div className="card bg-gradient-to-r from-rose-900/20 to-surface-900 border-rose-500/20">
+        <div className="card bg-gradient-to-r from-rose-900/20 to-navy-900 border-rose-500/20">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center flex-shrink-0">
               <TrendingUp size={18} className="text-rose-400" />

@@ -133,7 +133,7 @@ export default function TechDocuments() {
         )}
 
         {/* Account standing */}
-        <div className="flex items-center gap-4 px-5 py-4 rounded-2xl bg-gradient-to-r from-emerald-900/30 to-surface-900 border border-emerald-500/30">
+        <div className="flex items-center gap-4 px-5 py-4 rounded-2xl bg-gradient-to-r from-emerald-900/30 to-navy-900 border border-emerald-500/30">
           <div className="w-10 h-10 rounded-xl bg-emerald-400/10 flex items-center justify-center flex-shrink-0">
             <Shield size={20} className="text-emerald-400" />
           </div>

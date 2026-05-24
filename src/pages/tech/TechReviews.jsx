@@ -88,7 +88,7 @@ export default function TechReviews() {
         </div>
 
         {/* Badge callout */}
-        <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-gradient-to-r from-amber-900/30 to-surface-900 border border-amber-500/30">
+        <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-gradient-to-r from-amber-900/30 to-navy-900 border border-amber-500/30">
           <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center flex-shrink-0">
             <Award size={20} className="text-amber-400" />
           </div>

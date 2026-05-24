@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
 import { useAuth } from '../../context/AuthContext'
 import { MOCK_JOBS, SERVICES } from '../../data/mockData'
-import { Wrench, ShoppingBag, MapPin, ChevronRight, AlertTriangle, CheckCircle, Clock, Star, Zap, ArrowRight, Shield, DollarSign, Lock } from 'lucide-react'
+import { Wrench, ShoppingBag, MapPin, ChevronRight, AlertTriangle, CheckCircle, Clock, Star, Zap, ArrowRight, Shield, DollarSign, Lock, Wind } from 'lucide-react'
 
 const customerJobs = MOCK_JOBS.filter(j => ['j1','j2','j3','j4'].includes(j.id))
 
@@ -168,7 +168,9 @@ export default function CustomerHome() {
           >
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
             <div className="flex items-center gap-3 px-4 py-3.5">
-              <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-xl flex-shrink-0">❄️</div>
+              <div className="w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
+                <Wind size={20} className="text-accent-500" />
+              </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-brand-600 text-xs font-bold">Comfort Connect Premier</span>

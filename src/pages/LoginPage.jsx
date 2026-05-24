@@ -214,10 +214,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-surface-100 flex">
       {/* Left hero */}
-      <div className="hidden lg:flex flex-col flex-1 relative overflow-hidden bg-gradient-to-br from-surface-900 to-surface-950 border-r border-surface-200">
+      <div className="hidden lg:flex flex-col flex-1 relative overflow-hidden bg-gradient-to-br from-navy-800 to-navy-950 border-r border-navy-700">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-20 left-20 w-72 h-72 bg-brand-500/15 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/15 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10 flex flex-col h-full p-12">
           <div className="flex items-center justify-between">

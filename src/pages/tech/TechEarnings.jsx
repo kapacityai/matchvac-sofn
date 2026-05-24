@@ -52,7 +52,7 @@ export default function TechEarnings() {
         {/* Subscription plan banner */}
         <div
           onClick={() => navigate('/tech/subscription')}
-          className="cursor-pointer rounded-2xl border border-accent-500/40 bg-gradient-to-r from-accent-900/30 to-surface-900 hover:border-accent-400 transition-all flex items-center gap-4 px-5 py-4"
+          className="cursor-pointer rounded-2xl border border-accent-500/40 bg-gradient-to-r from-accent-900/30 to-navy-900 hover:border-accent-400 transition-all flex items-center gap-4 px-5 py-4"
         >
           <div className="w-10 h-10 rounded-xl bg-accent-500/20 flex items-center justify-center flex-shrink-0">
             <Crown size={20} className="text-accent-400" />
