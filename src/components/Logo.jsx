@@ -2,9 +2,9 @@ import React from 'react'
 import logoImg from '../assets/matchvac-logo.png'
 
 const sizes = {
-  sm: { height: 28 },
-  md: { height: 36 },
-  lg: { height: 52 },
+  sm: { height: 48 },
+  md: { height: 64 },
+  lg: { height: 88 },
 }
 
 export default function Logo({ size = 'md', dark = false }) {
