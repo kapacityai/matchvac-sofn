@@ -1,6 +1,7 @@
 {
   "startupCommands": [
-    "npm install; rm -rf node_modules/.vite; npm run dev -- --host 0.0.0.0 --port 5173"
+    "npm install; rm -rf node_modules/.vite; npm run dev -- --host 0.0.0.0 --port 5173",
+    "cd server && npm install; node src/index.js"
   ],
   "projectId": "8e615d2c-c47f-465b-b291-77ab836a1ce2",
   "templateId": "any"

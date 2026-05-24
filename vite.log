@@ -34,3 +34,8 @@
 8:00:29 PM [vite] hmr update /src/pages/ComfortConnect.jsx, /src/index.css
 8:00:36 PM [vite] hmr update /src/pages/ComfortConnect.jsx, /src/index.css
 8:00:46 PM [vite] hmr update /src/index.css, /src/pages/Website.jsx, /src/pages/customer/CustomerHome.jsx, /src/pages/customer/ServiceRequest.jsx, /src/pages/customer/Store.jsx, /src/pages/customer/CustomerJobs.jsx, /src/pages/tech/TechDashboard.jsx, /src/pages/tech/AvailableJobs.jsx, /src/pages/tech/TechMyJobs.jsx, /src/pages/tech/TechEarnings.jsx, /src/pages/tech/TechSubscription.jsx, /src/pages/admin/AdminUsers.jsx, /src/pages/admin/AdminOverview.jsx, /src/pages/admin/AdminAds.jsx, /src/pages/admin/AdminInventory.jsx, /src/pages/admin/AdminReports.jsx, /src/pages/admin/AdminJobs.jsx, /src/components/LocationTicker.jsx
+8:15:37 PM [vite] .env.local changed, restarting server...
+8:15:37 PM [vite] .env.local changed, restarting server...
+8:15:37 PM [vite] server restarted.
+8:19:39 PM [vite] ✨ new dependencies optimized: @stripe/stripe-js, @stripe/react-stripe-js
+8:19:39 PM [vite] ✨ optimized dependencies changed. reloading
