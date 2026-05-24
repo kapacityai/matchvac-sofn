@@ -94,7 +94,7 @@ export default function TechReviews() {
           </div>
           <div>
             <p className="text-white font-bold">Top Rated Pro</p>
-            <p className="text-surface-400 text-sm">You're in the top 5% of all technicians on ServiceConnect. Keep it up!</p>
+            <p className="text-surface-400 text-sm">You're in the top 5% of all technicians on MatcHvac. Keep it up!</p>
           </div>
         </div>
 

@@ -22,7 +22,7 @@ const TIERS = [
       'Up to 500 impressions/month',
       'Link to your application portal',
       'Basic performance report (monthly)',
-      'ServiceConnect Verified badge',
+      'MatcHvac Verified badge',
     ],
     notIncluded: [
       'Hero ad placement',
@@ -253,7 +253,7 @@ export default function LendingPartners() {
             </span>
           </h1>
           <p className="text-surface-400 text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Partner with ServiceConnect to place your financing offers directly in front of homeowners who are actively booking HVAC services — the moment they need it most.
+            Partner with MatcHvac to place your financing offers directly in front of homeowners who are actively booking HVAC services — the moment they need it most.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
             <button onClick={() => openForm()} className="btn-primary py-4 px-8 text-lg">
@@ -303,7 +303,7 @@ export default function LendingPartners() {
                 color: 'text-emerald-400',
                 bg: 'bg-emerald-500/10',
                 title: 'Brand-Safe Context',
-                body: 'ServiceConnect is a vetted, licensed HVAC marketplace. Your brand appears alongside trusted technicians — not random web content.',
+                body: 'MatcHvac is a vetted, licensed HVAC marketplace. Your brand appears alongside trusted technicians — not random web content.',
               },
             ].map(item => (
               <div key={item.title} className="card">
@@ -387,7 +387,7 @@ export default function LendingPartners() {
               </div>
             ))}
           </div>
-          <p className="text-surface-500 text-xs text-center mt-6">All plans include onboarding support. Enterprise pricing available for national lenders — contact partnerships@serviceconnect.io</p>
+          <p className="text-surface-500 text-xs text-center mt-6">All plans include onboarding support. Enterprise pricing available for national lenders — contact partnerships@matchvac.com</p>
         </div>
       </section>
 
@@ -428,7 +428,7 @@ export default function LendingPartners() {
       <footer className="border-t border-surface-200 py-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-surface-500 text-xs">
           <Logo size="sm" />
-          <p>© 2026 ServiceConnect. All rights reserved.</p>
+          <p>© 2026 MatcHvac. All rights reserved.</p>
           <div className="flex gap-4">
             <button onClick={() => navigate('/')} className="hover:text-white transition-colors">Home</button>
             <button onClick={() => navigate('/financing')} className="hover:text-white transition-colors">Financing</button>

@@ -67,7 +67,7 @@ export default function AdminSettings() {
 
   return (
     <div className="flex flex-col h-full overflow-auto">
-      <Header title="Platform Settings" subtitle="Configure ServiceConnect operations" />
+      <Header title="Platform Settings" subtitle="Configure MatcHvac operations" />
 
       <div className="flex-1 p-6 max-w-3xl space-y-6">
 

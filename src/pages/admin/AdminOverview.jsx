@@ -18,7 +18,7 @@ export default function AdminOverview() {
 
   return (
     <div className="flex flex-col h-full overflow-auto bg-surface-100">
-      <Header title="Platform Overview" subtitle="ServiceConnect Admin" />
+      <Header title="Platform Overview" subtitle="MatcHvac Admin" />
 
       <div className="flex-1 p-6 space-y-5 max-w-6xl">
 

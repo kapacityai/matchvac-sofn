@@ -182,14 +182,15 @@ export default function Website() {
             <div className="flex mb-6">
               <LocationTicker />
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-6 text-surface-900">
-              HVAC Service<br />
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-3 text-surface-900">
+              Certified Pros.<br />
               <span className="relative">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-brand-400 to-accent-500 animate-gradient">
                   On Demand.
                 </span>
               </span>
             </h1>
+            <p className="text-brand-500 font-bold tracking-[0.14em] uppercase text-sm mb-5">matchvac.com</p>
             <p className="text-surface-500 text-xl leading-relaxed mb-8 max-w-lg">
               Book a certified technician in minutes. Real-time GPS tracking, AI-powered diagnostics, and escrow-protected payments — all in one platform.
             </p>
@@ -607,7 +608,7 @@ export default function Website() {
             </div>
           </div>
           <div className="border-t border-surface-200 pt-6 text-center">
-            <p className="text-surface-400 text-sm">© 2026 ServiceConnect. All rights reserved. · Maryland · DMV &amp; Expanding Nationwide</p>
+            <p className="text-surface-400 text-sm">© 2026 MatcHvac. All rights reserved. · Maryland · DMV &amp; Expanding Nationwide</p>
           </div>
         </div>
       </footer>

@@ -179,7 +179,7 @@ function SignupModal({ tier, onClose }) {
             </div>
           </div>
           <p className="text-xs text-surface-500 bg-surface-150/40 rounded-xl px-4 py-3 leading-relaxed">
-            By applying you agree to ServiceConnect's Contractor Partner Terms. Featured listings require a valid contractor's license and proof of insurance.
+            By applying you agree to MatcHvac's Contractor Partner Terms. Featured listings require a valid contractor's license and proof of insurance.
           </p>
           <button
             type="submit"
@@ -235,7 +235,7 @@ export default function ContractorsPage() {
           <h1 className="text-4xl sm:text-5xl font-extrabold text-surface-900 mb-4 leading-tight">
             Grow Your Business With<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">
-              ServiceConnect Referrals
+              MatcHvac Referrals
             </span>
           </h1>
           <p className="text-surface-400 text-lg mb-8 leading-relaxed">
@@ -363,7 +363,7 @@ export default function ContractorsPage() {
 
         {/* Revenue model */}
         <div className="card bg-surface-150/30">
-          <h2 className="text-white font-bold text-xl mb-5 text-center">How ServiceConnect Earns — Full Transparency</h2>
+          <h2 className="text-white font-bold text-xl mb-5 text-center">How MatcHvac Earns — Full Transparency</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
             {[
               { icon: '🔧', title: 'HVAC Job Platform Fees', body: '10–15% fee on every HVAC job completed through the platform, deducted from tech payout.' },

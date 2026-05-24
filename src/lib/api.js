@@ -1,5 +1,5 @@
 /**
- * ServiceConnect API Client
+ * MatcHvac API Client
  * Connects the React frontend to the real backend API.
  * Falls back to mock data when VITE_API_URL is not set (demo mode).
  */

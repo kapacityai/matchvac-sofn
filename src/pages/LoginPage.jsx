@@ -148,7 +148,7 @@ function TechSignup({ onBack }) {
         <div className="space-y-4">
           <div className="card bg-surface-150/50 text-sm text-surface-600 h-28 overflow-y-auto leading-relaxed">
             <p className="font-semibold text-surface-900 mb-1">Independent Contractor Agreement</p>
-            You are an independent contractor, not an employee of ServiceConnect. You will receive a 1099-NEC at year-end for earnings over $600. Platform fee: {form.plan === 'subscription' ? '8% + $149/mo' : '15%'} per job. Off-platform solicitation of customers obtained through ServiceConnect is strictly prohibited and subject to liquidated damages of $5,000 per violation. By clicking Submit you e-sign this agreement and the full Technician Terms of Service.
+            You are an independent contractor, not an employee of MatcHvac. You will receive a 1099-NEC at year-end for earnings over $600. Platform fee: {form.plan === 'subscription' ? '8% + $149/mo' : '15%'} per job. Off-platform solicitation of customers obtained through MatcHvac is strictly prohibited and subject to liquidated damages of $5,000 per violation. By clicking Submit you e-sign this agreement and the full Technician Terms of Service.
           </div>
           <div className="flex items-center gap-2 px-3 py-2 bg-brand-500/10 border border-brand-500/20 rounded-xl">
             <FileText size={13} className="text-brand-400 flex-shrink-0" />
@@ -250,7 +250,7 @@ export default function LoginPage() {
               </div>
             </div>
           </div>
-          <p className="text-surface-600 text-xs">© 2026 ServiceConnect. All rights reserved.</p>
+          <p className="text-surface-600 text-xs">© 2026 MatcHvac. All rights reserved.</p>
         </div>
       </div>
 

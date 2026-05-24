@@ -66,7 +66,7 @@ export default function Sidebar() {
       <div className={`flex items-center ${collapsed ? 'justify-center px-3' : 'px-5'} py-[18px] border-b border-surface-200`}>
         {collapsed ? (
           <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${rc.from} ${rc.to} flex items-center justify-center shadow-sm`}>
-            <span className="text-white text-xs font-black">SC</span>
+            <span className="text-white text-xs font-black">MH</span>
           </div>
         ) : (
           <Logo size="sm" />

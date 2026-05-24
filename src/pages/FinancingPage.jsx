@@ -398,7 +398,7 @@ export default function FinancingPage() {
 
         {/* Disclaimer */}
         <p className="text-center text-surface-600 text-xs max-w-2xl mx-auto">
-          ServiceConnect is not a lender. Financing options are provided by independent third-party partners. Approval is subject to each partner's credit criteria. Rates and terms are subject to change. All soft inquiries have no impact on your credit score.
+          MatcHvac is not a lender. Financing options are provided by independent third-party partners. Approval is subject to each partner's credit criteria. Rates and terms are subject to change. All soft inquiries have no impact on your credit score.
         </p>
       </div>
 
