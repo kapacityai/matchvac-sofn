@@ -221,15 +221,15 @@ export default function LoginPage() {
         </div>
         <div className="relative z-10 flex flex-col h-full p-12">
           <div className="flex items-center justify-between">
-            <Logo size="md" />
+            <Logo size="md" dark />
             <button onClick={() => navigate('/')} className="text-surface-500 hover:text-white text-sm transition-colors">← Website</button>
           </div>
           <div className="flex-1 flex flex-col justify-center">
             <div className="max-w-md">
               <div className="badge badge-blue mb-4">🔧 HVAC On-Demand Marketplace</div>
-              <h2 className="text-4xl font-extrabold text-surface-900 leading-tight mb-4">
-                Fast, Verified HVAC<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">Service On Demand</span>
+              <h2 className="text-4xl font-extrabold text-white leading-tight mb-4">
+                Certified Pros.<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">On Demand.</span>
               </h2>
               <p className="text-surface-400 text-lg leading-relaxed mb-8">
                 Connect with certified HVAC technicians in minutes. Real-time tracking, escrow payments, guaranteed quality.
