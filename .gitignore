@@ -3,9 +3,9 @@ node_modules/
 server/node_modules/
 
 # Environment — never commit secrets
-# .env.local # Removed by Orchids to allow .env files
-# .env.*.local # Removed by Orchids to allow .env files
-# server/.env # Removed by Orchids to allow .env files
+.env.local
+.env.*.local
+server/.env
 
 # Build output
 dist/
