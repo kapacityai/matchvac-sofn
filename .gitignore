@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Environment — never commit secrets
+.env.local
+.env.*.local
+server/.env
+
+# Build output
+dist/
+build/
+
+# Vite cache
+.vite/
+node_modules/.vite/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Orchids runtime files (not needed in repo)
+.orchids/files/
