@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
 import { useAuth } from '../../context/AuthContext'
-import { MOCK_JOBS, SERVICES } from '../../data/mockData'
+import { SERVICES } from '../../data/mockData'
+import { customer as customerApi } from '../../lib/api'
 import { Wrench, ShoppingBag, MapPin, ChevronRight, AlertTriangle, CheckCircle, Clock, Star, Zap, ArrowRight, Shield, DollarSign, Lock, Wind } from 'lucide-react'
-
-const customerJobs = MOCK_JOBS.filter(j => ['j1','j2','j3','j4'].includes(j.id))
 
 export default function CustomerHome() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const firstName = user?.name?.split(' ')[0]
+  const [customerJobs, setCustomerJobs] = useState([])
+
+  useEffect(() => {
+    customerApi.jobs().then(data => {
+      setCustomerJobs(Array.isArray(data) ? data : data?.jobs || [])
+    }).catch(() => setCustomerJobs([]))
+  }, [])
 
   const activeJob = customerJobs.find(j => j.status === 'in_progress')
   const recentJobs = customerJobs.filter(j => j.status === 'completed').slice(0, 2)

@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
-import { MOCK_JOBS } from '../../data/mockData'
+import { customer as customerApi } from '../../lib/api'
 import { CheckCircle, Clock, Wrench, Star, ChevronRight, ArrowRight } from 'lucide-react'
-
-const cJobs = MOCK_JOBS.filter(j => ['j1','j2','j3','j4'].includes(j.id))
 
 const statusConfig = {
   completed: { label: 'Completed', badge: 'badge-green', icon: CheckCircle },
@@ -15,7 +13,16 @@ const statusConfig = {
 export default function CustomerJobs() {
   const navigate = useNavigate()
   const [filter, setFilter] = useState('all')
-  const filtered = filter === 'all' ? cJobs : cJobs.filter(j => j.status === filter)
+  const [jobs, setJobs] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    customerApi.jobs().then(data => {
+      setJobs(Array.isArray(data) ? data : data?.jobs || [])
+    }).catch(() => setJobs([])).finally(() => setLoading(false))
+  }, [])
+
+  const filtered = filter === 'all' ? jobs : jobs.filter(j => j.status === filter)
 
   return (
     <div className="flex flex-col h-full overflow-auto">
@@ -28,6 +35,17 @@ export default function CustomerJobs() {
             </button>
           ))}
         </div>
+        {loading && <div className="text-center text-surface-400 py-12">Loading jobs...</div>}
+        {!loading && filtered.length === 0 && (
+          <div className="text-center py-16">
+            <div className="w-16 h-16 rounded-2xl bg-surface-150 flex items-center justify-center mx-auto mb-4">
+              <Wrench size={28} className="text-surface-400" />
+            </div>
+            <p className="text-surface-900 font-semibold mb-1">No jobs yet</p>
+            <p className="text-surface-400 text-sm mb-5">Book your first service to get started</p>
+            <button onClick={() => navigate('/customer/request')} className="btn-primary px-6">Book a Technician</button>
+          </div>
+        )}
         <div className="space-y-3">
           {filtered.map(job => {
             const sc = statusConfig[job.status] || statusConfig.pending
