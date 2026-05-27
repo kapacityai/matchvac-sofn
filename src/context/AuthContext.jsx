@@ -48,19 +48,14 @@ export function AuthProvider({ children }) {
   }
 
   // ── REGISTER ─────────────────────────────────────────────────
-  const register = async (name, email, password, role) => {
+  const register = async (name, email, role, password, phone) => {
     setError('')
 
     // Live API mode
     if (apiAuth.isLive) {
-      try {
-        const { user: u } = await apiAuth.register({ name, email, password, role })
-        persistUser(u)
-        return u
-      } catch (err) {
-        setError(err.message || 'Registration failed')
-        return null
-      }
+      const { user: u } = await apiAuth.register({ name, email, password, role, phone })
+      persistUser(u)
+      return u
     }
 
     // Demo mode

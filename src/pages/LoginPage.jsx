@@ -7,51 +7,66 @@ import { Eye, EyeOff, Zap, Shield, MapPin, ArrowRight, Upload, CheckCircle, File
 // ── Customer Signup ──────────────────────────────────────────────────────────
 function CustomerSignup({ onBack }) {
   const { register } = useAuth()
-  const [step, setStep] = useState(0)
-  const [form, setForm] = useState({ name: '', email: '', phone: '', address: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', address: '', password: '', confirm: '' })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [show, setShow] = useState(false)
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
-  const finish = () => register(form.name || 'New Customer', form.email || 'newcustomer@demo.com', 'customer')
+  const finish = async () => {
+    if (!form.name || !form.email || !form.password) return setError('Name, email and password are required.')
+    if (form.password.length < 8) return setError('Password must be at least 8 characters.')
+    if (form.password !== form.confirm) return setError('Passwords do not match.')
+    setError('')
+    setLoading(true)
+    try {
+      await register(form.name, form.email, 'customer', form.password, form.phone)
+    } catch (e) {
+      setError(e.message || 'Registration failed. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="w-full max-w-sm mx-auto animate-slide-up">
       <button onClick={onBack} className="text-surface-400 hover:text-surface-900 text-sm mb-6 flex items-center gap-1">← Back to sign in</button>
       <h2 className="text-2xl font-bold text-surface-900 mb-1">Create Customer Account</h2>
-      <p className="text-surface-400 text-sm mb-6">Book HVAC service in minutes</p>
+      <p className="text-surface-400 text-sm mb-6">Book HVAC service in minutes — no card required to sign up</p>
 
-      {step === 0 && (
-        <div className="space-y-4">
-          <div><label className="label">Full Name</label><input className="input" placeholder="Jane Smith" value={form.name} onChange={set('name')} /></div>
-          <div><label className="label">Email Address</label><input className="input" type="email" placeholder="jane@email.com" value={form.email} onChange={set('email')} /></div>
-          <div><label className="label">Phone (for SMS updates)</label><input className="input" type="tel" placeholder="(555) 000-0000" value={form.phone} onChange={set('phone')} /></div>
-          <div><label className="label">Service Address</label><input className="input" placeholder="123 Main St, City, State ZIP" value={form.address} onChange={set('address')} /></div>
-          <button onClick={() => setStep(1)} className="btn-primary w-full py-3">Continue <ArrowRight size={16} /></button>
+      <div className="space-y-4">
+        <div><label className="label">Full Name</label><input className="input" placeholder="Jane Smith" value={form.name} onChange={set('name')} /></div>
+        <div><label className="label">Email Address</label><input className="input" type="email" placeholder="jane@email.com" value={form.email} onChange={set('email')} /></div>
+        <div><label className="label">Phone (for SMS updates)</label><input className="input" type="tel" placeholder="(555) 000-0000" value={form.phone} onChange={set('phone')} /></div>
+        <div><label className="label">Service Address <span className="text-surface-500 font-normal">(optional)</span></label><input className="input" placeholder="123 Main St, City, State ZIP" value={form.address} onChange={set('address')} /></div>
+        <div>
+          <label className="label">Password</label>
+          <div className="relative">
+            <input className="input pr-11" type={show ? 'text' : 'password'} placeholder="Min. 8 characters" value={form.password} onChange={set('password')} />
+            <button type="button" onClick={() => setShow(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-500 hover:text-white">
+              {show ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          </div>
         </div>
-      )}
+        <div><label className="label">Confirm Password</label><input className="input" type="password" placeholder="Re-enter password" value={form.confirm} onChange={set('confirm')} /></div>
 
-      {step === 1 && (
-        <div className="space-y-4">
-          <p className="text-surface-400 text-sm">Add a payment method. Funds are held in escrow until job completion.</p>
-          <div><label className="label">Card Number</label><input className="input font-mono" placeholder="4242 4242 4242 4242" /></div>
-          <div className="grid grid-cols-2 gap-3">
-            <div><label className="label">Expiry</label><input className="input" placeholder="MM / YY" /></div>
-            <div><label className="label">CVC</label><input className="input" placeholder="123" /></div>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-surface-400">
-            <Shield size={14} className="text-emerald-400" /> Secured by Stripe — never stored on our servers
-          </div>
-          <div className="flex gap-3">
-            <button onClick={() => setStep(0)} className="btn-secondary flex-1">Back</button>
-            <button onClick={finish} className="btn-primary flex-1">Create Account</button>
-          </div>
-          <p className="text-surface-600 text-xs text-center mt-2">
-            By creating an account you agree to our{' '}
-            <a href="/terms?tab=customer" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">Customer Terms of Service</a>
-            {' '}and{' '}
-            <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">General Terms</a>.
-          </p>
+        {error && <div className="px-4 py-3 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-sm">{error}</div>}
+
+        <div className="flex items-start gap-2 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+          <Shield size={14} className="text-emerald-400 mt-0.5 flex-shrink-0" />
+          <p className="text-emerald-400 text-xs">Payment info is only needed when you book a service — not to create your account.</p>
         </div>
-      )}
+
+        <button onClick={finish} disabled={loading} className="btn-primary w-full py-3">
+          {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" /> : 'Create Account'}
+        </button>
+        <p className="text-surface-600 text-xs text-center">
+          By creating an account you agree to our{' '}
+          <a href="/terms?tab=customer" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">Customer Terms</a>
+          {' '}and{' '}
+          <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">General Terms</a>.
+        </p>
+      </div>
     </div>
   )
 }
