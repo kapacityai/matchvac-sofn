@@ -6,7 +6,7 @@ import { Check, Zap, Shield, Star, TrendingUp, ChevronRight, Crown, Award } from
 const TIER_STYLES = {
   free:  { ring: 'border-surface-200',          bg: 'from-navy-800/60 to-navy-900',   icon: Shield,  iconColor: 'text-surface-400', iconBg: 'bg-surface-700' },
   pro:   { ring: 'border-brand-500/50',       bg: 'from-brand-900/40 to-navy-900',     icon: Zap,     iconColor: 'text-brand-400',   iconBg: 'bg-brand-500/20' },
-  elite: { ring: 'border-accent-500/50',      bg: 'from-accent-900/40 to-navy-900',    icon: Crown,   iconColor: 'text-accent-400',  iconBg: 'bg-accent-500/20' },
+  elite: { ring: 'border-brand-500/50',      bg: 'from-accent-900/40 to-navy-900',    icon: Crown,   iconColor: 'text-brand-400',  iconBg: 'bg-brand-100' },
 }
 
 // Breakeven calculator: at what monthly job volume does upgrading pay for itself?
@@ -58,9 +58,9 @@ export default function TechSubscription() {
         )}
 
         {/* Current plan callout */}
-        <div className="rounded-2xl bg-gradient-to-r from-accent-900/30 to-navy-900 border border-accent-500/30 p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-accent-500/20 flex items-center justify-center flex-shrink-0">
-            <Crown size={24} className="text-accent-400" />
+        <div className="rounded-2xl bg-gradient-to-r from-accent-900/30 to-navy-900 border border-brand-500/30 p-5 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-brand-100 flex items-center justify-center flex-shrink-0">
+            <Crown size={24} className="text-brand-400" />
           </div>
           <div className="flex-1">
             <p className="text-surface-400 text-sm">Your Current Plan</p>
@@ -84,7 +84,7 @@ export default function TechSubscription() {
           {[
             { label: 'Standard Fee', value: '15%', sub: '0 jobs/mo advantage', color: 'text-surface-400' },
             { label: 'Pro Fee', value: '11%', sub: 'Save $8.80 per $220 job', color: 'text-brand-400' },
-            { label: 'Elite Fee', value: '8%', sub: 'Save $15.40 per $220 job', color: 'text-accent-400' },
+            { label: 'Elite Fee', value: '8%', sub: 'Save $15.40 per $220 job', color: 'text-brand-400' },
           ].map(s => (
             <div key={s.label} className="stat-card text-center">
               <p className={`text-2xl font-extrabold ${s.color}`}>{s.value}</p>
@@ -108,7 +108,7 @@ export default function TechSubscription() {
               >
                 {/* Badge */}
                 {tier.badge && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-accent-500 to-brand-500 text-surface-900 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-lg">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-500 to-brand-500 text-surface-900 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-lg">
                     {tier.badge}
                   </div>
                 )}
@@ -136,7 +136,7 @@ export default function TechSubscription() {
                 </div>
 
                 {/* Fee highlight */}
-                <div className={`rounded-xl px-3 py-2 mb-4 ${key === 'elite' ? 'bg-accent-500/15 border border-accent-500/30' : key === 'pro' ? 'bg-brand-500/15 border border-brand-500/30' : 'bg-surface-150 border border-surface-200'}`}>
+                <div className={`rounded-xl px-3 py-2 mb-4 ${key === 'elite' ? 'bg-brand-500/15 border border-brand-500/30' : key === 'pro' ? 'bg-brand-500/15 border border-brand-500/30' : 'bg-surface-150 border border-surface-200'}`}>
                   <p className="text-surface-400 text-xs">Platform fee per job</p>
                   <p className={`text-xl font-extrabold ${style.iconColor}`}>{tier.platformFee * 100}%</p>
                   {tier.price > 0 && (
@@ -166,7 +166,7 @@ export default function TechSubscription() {
                     isActive
                       ? 'bg-surface-700 text-surface-400 cursor-default'
                       : key === 'elite'
-                      ? 'bg-accent-500 hover:bg-accent-600 text-surface-900 active:scale-[0.98]'
+                      ? 'bg-brand-500 hover:bg-brand-600 text-white active:scale-[0.98]'
                       : key === 'pro'
                       ? 'bg-brand-500 hover:bg-brand-600 text-surface-900 active:scale-[0.98]'
                       : 'btn-secondary'
@@ -217,7 +217,7 @@ export default function TechSubscription() {
                       <td className="py-3 text-right text-surface-400">${avg}</td>
                       <td className="py-3 text-right text-rose-400 font-medium">−${stdFee.toLocaleString()}</td>
                       <td className="py-3 text-right text-brand-400 font-medium">−${proFee.toFixed(0)}</td>
-                      <td className="py-3 text-right text-accent-400 font-medium">−${eliteFee.toFixed(0)}</td>
+                      <td className="py-3 text-right text-brand-400 font-medium">−${eliteFee.toFixed(0)}</td>
                       <td className="py-3 text-right font-bold">
                         <span className={eliteSavings > 0 ? 'text-emerald-400' : 'text-rose-400'}>
                           {eliteSavings > 0 ? '+' : ''}${eliteSavings.toFixed(0)}/mo

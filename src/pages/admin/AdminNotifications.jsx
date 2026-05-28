@@ -4,7 +4,7 @@ import { Bell, CheckCircle, AlertTriangle, Info, User, Briefcase, DollarSign, Sh
 
 const TYPE_CONFIG = {
   alert:   { icon: AlertTriangle, color: 'text-rose-400',    bg: 'bg-rose-400/10',    badge: 'badge-red',    dot: 'bg-rose-400' },
-  info:    { icon: Info,          color: 'text-brand-400',   bg: 'bg-brand-400/10',   badge: 'badge-blue',   dot: 'bg-brand-400' },
+  info:    { icon: Info,          color: 'text-brand-400',   bg: 'bg-brand-400/10',   badge: 'badge-teal',   dot: 'bg-brand-400' },
   success: { icon: CheckCircle,   color: 'text-emerald-400', bg: 'bg-emerald-400/10', badge: 'badge-green',  dot: 'bg-emerald-400' },
   warning: { icon: AlertTriangle, color: 'text-amber-400',   bg: 'bg-amber-400/10',   badge: 'badge-yellow', dot: 'bg-amber-400' },
 }

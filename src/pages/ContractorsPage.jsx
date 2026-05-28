@@ -95,7 +95,7 @@ function SignupModal({ tier, onClose }) {
         <div className="relative mx-auto mb-6 w-16 h-16">
           <div className="absolute inset-0 bg-brand-500/20 rounded-full animate-ping" />
           <div className="relative w-16 h-16 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center">
-            <CheckCircle size={32} className="text-brand-400" />
+            <CheckCircle size={32} className="text-brand-500" />
           </div>
         </div>
         <h3 className="text-2xl font-bold text-surface-900 mb-2">Application Submitted!</h3>
@@ -234,7 +234,7 @@ export default function ContractorsPage() {
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-surface-900 mb-4 leading-tight">
             Grow Your Business With<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">
               MatcHvac Referrals
             </span>
           </h1>
@@ -244,9 +244,9 @@ export default function ContractorsPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             {[
-              { icon: Users, text: '2,400+ active homeowners', color: 'text-brand-400' },
+              { icon: Users, text: '2,400+ active homeowners', color: 'text-brand-500' },
               { icon: MapPin, text: '15 cities & growing', color: 'text-emerald-400' },
-              { icon: TrendingUp, text: 'Avg. 12 leads/mo per partner', color: 'text-accent-400' },
+              { icon: TrendingUp, text: 'Avg. 12 leads/mo per partner', color: 'text-brand-500' },
             ].map(({ icon: Icon, text, color }) => (
               <div key={text} className="flex items-center gap-2 bg-surface-100 px-4 py-2 rounded-xl border border-surface-200">
                 <Icon size={14} className={color} />
@@ -262,9 +262,9 @@ export default function ContractorsPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { icon: DollarSign, title: 'Pay Only for Results', body: 'Referral-based model — you pay a small fee only when a job is completed, not per click.', color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-              { icon: Bell, title: 'In-App Placement', body: 'Featured contractors are shown to customers immediately after their HVAC job is complete — exactly when they need you.', color: 'text-brand-400', bg: 'bg-brand-400/10' },
+              { icon: Bell, title: 'In-App Placement', body: 'Featured contractors are shown to customers immediately after their HVAC job is complete — exactly when they need you.', color: 'text-brand-500', bg: 'bg-brand-400/10' },
               { icon: Award, title: 'Verified Badge', body: 'Stand out with a Verified Partner badge that signals trust and quality to every potential customer.', color: 'text-amber-400', bg: 'bg-amber-400/10' },
-              { icon: BarChart3, title: 'Full Analytics', body: 'Track impressions, referrals, and completed jobs from your contractor dashboard in real time.', color: 'text-accent-400', bg: 'bg-accent-400/10' },
+              { icon: BarChart3, title: 'Full Analytics', body: 'Track impressions, referrals, and completed jobs from your contractor dashboard in real time.', color: 'text-brand-500', bg: 'bg-brand-50' },
             ].map(item => (
               <div key={item.title} className="text-center">
                 <div className={`w-11 h-11 rounded-2xl ${item.bg} flex items-center justify-center mx-auto mb-3`}>
@@ -304,13 +304,13 @@ export default function ContractorsPage() {
                   tier.highlight
                     ? 'border-brand-500 shadow-lg shadow-brand-500/10'
                     : tier.id === 'featured'
-                    ? 'border-accent-500/50'
+                    ? 'border-brand-500/50'
                     : 'border-surface-200'
                 }`}
               >
                 {tier.badge && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className={`badge px-3 py-1 font-bold text-xs ${tier.id === 'featured' ? 'badge-purple' : 'badge-blue'}`}>
+                    <span className={`badge px-3 py-1 font-bold text-xs ${tier.id === 'featured' ? 'badge-purple' : 'badge-teal'}`}>
                       {tier.badge}
                     </span>
                   </div>
@@ -346,7 +346,7 @@ export default function ContractorsPage() {
                     tier.highlight
                       ? 'btn-primary'
                       : tier.id === 'featured'
-                      ? 'bg-accent-500 hover:bg-accent-600 text-surface-900'
+                      ? 'btn-primary'
                       : 'btn-secondary'
                   }`}
                 >

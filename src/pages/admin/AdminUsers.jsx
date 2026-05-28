@@ -39,7 +39,7 @@ export default function AdminUsers() {
               return (
                 <div key={tech.id} className={`card ${isPending ? 'border-amber-500/30 bg-amber-500/5' : ''}`}>
                   <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-sm font-bold text-surface-900 flex-shrink-0">
+                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-sm font-bold text-surface-900 flex-shrink-0">
                       {tech.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -123,7 +123,7 @@ export default function AdminUsers() {
                   <tr key={c.id} className={`${i < MOCK_CUSTOMERS.length - 1 ? 'border-b border-surface-150' : ''} hover:bg-white/5 transition-colors`}>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                           {c.name.split(' ').map(n => n[0]).join('')}
                         </div>
                         <div>

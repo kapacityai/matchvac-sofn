@@ -390,7 +390,7 @@ export default function TermsOfService() {
       <div className="max-w-5xl mx-auto px-6 py-12">
         {/* Hero */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 badge badge-blue mb-4 text-sm px-4 py-1.5">
+          <div className="inline-flex items-center gap-2 badge badge-teal mb-4 text-sm px-4 py-1.5">
             <Shield size={14} /> Terms of Service
           </div>
           <h1 className="text-4xl font-extrabold text-surface-900 mb-3">MatcHvac Terms of Service</h1>

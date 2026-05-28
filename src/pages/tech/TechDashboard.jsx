@@ -27,17 +27,17 @@ export default function TechDashboard() {
         {/* Subscription banner */}
         <div
           onClick={() => navigate('/tech/subscription')}
-          className="cursor-pointer group relative overflow-hidden flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-accent-400 bg-white hover:border-accent-500 hover:shadow-md transition-all"
+          className="cursor-pointer group relative overflow-hidden flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-brand-400 bg-white hover:border-brand-500 hover:shadow-md transition-all"
         >
-          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent-500 to-transparent" />
-          <div className="w-9 h-9 rounded-xl bg-accent-500/10 flex items-center justify-center flex-shrink-0">
-            <Crown size={17} className="text-accent-500" />
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-brand-500 to-transparent" />
+          <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center flex-shrink-0">
+            <Crown size={17} className="text-brand-500" />
           </div>
           <div className="flex-1 min-w-0">
             <span className="text-surface-900 font-bold text-sm">{subTier.name} Plan Active</span>
             <span className="text-surface-500 text-xs ml-2">· {(subTier.platformFee * 100).toFixed(0)}% fee · Priority dispatch enabled</span>
           </div>
-          <span className="text-accent-500 text-xs font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
+          <span className="text-brand-500 text-xs font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
             Manage <ChevronRight size={13} />
           </span>
         </div>
@@ -48,7 +48,7 @@ export default function TechDashboard() {
             { label: "Today's Earnings", value: '$466', sub: '+2 jobs today', icon: DollarSign, color: 'text-emerald-600', bg: 'bg-emerald-100', border: 'border-emerald-200' },
             { label: 'Jobs This Week',   value: '6',    sub: '247 all time',  icon: Briefcase,   color: 'text-brand-500',   bg: 'bg-brand-100',   border: 'border-brand-200' },
             { label: 'Rating',           value: '4.9',  sub: '247 reviews',   icon: Star,        color: 'text-amber-600',   bg: 'bg-amber-100',   border: 'border-amber-200' },
-            { label: 'YTD Earnings',     value: '$42.8k', sub: 'Net after fees', icon: TrendingUp, color: 'text-accent-500', bg: 'bg-accent-500/10', border: 'border-accent-400/30' },
+            { label: 'YTD Earnings',     value: '$42.8k', sub: 'Net after fees', icon: TrendingUp, color: 'text-brand-500', bg: 'bg-brand-50', border: 'border-brand-400/30' },
           ].map(s => (
             <div key={s.label} className={`relative overflow-hidden bg-white border ${s.border} rounded-2xl p-4 shadow-sm`}>
               <div className={`w-9 h-9 rounded-xl ${s.bg} flex items-center justify-center mb-3`}>

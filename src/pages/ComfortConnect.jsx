@@ -40,8 +40,8 @@ const BENEFITS_RIGHT = [
 ]
 
 const EQUIPMENT = [
-  { Icon: Thermometer, label: 'HVAC Systems &\nHeat Pumps',               color: 'text-brand-400' },
-  { Icon: Droplets,   label: 'Tank, Tankless, &\nHeat Pump Water Heaters', color: 'text-accent-400' },
+  { Icon: Thermometer, label: 'HVAC Systems &\nHeat Pumps',               color: 'text-brand-500' },
+  { Icon: Droplets,   label: 'Tank, Tankless, &\nHeat Pump Water Heaters', color: 'text-brand-500' },
   { Icon: Wind,       label: 'Water Purification\nSystems',                color: 'text-accent-300' },
   { Icon: Zap,        label: 'Standby\nGenerators',                        color: 'text-amber-400' },
 ]
@@ -90,7 +90,7 @@ export default function ComfortConnect() {
       </nav>
 
       {/* Hero */}
-      <section className="py-14 px-6 text-center bg-gradient-to-b from-[#003478]/20 to-navy-950 border-b border-surface-200">
+      <section className="py-14 px-6 text-center bg-gradient-to-b from-[#003478]/20 to-navy-900 border-b border-surface-200">
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-center mb-5">
             <CCLogo size="lg" />
@@ -103,10 +103,10 @@ export default function ComfortConnect() {
             Make Your Entire Home Comfortable And Worry-Free With Low Monthly Payments.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
-            <span className="badge badge-blue px-3 py-1.5">No Up-Front Costs</span>
+            <span className="badge badge-teal px-3 py-1.5">No Up-Front Costs</span>
             <span className="badge badge-green px-3 py-1.5">Includes All Repairs</span>
             <span className="badge badge-purple px-3 py-1.5">24/7 Priority Service</span>
-            <span className="badge badge-blue px-3 py-1.5">Transferable</span>
+            <span className="badge badge-teal px-3 py-1.5">Transferable</span>
           </div>
         </div>
       </section>
@@ -163,7 +163,7 @@ export default function ComfortConnect() {
           {/* Pre-qual form */}
           <div id="prequal" className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 badge badge-blue px-4 py-2 text-sm mb-3">
+              <div className="inline-flex items-center gap-2 badge badge-teal px-4 py-2 text-sm mb-3">
                 <Shield size={14} /> Soft credit check — won't affect your score
               </div>
               <h2 className="text-3xl font-extrabold text-surface-900 mb-2">Find an Authorized Dealer Near You</h2>
@@ -296,9 +296,9 @@ function ConfirmationScreen({ form, navigate }) {
         <div className="card text-left space-y-4 mb-8">
           <h3 className="text-white font-bold text-center mb-2">What Happens Next</h3>
           {[
-            { icon: Phone, color: 'text-brand-400', bg: 'bg-brand-400/10', step: '1', title: 'A local dealer will call you', sub: `Expect a call to ${form.phone} within 24 hours to confirm your consultation.` },
+            { icon: Phone, color: 'text-brand-500', bg: 'bg-brand-400/10', step: '1', title: 'A local dealer will call you', sub: `Expect a call to ${form.phone} within 24 hours to confirm your consultation.` },
             { icon: MapPin, color: 'text-emerald-400', bg: 'bg-emerald-400/10', step: '2', title: 'Free in-home consultation', sub: 'Your authorized contractor will assess your home and recommend the right system.' },
-            { icon: Wrench, color: 'text-accent-400', bg: 'bg-accent-400/10', step: '3', title: 'Professional installation', sub: 'Equipment installed by certified technicians — covered under the Premier Program from day one.' },
+            { icon: Wrench, color: 'text-brand-500', bg: 'bg-brand-50', step: '3', title: 'Professional installation', sub: 'Equipment installed by certified technicians — covered under the Premier Program from day one.' },
             { icon: Shield, color: 'text-amber-400', bg: 'bg-amber-400/10', step: '4', title: 'Worry-free from here on', sub: 'All maintenance, repairs, and consumables included with your low monthly payment.' },
           ].map(item => (
             <div key={item.step} className="flex items-start gap-3">

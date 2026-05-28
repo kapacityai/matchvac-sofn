@@ -52,10 +52,10 @@ export default function TechEarnings() {
         {/* Subscription plan banner */}
         <div
           onClick={() => navigate('/tech/subscription')}
-          className="cursor-pointer rounded-2xl border border-accent-500/40 bg-gradient-to-r from-accent-900/30 to-navy-900 hover:border-accent-400 transition-all flex items-center gap-4 px-5 py-4"
+          className="cursor-pointer rounded-2xl border border-brand-500/40 bg-gradient-to-r from-accent-900/30 to-navy-900 hover:border-brand-400 transition-all flex items-center gap-4 px-5 py-4"
         >
-          <div className="w-10 h-10 rounded-xl bg-accent-500/20 flex items-center justify-center flex-shrink-0">
-            <Crown size={20} className="text-accent-400" />
+          <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center flex-shrink-0">
+            <Crown size={20} className="text-brand-400" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2">
@@ -66,7 +66,7 @@ export default function TechEarnings() {
               Saving {15 - Number(feePct)}% vs Standard on every job · ${subTier.price}/mo
             </p>
           </div>
-          <div className="flex items-center gap-1 text-accent-400 text-sm font-medium flex-shrink-0">
+          <div className="flex items-center gap-1 text-brand-400 text-sm font-medium flex-shrink-0">
             Manage <ChevronRight size={15} />
           </div>
         </div>
@@ -163,7 +163,7 @@ export default function TechEarnings() {
                     <td className="px-5 py-3 text-right text-rose-400">−${job.calcFee.toFixed(2)}</td>
                     <td className="px-5 py-3 text-right text-emerald-400 font-bold">${job.calcNet.toFixed(2)}</td>
                     <td className="px-5 py-3 text-center">
-                      <span className={`badge ${job.status === 'completed' ? 'badge-green' : 'badge-blue'}`}>
+                      <span className={`badge ${job.status === 'completed' ? 'badge-green' : 'badge-teal'}`}>
                         {job.status === 'completed' ? 'Paid' : 'Pending'}
                       </span>
                     </td>
@@ -184,7 +184,7 @@ export default function TechEarnings() {
 
           {/* Fee savings callout */}
           <div className="mt-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 flex items-center gap-3">
-            <Crown size={16} className="text-accent-400 flex-shrink-0" />
+            <Crown size={16} className="text-brand-400 flex-shrink-0" />
             <p className="text-surface-300 text-xs leading-relaxed">
               <span className="text-white font-semibold">Elite plan saving:</span>{' '}
               At Standard (15%) these jobs would have cost{' '}

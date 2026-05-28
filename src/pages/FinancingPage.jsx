@@ -229,7 +229,7 @@ const PARTNERS = [
 ]
 
 const TYPE_COLORS = {
-  subscription: 'badge-blue',
+  subscription: 'badge-teal',
   loan: 'badge-green',
   rto: 'badge-yellow',
   lto: 'badge-purple',
@@ -259,12 +259,12 @@ export default function FinancingPage() {
       <div className="max-w-5xl mx-auto px-6 py-14 space-y-12">
         {/* Header */}
         <div className="text-center">
-          <div className="badge badge-blue px-4 py-1.5 text-sm mb-4 inline-flex items-center gap-2">
+          <div className="badge badge-teal px-4 py-1.5 text-sm mb-4 inline-flex items-center gap-2">
             <DollarSign size={14} /> HVAC Financing Options
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-surface-900 mb-3">
             Flexible Financing<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">For Every Situation</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">For Every Situation</span>
           </h1>
           <p className="text-surface-400 text-lg max-w-2xl mx-auto">
             From no-credit-needed rent-to-own to all-inclusive monthly subscriptions — find the right payment option for your home comfort needs.
@@ -283,7 +283,7 @@ export default function FinancingPage() {
             onClick={() => navigate('/comfort-connect')}
             className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-lg transition-all"
           >
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-brand-400 to-brand-400" />
             {/* Header bar */}
             <div className="bg-brand-50 border-b border-brand-100 px-5 py-3 flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-3">

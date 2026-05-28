@@ -24,7 +24,7 @@ export default function AdminAds() {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="text-white font-bold text-lg">Comfort Connect Premier Program</h3>
-                <span className="badge badge-blue">Featured Sponsor</span>
+                <span className="badge badge-teal">Featured Sponsor</span>
               </div>
               <p className="text-surface-400 text-sm mb-2">Permanent featured placement — homepage, service flow, and job completion screen.</p>
               <div className="flex gap-6 text-sm">

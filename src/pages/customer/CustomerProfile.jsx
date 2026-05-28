@@ -65,7 +65,7 @@ export default function CustomerProfile() {
         {/* Avatar + name hero */}
         <div className="card flex items-center gap-5">
           <div className="relative flex-shrink-0">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-2xl font-extrabold text-surface-900">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-2xl font-extrabold text-surface-900">
               {initials}
             </div>
             <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-surface-700 border border-white/20 flex items-center justify-center hover:bg-surface-600 transition-colors">

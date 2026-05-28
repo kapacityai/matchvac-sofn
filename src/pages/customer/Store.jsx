@@ -60,7 +60,7 @@ export default function Store() {
           onClick={() => navigate('/comfort-connect')}
           className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-md transition-all"
         >
-          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-brand-400 to-brand-400" />
           {/* Header bar */}
           <div className="px-5 py-2.5 border-b border-brand-100 flex items-center justify-between bg-brand-50">
             <div className="flex items-center gap-2">
@@ -109,7 +109,7 @@ export default function Store() {
               <div className="flex items-start gap-3 mb-3">
                 <div className="text-4xl">{product.image}</div>
                 <div className="flex-1 min-w-0">
-                  {product.badge && <span className="badge badge-blue mb-1">{product.badge}</span>}
+                  {product.badge && <span className="badge badge-teal mb-1">{product.badge}</span>}
                   <p className="text-white font-semibold text-sm leading-tight">{product.name}</p>
                   <p className="text-surface-400 text-xs mt-0.5 leading-relaxed">{product.description}</p>
                 </div>

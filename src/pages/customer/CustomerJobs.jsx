@@ -6,7 +6,7 @@ import { CheckCircle, Clock, Wrench, Star, ChevronRight, ArrowRight } from 'luci
 
 const statusConfig = {
   completed: { label: 'Completed', badge: 'badge-green', icon: CheckCircle },
-  in_progress: { label: 'In Progress', badge: 'badge-blue', icon: Wrench },
+  in_progress: { label: 'In Progress', badge: 'badge-teal', icon: Wrench },
   pending: { label: 'Pending', badge: 'badge-yellow', icon: Clock },
 }
 

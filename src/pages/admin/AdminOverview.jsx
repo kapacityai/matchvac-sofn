@@ -47,7 +47,7 @@ export default function AdminOverview() {
             { label: 'Total Customers',  value: MOCK_CUSTOMERS.length, sub: '+3 this week',     icon: Users,      color: 'text-brand-500',   bg: 'bg-brand-100',   border: 'border-brand-200',   trend: '+12%' },
             { label: 'Active Techs',     value: MOCK_TECHS.filter(t => t.status === 'active').length, sub: `${pendingTechs} pending`, icon: UserCheck, color: 'text-emerald-600', bg: 'bg-emerald-100', border: 'border-emerald-200', trend: '+4%' },
             { label: 'Active Jobs',      value: activeJobs,             sub: `${urgentJobs} urgent`,  icon: Briefcase,  color: 'text-amber-600',   bg: 'bg-amber-100',   border: 'border-amber-200',   trend: null },
-            { label: 'May Revenue',      value: '$4,800',               sub: '+14% vs Apr',     icon: DollarSign, color: 'text-accent-500',  bg: 'bg-accent-500/10',  border: 'border-accent-400/30',  trend: '+14%' },
+            { label: 'May Revenue',      value: '$4,800',               sub: '+14% vs Apr',     icon: DollarSign, color: 'text-brand-500',  bg: 'bg-brand-50',  border: 'border-brand-400/30',  trend: '+14%' },
           ].map(s => (
             <div key={s.label} className={`relative overflow-hidden bg-white border ${s.border} rounded-2xl p-4 shadow-sm`}>
               <div className="flex items-start justify-between mb-3">

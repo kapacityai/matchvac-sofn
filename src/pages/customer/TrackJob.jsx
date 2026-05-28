@@ -7,7 +7,7 @@ const TIMELINE = [
   { key: 'accepted', icon: CheckCircle, label: 'Job Accepted', sub: 'Marcus is on the way', color: 'text-emerald-400', bg: 'bg-emerald-400' },
   { key: 'enroute', icon: Car, label: 'En Route', sub: 'ETA: ~12 minutes', color: 'text-brand-400', bg: 'bg-brand-400' },
   { key: 'arrived', icon: MapPin, label: 'Arrived', sub: 'Tech has arrived', color: 'text-amber-400', bg: 'bg-amber-400' },
-  { key: 'working', icon: Wrench, label: 'Work in Progress', sub: 'Diagnostics underway', color: 'text-accent-400', bg: 'bg-accent-400' },
+  { key: 'working', icon: Wrench, label: 'Work in Progress', sub: 'Diagnostics underway', color: 'text-brand-500', bg: 'bg-brand-500' },
   { key: 'photos', icon: Camera, label: 'Completion Photos', sub: 'Photos uploaded by tech', color: 'text-purple-400', bg: 'bg-purple-400' },
   { key: 'complete', icon: CheckCircle, label: 'Marked Complete by Tech', sub: 'Awaiting your confirmation', color: 'text-emerald-400', bg: 'bg-emerald-400' },
 ]
@@ -114,7 +114,7 @@ export default function TrackJob() {
 
         {/* Tech card */}
         <div className="card flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xl font-bold text-surface-900 flex-shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xl font-bold text-surface-900 flex-shrink-0">
             MR
           </div>
           <div className="flex-1">
@@ -157,7 +157,7 @@ export default function TrackJob() {
                   <div className="pb-4">
                     <p className={`text-sm font-semibold ${active ? 'text-white' : done ? 'text-surface-300' : 'text-surface-600'}`}>{item.label}</p>
                     <p className={`text-xs mt-0.5 ${active ? item.color : done ? 'text-surface-400' : 'text-surface-700'}`}>{item.sub}</p>
-                    {active && !paymentReleased && <span className="badge badge-blue mt-1">Current</span>}
+                    {active && !paymentReleased && <span className="badge badge-teal mt-1">Current</span>}
                     {active && paymentReleased && <span className="badge badge-green mt-1">Confirmed ✓</span>}
                   </div>
                 </div>
@@ -243,7 +243,7 @@ export default function TrackJob() {
           onClick={() => navigate('/comfort-connect')}
           className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-md transition-all"
         >
-          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-brand-400 to-brand-400" />
           <div className="flex items-center gap-3 px-4 py-3.5">
             <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-xl flex-shrink-0">❄️</div>
             <div className="flex-1 min-w-0">
@@ -276,7 +276,7 @@ export default function TrackJob() {
       {showRating && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="card max-w-sm w-full text-center">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-2xl font-bold text-surface-900 mx-auto mb-4">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-2xl font-bold text-surface-900 mx-auto mb-4">
               MR
             </div>
             <h3 className="text-xl font-bold text-surface-900 mb-1">Rate Your Experience</h3>

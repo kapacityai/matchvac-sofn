@@ -59,8 +59,8 @@ const TIERS = [
     price: 1499,
     period: '/mo',
     badge: 'Best Visibility',
-    color: 'border-accent-500',
-    btnClass: 'bg-accent-500 hover:bg-accent-600 text-surface-900 font-semibold px-5 py-2.5 rounded-xl transition-all active:scale-95 flex items-center gap-2 justify-center',
+    color: 'border-brand-500',
+    btnClass: 'btn-primary flex items-center gap-2 justify-center',
     features: [
       'Everything in Growth',
       'Priority customer matching at booking',
@@ -165,7 +165,7 @@ function ApplicationForm({ tier, onClose }) {
               <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2">
                   <p className="text-white font-semibold">{t.name}</p>
-                  {t.badge && <span className="badge badge-blue">{t.badge}</span>}
+                  {t.badge && <span className="badge badge-teal">{t.badge}</span>}
                 </div>
                 <p className="text-white font-bold">${t.price.toLocaleString()}<span className="text-surface-400 font-normal text-xs">/mo</span></p>
               </div>
@@ -242,13 +242,13 @@ export default function LendingPartners() {
       <section className="relative overflow-hidden py-24 px-6 border-b border-surface-200">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-500/8 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent-500/8 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-brand-500/6 rounded-full blur-3xl" />
         </div>
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="badge badge-blue mb-5">💳 Lending & Financing Partners</div>
+          <div className="badge badge-teal mb-5">💳 Lending & Financing Partners</div>
           <h1 className="text-5xl sm:text-6xl font-extrabold leading-tight tracking-tight mb-6">
             Reach Homeowners <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-accent-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">
               Ready to Finance
             </span>
           </h1>
@@ -338,7 +338,7 @@ export default function LendingPartners() {
                 </div>
                 <p className="text-white text-sm font-semibold">{p.label}</p>
                 <p className="text-surface-400 text-xs leading-relaxed flex-1">{p.detail}</p>
-                <span className="badge badge-blue self-start">{p.badge}</span>
+                <span className="badge badge-teal self-start">{p.badge}</span>
               </div>
             ))}
           </div>
@@ -357,7 +357,7 @@ export default function LendingPartners() {
               <div key={tier.key} className={`card border-2 ${tier.color} flex flex-col relative`}>
                 {tier.badge && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className={`badge ${tier.key === 'premier' ? 'badge-purple' : 'badge-blue'} px-3 py-1`}>{tier.badge}</span>
+                    <span className={`badge ${tier.key === 'premier' ? 'badge-purple' : 'badge-teal'} px-3 py-1`}>{tier.badge}</span>
                   </div>
                 )}
                 <div className="mb-5">
@@ -406,7 +406,7 @@ export default function LendingPartners() {
                 </div>
                 <p className="text-white font-semibold text-sm">{p.name}</p>
                 <p className="text-surface-400 text-xs">{p.category}</p>
-                <span className={`badge self-center ${p.tier === 'Premier' ? 'badge-purple' : p.tier === 'Growth' ? 'badge-blue' : 'bg-surface-700 text-surface-400'}`}>{p.tier}</span>
+                <span className={`badge self-center ${p.tier === 'Premier' ? 'badge-purple' : p.tier === 'Growth' ? 'badge-teal' : 'bg-surface-700 text-surface-400'}`}>{p.tier}</span>
               </div>
             ))}
           </div>

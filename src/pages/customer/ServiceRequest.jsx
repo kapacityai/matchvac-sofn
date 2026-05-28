@@ -28,7 +28,7 @@ const CATEGORY_CONFIG = {
 const TIERS = [
   { key: 'basic',    label: 'Basic',    sub: 'Essential fix',        badge: null,        ring: 'ring-surface-300' },
   { key: 'standard', label: 'Standard', sub: 'Most popular',         badge: '⭐ Popular', ring: 'ring-brand-500' },
-  { key: 'premium',  label: 'Premium',  sub: 'Full service + parts', badge: null,        ring: 'ring-accent-500' },
+  { key: 'premium',  label: 'Premium',  sub: 'Full service + parts', badge: null,        ring: 'ring-brand-500' },
 ]
 
 const CARD_STYLE = {

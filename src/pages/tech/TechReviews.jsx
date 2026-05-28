@@ -70,8 +70,8 @@ export default function TechReviews() {
             <div className="flex flex-col gap-3 flex-shrink-0">
               {[
                 { label: 'Completion Rate', value: '100%', icon: Award, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-                { label: 'On-Time Arrival', value: '97%', icon: TrendingUp, color: 'text-brand-400', bg: 'bg-brand-400/10' },
-                { label: 'Total Reviews', value: `${totalReviews}`, icon: MessageCircle, color: 'text-accent-400', bg: 'bg-accent-400/10' },
+                { label: 'On-Time Arrival', value: '97%', icon: TrendingUp, color: 'text-brand-500', bg: 'bg-brand-400/10' },
+                { label: 'Total Reviews', value: `${totalReviews}`, icon: MessageCircle, color: 'text-brand-500', bg: 'bg-brand-50' },
               ].map(s => (
                 <div key={s.label} className="flex items-center gap-3">
                   <div className={`w-8 h-8 rounded-lg ${s.bg} flex items-center justify-center flex-shrink-0`}>
@@ -105,7 +105,7 @@ export default function TechReviews() {
             {REVIEWS.map(review => (
               <div key={review.id} className="card">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                     {review.avatar}
                   </div>
                   <div className="flex-1 min-w-0">

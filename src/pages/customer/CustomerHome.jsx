@@ -108,7 +108,7 @@ export default function CustomerHome() {
           <div className="grid grid-cols-3 gap-3">
             {[
               { icon: Wrench,      label: 'Book Service', path: '/customer/request', bg: 'bg-brand-500'   },
-              { icon: ShoppingBag, label: 'Shop Parts',   path: '/customer/store',   bg: 'bg-accent-500'  },
+              { icon: ShoppingBag, label: 'Shop Parts',   path: '/customer/store',   bg: 'bg-brand-500'  },
               { icon: Clock,       label: 'My Jobs',      path: '/customer/jobs',    bg: 'bg-surface-700' },
             ].map(item => (
               <button
@@ -224,8 +224,8 @@ export default function CustomerHome() {
             onClick={() => navigate('/comfort-connect')}
             className="w-full flex items-center gap-3 bg-white border border-surface-200 rounded-2xl px-4 py-3.5 hover:border-brand-400 hover:shadow-sm transition-all text-left"
           >
-            <div className="w-10 h-10 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
-              <Wind size={20} className="text-accent-500" />
+            <div className="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center flex-shrink-0">
+              <Wind size={20} className="text-brand-500" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-brand-600 text-xs font-bold">Comfort Connect Premier · Sponsored</p>

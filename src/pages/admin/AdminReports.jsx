@@ -367,7 +367,7 @@ export default function AdminReports() {
                 return (
                   <div key={tech.id} className="card">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-sm font-bold text-surface-900 flex-shrink-0">
+                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-sm font-bold text-surface-900 flex-shrink-0">
                         {tech.name.split(' ').map(n => n[0]).join('')}
                       </div>
                       <div>
@@ -427,13 +427,13 @@ export default function AdminReports() {
                         <td className="py-3 pr-4 text-surface-900 font-medium">{job.service}</td>
                         <td className="py-3 pr-4 text-surface-300 whitespace-nowrap">{job.tech}</td>
                         <td className="py-3 pr-4">
-                          <span className={`badge ${job.tier === 'Premium' ? 'badge-purple' : job.tier === 'Standard' ? 'badge-blue' : 'badge-yellow'}`}>{job.tier}</span>
+                          <span className={`badge ${job.tier === 'Premium' ? 'badge-purple' : job.tier === 'Standard' ? 'badge-teal' : 'badge-yellow'}`}>{job.tier}</span>
                         </td>
                         <td className="py-3 pr-4 text-surface-900 font-semibold">${job.grossRevenue}</td>
                         <td className="py-3 pr-4 text-rose-400">−${job.platformFee.toFixed(2)}</td>
                         <td className="py-3 pr-4 text-emerald-400 font-bold">${job.techPayout.toFixed(2)}</td>
                         <td className="py-3 pr-4">
-                          <span className={`badge ${job.status === 'completed' ? 'badge-green' : 'badge-blue'}`}>
+                          <span className={`badge ${job.status === 'completed' ? 'badge-green' : 'badge-teal'}`}>
                             {job.status === 'completed' ? 'Disbursed' : 'Pending'}
                           </span>
                         </td>
@@ -472,7 +472,7 @@ export default function AdminReports() {
                   const plan = TECH_SUBSCRIPTION_TIERS[tech.subscription]
                   return (
                     <div key={tech.id} className="flex items-center gap-4 px-4 py-3 bg-surface-150/50 rounded-xl">
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                         {tech.name.split(' ').map(n => n[0]).join('')}
                       </div>
                       <div className="flex-1">
@@ -484,7 +484,7 @@ export default function AdminReports() {
                         <p className="text-emerald-400 font-bold text-sm">{(plan.platformFee * 100).toFixed(0)}%</p>
                       </div>
                       <div className="text-right">
-                        <span className={`badge ${tech.subscription === 'elite' ? 'badge-purple' : tech.subscription === 'pro' ? 'badge-blue' : 'badge-yellow'}`}>
+                        <span className={`badge ${tech.subscription === 'elite' ? 'badge-purple' : tech.subscription === 'pro' ? 'badge-teal' : 'badge-yellow'}`}>
                           {plan.name}
                         </span>
                         <p className="text-cyan-400 font-bold text-sm mt-1">${plan.price}/mo</p>
@@ -557,7 +557,7 @@ export default function AdminReports() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { label: 'Active Contractors', value: MOCK_CONTRACTORS.filter(c => c.status === 'active').length, color: 'text-white', icon: Building2 },
-                { label: 'Subscription MRR', value: `$${MOCK_CONTRACTORS.filter(c => c.status === 'active').reduce((s, c) => s + c.monthlyFee, 0).toLocaleString()}`, color: 'text-accent-400', icon: CreditCard },
+                { label: 'Subscription MRR', value: `$${MOCK_CONTRACTORS.filter(c => c.status === 'active').reduce((s, c) => s + c.monthlyFee, 0).toLocaleString()}`, color: 'text-brand-400', icon: CreditCard },
                 { label: 'Referral Revenue YTD', value: `$${MOCK_CONTRACTORS.reduce((s, c) => s + c.referralRevenue, 0).toLocaleString()}`, color: 'text-emerald-400', icon: DollarSign },
                 { label: 'Total Leads Generated', value: MOCK_CONTRACTORS.reduce((s, c) => s + c.leads, 0), color: 'text-brand-400', icon: Users },
               ].map(s => (
@@ -608,7 +608,7 @@ export default function AdminReports() {
                       onClick={() => setExpandedContractor(expandedContractor === c.id ? null : c.id)}
                     >
                       {/* Logo placeholder */}
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-500/30 to-brand-600/30 border border-surface-200 flex items-center justify-center text-xs font-black text-surface-900 flex-shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/30 to-brand-600/30 border border-surface-200 flex items-center justify-center text-xs font-black text-surface-900 flex-shrink-0">
                         {c.company.split(' ').map(w => w[0]).join('').slice(0,2)}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -689,7 +689,7 @@ export default function AdminReports() {
                 </ResponsiveContainer>
               </div>
               <div className="flex gap-4 mt-2 text-xs">
-                <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-accent-500" /><span className="text-surface-400">Subscription Fee</span></div>
+                <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-brand-500" /><span className="text-surface-400">Subscription Fee</span></div>
                 <div className="flex items-center gap-1.5"><div className="w-3 h-3 rounded-sm bg-emerald-500" /><span className="text-surface-400">Referral Revenue</span></div>
               </div>
             </div>
@@ -787,7 +787,7 @@ export default function AdminReports() {
               <div className="space-y-2">
                 {MOCK_TECHS.filter(t => t.status === 'active').map(tech => (
                   <div key={tech.id} className="flex items-center gap-4 px-4 py-3 bg-surface-150/50 rounded-xl">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                       {tech.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div className="flex-1">
@@ -819,7 +819,7 @@ export default function AdminReports() {
               <div className="space-y-2">
                 {MOCK_CONTRACTORS.filter(c => c.referralRevenue > 0).map(c => (
                   <div key={c.id} className="flex items-center gap-4 px-4 py-3 bg-surface-150/50 rounded-xl">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-500/30 to-brand-600/30 border border-surface-200 flex items-center justify-center text-xs font-black text-surface-900 flex-shrink-0">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500/30 to-brand-600/30 border border-surface-200 flex items-center justify-center text-xs font-black text-surface-900 flex-shrink-0">
                       {c.company.split(' ').map(w => w[0]).join('').slice(0,2)}
                     </div>
                     <div className="flex-1">

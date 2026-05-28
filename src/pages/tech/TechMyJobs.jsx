@@ -22,7 +22,7 @@ export default function TechMyJobs() {
                 <div>
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <h3 className="text-white font-bold">{job.service}</h3>
-                    {isActive && <span className="badge badge-blue">Active</span>}
+                    {isActive && <span className="badge badge-teal">Active</span>}
                     {(isDone) && <span className="badge badge-green">Completed</span>}
                   </div>
                   <div className="flex items-center gap-2 text-surface-400 text-sm">

@@ -42,7 +42,7 @@ export default function AdminInventory() {
                       <span className="text-xl">{p.image}</span>
                       <div>
                         <p className="text-white font-medium leading-tight">{p.name}</p>
-                        {p.badge && <span className="badge badge-blue">{p.badge}</span>}
+                        {p.badge && <span className="badge badge-teal">{p.badge}</span>}
                       </div>
                     </div>
                   </td>

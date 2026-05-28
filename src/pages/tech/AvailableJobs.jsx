@@ -38,7 +38,7 @@ export default function AvailableJobs() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 flex-wrap mb-2">
                   <h3 className="text-white font-bold">{job.service}</h3>
-                  <span className="badge badge-blue">{job.tier}</span>
+                  <span className="badge badge-teal">{job.tier}</span>
                   {job.urgent && <span className="badge badge-red">URGENT</span>}
                 </div>
 

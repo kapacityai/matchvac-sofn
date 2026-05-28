@@ -92,7 +92,7 @@ export default function CustomerReviews() {
             {COMPLETED_JOBS.map(job => (
               <div key={job.id} className="card">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
                     {job.techAvatar}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -127,7 +127,7 @@ export default function CustomerReviews() {
       {active && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="card w-full max-w-sm text-center space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-xl font-bold text-surface-900 mx-auto">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xl font-bold text-surface-900 mx-auto">
               {active.techAvatar}
             </div>
             <div>

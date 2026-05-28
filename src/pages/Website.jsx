@@ -117,7 +117,7 @@ function MockJobCard() {
         {/* Progress bar */}
         <div className="h-1.5 bg-surface-150 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-brand-500 to-accent-500 rounded-full transition-all duration-700"
+            className="h-full bg-gradient-to-r from-brand-500 to-navy-700 rounded-full transition-all duration-700"
             style={{ width: `${(step + 1) * 25}%` }}
           />
         </div>
@@ -174,7 +174,7 @@ export default function Website() {
         {/* Background layers */}
         <div className="absolute inset-0 dot-grid" />
         <div className="absolute top-1/4 left-1/3 w-[700px] h-[700px] bg-brand-500/8 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent-500/6 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-brand-500/6 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center py-20">
           {/* Left — copy */}
@@ -185,7 +185,7 @@ export default function Website() {
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-3 text-surface-900">
               Certified Pros.<br />
               <span className="relative">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-brand-400 to-accent-500 animate-gradient">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-brand-400 to-navy-700 animate-gradient">
                   On Demand.
                 </span>
               </span>
@@ -235,7 +235,7 @@ export default function Website() {
               { value: '500+', label: 'Jobs Completed', icon: Wrench, color: 'text-brand-500' },
               { value: '4.9★', label: 'Average Rating', icon: Star, color: 'text-amber-500' },
               { value: '< 15m', label: 'Avg. Response', icon: Zap, color: 'text-emerald-500' },
-              { value: '100%', label: 'Escrow Safe', icon: Shield, color: 'text-accent-500' },
+              { value: '100%', label: 'Escrow Safe', icon: Shield, color: 'text-brand-500' },
             ].map((s, i) => (
               <div
                 key={s.label}
@@ -258,7 +258,7 @@ export default function Website() {
             onClick={() => navigate('/comfort-connect')}
             className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-md transition-all duration-300"
           >
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-400 to-brand-400" />
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-brand-400 to-brand-400" />
             <div className="flex flex-col sm:flex-row items-center gap-5 p-5">
               <div className="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center text-2xl flex-shrink-0">❄️</div>
               <div className="flex-1 text-center sm:text-left">
@@ -296,7 +296,7 @@ export default function Website() {
               { num: '01', icon: Wrench, title: 'Pick Your Service', body: 'Browse services, choose a tier, describe your issue and upload a photo.', color: 'from-brand-500 to-brand-400', glow: 'shadow-brand-500/20' },
               { num: '02', icon: Zap, title: 'Instant Broadcast', body: 'Your job hits all certified techs nearby simultaneously. Fastest finger gets the job.', color: 'from-amber-500 to-amber-400', glow: 'shadow-amber-500/20' },
               { num: '03', icon: MapPin, title: 'Live GPS Tracking', body: "See your tech's exact location, ETA, vehicle, and photo in real time.", color: 'from-emerald-500 to-emerald-400', glow: 'shadow-emerald-500/20' },
-              { num: '04', icon: Lock, title: 'Pay When Done', body: 'Funds sit in secure escrow. You release payment only after confirming the job.', color: 'from-accent-500 to-accent-400', glow: 'shadow-accent-500/20' },
+              { num: '04', icon: Lock, title: 'Pay When Done', body: 'Funds sit in secure escrow. You release payment only after confirming the job.', color: 'from-brand-500 to-brand-600', glow: 'shadow-brand-500/20' },
             ].map((s, i) => (
               <div
                 key={s.num}
@@ -450,7 +450,7 @@ export default function Website() {
                 { icon: DollarSign, text: 'See net payout before accepting any job', color: 'text-emerald-600', bg: 'bg-emerald-100' },
                 { icon: Zap,        text: 'Instant payouts with Pro or Elite plan', color: 'text-brand-500', bg: 'bg-brand-100' },
                 { icon: FileText,   text: '1099-NEC & quarterly tax estimates built-in', color: 'text-amber-600', bg: 'bg-amber-100' },
-                { icon: Users,      text: '247 verified techs already on the platform', color: 'text-accent-500', bg: 'bg-accent-500/10' },
+                { icon: Users,      text: '247 verified techs already on the platform', color: 'text-brand-500', bg: 'bg-brand-50' },
               ].map(({ icon: Icon, text, color, bg }) => (
                 <div key={text} className="flex items-center gap-3">
                   <div className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center flex-shrink-0`}>
@@ -477,7 +477,7 @@ export default function Website() {
                   p.highlight
                     ? 'border-brand-400 bg-brand-50 shadow-sm'
                     : p.accent
-                    ? 'border-accent-400 bg-accent-500/5'
+                    ? 'border-brand-400 bg-brand-50'
                     : 'border-surface-200 bg-white'
                 }`}
               >
@@ -485,7 +485,7 @@ export default function Website() {
                 <div className="flex items-center justify-between mb-1">
                   <p className="text-surface-900 font-bold">{p.label}</p>
                   {p.badge && (
-                    <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${p.accent ? 'bg-accent-500/10 text-accent-600' : 'bg-brand-100 text-brand-700'}`}>{p.badge}</span>
+                    <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${p.accent ? 'bg-brand-50 text-brand-600' : 'bg-brand-100 text-brand-700'}`}>{p.badge}</span>
                   )}
                 </div>
                 <p className="text-surface-500 text-sm">{p.detail}</p>
@@ -552,7 +552,7 @@ export default function Website() {
                 </div>
                 <p className="text-surface-600 text-sm leading-relaxed mb-5">"{r.text}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-accent-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                     {r.avatar}
                   </div>
                   <div>

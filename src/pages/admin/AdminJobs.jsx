@@ -9,7 +9,7 @@ export default function AdminJobs() {
 
   const statusMap = {
     completed: { label: 'Completed', badge: 'badge-green', icon: CheckCircle },
-    in_progress: { label: 'In Progress', badge: 'badge-blue', icon: Wrench },
+    in_progress: { label: 'In Progress', badge: 'badge-teal', icon: Wrench },
     available: { label: 'Open', badge: 'badge-yellow', icon: Clock },
   }
 
