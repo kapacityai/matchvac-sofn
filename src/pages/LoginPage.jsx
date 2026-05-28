@@ -214,7 +214,7 @@ export default function LoginPage() {
         </div>
         <div className="relative z-10 flex flex-col h-full p-12">
           <div className="flex items-center justify-between">
-            <Logo size="md" />
+            <button onClick={() => navigate('/')}><Logo size="md" /></button>
             <button onClick={() => navigate('/')} className="text-white/50 hover:text-white text-sm transition-colors">← Website</button>
           </div>
           <div className="flex-1 flex flex-col justify-center">
@@ -253,7 +253,7 @@ export default function LoginPage() {
       {/* Right form — white panel */}
       <div className="flex-1 lg:max-w-md flex flex-col justify-center px-8 py-12 bg-white">
         <div className="w-full max-w-sm mx-auto">
-          <div className="lg:hidden mb-8"><Logo size="md" /></div>
+          <div className="lg:hidden mb-8"><button onClick={() => navigate('/')}><Logo size="md" /></button></div>
 
           <h2 className="text-2xl font-bold text-navy-700 mb-1">Welcome back</h2>
           <p className="text-surface-500 text-sm mb-6">Sign in to your MatcHvac account</p>
