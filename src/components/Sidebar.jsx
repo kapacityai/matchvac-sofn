@@ -42,9 +42,9 @@ const navConfig = {
 }
 
 const roleColors = {
-  customer: { from: 'from-brand-400',   to: 'to-accent-500',   badge: 'bg-brand-100 text-brand-700',     label: 'Customer' },
-  tech:     { from: 'from-emerald-400', to: 'to-brand-500',    badge: 'bg-emerald-100 text-emerald-700', label: 'Technician' },
-  admin:    { from: 'from-accent-400',  to: 'to-rose-500',     badge: 'bg-accent-500/10 text-accent-600', label: 'Admin' },
+  customer: { from: 'from-brand-400',   to: 'to-brand-600',   badge: 'bg-brand-100 text-brand-700',     label: 'Customer' },
+  tech:     { from: 'from-emerald-400', to: 'to-brand-500',   badge: 'bg-emerald-100 text-emerald-700', label: 'Technician' },
+  admin:    { from: 'from-navy-500',    to: 'to-navy-800',    badge: 'bg-navy-100 text-navy-700',       label: 'Admin' },
 }
 
 export default function Sidebar() {
@@ -59,8 +59,8 @@ export default function Sidebar() {
 
   return (
     <aside className={`${collapsed ? 'w-16' : 'w-60'} h-screen flex flex-col bg-white border-r border-surface-200 flex-shrink-0 transition-all duration-300 relative`}>
-      {/* Subtle top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-500 to-navy-700" />
+      {/* Top accent line — teal to navy (brand colors) */}
+      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-brand-400 to-navy-700" />
 
       {/* Logo */}
       <div className={`flex items-center ${collapsed ? 'justify-center px-3' : 'px-5'} py-[18px] border-b border-surface-200`}>
