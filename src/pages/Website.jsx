@@ -5,7 +5,7 @@ import LocationTicker from '../components/LocationTicker'
 import { SERVICES, PRODUCTS } from '../data/mockData'
 import {
   Zap, Shield, MapPin, Star, ChevronRight, Menu, X,
-  CheckCircle, Clock, Wrench, Camera, ArrowRight,
+  CheckCircle, Clock, Wrench, Camera, ArrowRight, Megaphone,
   DollarSign, FileText, Users, Thermometer, Wind,
   Droplets, Flame, Activity, Phone, Play, Lock
 } from 'lucide-react'
@@ -198,6 +198,9 @@ export default function Website() {
               <button onClick={() => navigate('/login?signup=customer')} className="btn-primary py-4 px-8 text-base glow-brand">
                 Book a Technician <ArrowRight size={18} />
               </button>
+              <button onClick={() => navigate('/login?signup=tech')} className="btn-navy py-4 px-8 text-base">
+                Apply as a Tech <ArrowRight size={18} />
+              </button>
               <button onClick={goLogin} className="btn-secondary py-4 px-8 text-base">
                 Sign In
               </button>
@@ -251,27 +254,20 @@ export default function Website() {
         </div>
       </section>
 
-      {/* ── COMFORT CONNECT AD ─────────────────────────────────────────────── */}
+      {/* ── AD PLACEMENT ─────────────────────────────────────────────────── */}
       <section className="py-10 px-6">
         <div className="max-w-5xl mx-auto">
-          <div
-            onClick={() => navigate('/comfort-connect')}
-            className="cursor-pointer group relative overflow-hidden rounded-2xl border border-brand-200 bg-white hover:border-brand-400 hover:shadow-md transition-all duration-300"
-          >
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-brand-400 to-brand-400" />
-            <div className="flex flex-col sm:flex-row items-center gap-5 p-5">
-              <div className="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center text-2xl flex-shrink-0">❄️</div>
-              <div className="flex-1 text-center sm:text-left">
-                <div className="flex items-center gap-2 justify-center sm:justify-start mb-1">
-                  <span className="text-brand-600 text-xs font-bold uppercase tracking-wider">Comfort Connect Premier</span>
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-100 text-brand-700">#1 Partner</span>
-                  <span className="text-xs text-surface-400">· Sponsored</span>
-                </div>
-                <p className="text-surface-900 font-bold text-lg">Don't Buy Your HVAC — Get It All Included</p>
-                <p className="text-surface-500 text-sm mt-0.5">Equipment + install + repairs + maintenance for one low monthly payment. Zero up-front cost.</p>
+          <div className="relative overflow-hidden rounded-2xl border-2 border-dashed border-surface-300 bg-surface-50 hover:border-brand-300 transition-all duration-300">
+            <div className="flex flex-col sm:flex-row items-center gap-5 p-8">
+              <div className="w-14 h-14 rounded-xl bg-surface-200 flex items-center justify-center text-2xl flex-shrink-0">
+                <Megaphone size={24} className="text-surface-400" />
               </div>
-              <button className="btn-primary py-2.5 px-5 flex-shrink-0 whitespace-nowrap">
-                See If I Qualify <ArrowRight size={15} />
+              <div className="flex-1 text-center sm:text-left">
+                <span className="text-surface-400 text-xs font-bold uppercase tracking-widest">Sponsored Placement</span>
+                <p className="text-surface-500 font-semibold mt-1">Your ad could be here — reach thousands of local homeowners</p>
+              </div>
+              <button onClick={() => navigate('/contractors')} className="btn-secondary py-2.5 px-5 flex-shrink-0 whitespace-nowrap text-sm">
+                Advertise Here <ArrowRight size={15} />
               </button>
             </div>
           </div>
