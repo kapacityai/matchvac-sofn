@@ -1,7 +1,5 @@
 
-  VITE v5.4.21  ready in 154 ms
+  VITE v5.4.21  ready in 128 ms
 
-  ➜  Local:   http://localhost:3000/
-  ➜  Network: http://172.20.0.40:3000/
-2:49:19 AM [vite] hmr update /src/pages/LoginPage.jsx, /src/index.css
-2:49:28 AM [vite] hmr update /src/pages/LoginPage.jsx, /src/index.css
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://172.20.0.10:5173/
