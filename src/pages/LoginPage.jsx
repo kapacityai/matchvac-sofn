@@ -68,13 +68,22 @@ function TechSignup({ onBack }) {
   const [step, setStep] = useState(0)
   const [form, setForm] = useState({ name: '', email: '', password: '', phone: '', coverage: '', plan: 'per_job' })
   const [uploaded, setUploaded] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
   const DOCS = [
     { key: 'license', label: "Driver's License (front & back)" },
     { key: 'w9',      label: 'IRS Form W-9' },
     { key: 'certs',   label: 'HVAC Certifications (EPA 608, NATE, etc.)' },
   ]
-  const finish = () => register(form.name, form.email, 'tech', form.password, form.phone)
+  const finish = async () => {
+    if (!form.name || !form.email || !form.password) return setError('Name, email and password are required.')
+    if (form.password.length < 8) return setError('Password must be at least 8 characters.')
+    setError(''); setLoading(true)
+    try { await register(form.name, form.email, 'tech', form.password, form.phone) }
+    catch (e) { setError(e.message || 'Registration failed. Please try again.') }
+    finally { setLoading(false) }
+  }
   const steps = ['Info', 'Docs', 'Plan', 'Review']
 
   return (
@@ -156,9 +165,12 @@ function TechSignup({ onBack }) {
             <a href="/terms?tab=tech" target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:underline text-xs">Read full Technician Terms of Service →</a>
           </div>
           <div><label className="label">Bank Account for Payouts</label><input className="input" placeholder="Routing + Account number" /></div>
+          {error && <div className="px-4 py-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-600 text-sm">{error}</div>}
           <div className="flex gap-3">
             <button onClick={() => setStep(2)} className="btn-secondary flex-1">Back</button>
-            <button onClick={finish} className="btn-primary flex-1">Submit Application</button>
+            <button onClick={finish} disabled={loading} className="btn-primary flex-1">
+              {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" /> : 'Submit Application'}
+            </button>
           </div>
           <p className="text-surface-500 text-xs text-center">
             By submitting you agree to our{' '}
