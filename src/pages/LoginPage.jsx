@@ -66,7 +66,7 @@ function CustomerSignup({ onBack }) {
 function TechSignup({ onBack }) {
   const { register } = useAuth()
   const [step, setStep] = useState(0)
-  const [form, setForm] = useState({ name: '', email: '', phone: '', coverage: '', plan: 'per_job' })
+  const [form, setForm] = useState({ name: '', email: '', password: '', phone: '', coverage: '', plan: 'per_job' })
   const [uploaded, setUploaded] = useState({})
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
   const DOCS = [
@@ -74,7 +74,7 @@ function TechSignup({ onBack }) {
     { key: 'w9',      label: 'IRS Form W-9' },
     { key: 'certs',   label: 'HVAC Certifications (EPA 608, NATE, etc.)' },
   ]
-  const finish = () => register(form.name || 'New Tech', form.email || 'newtech@demo.com', 'tech')
+  const finish = () => register(form.name, form.email, 'tech', form.password, form.phone)
   const steps = ['Info', 'Docs', 'Plan', 'Review']
 
   return (
@@ -96,6 +96,7 @@ function TechSignup({ onBack }) {
           <div><label className="label">Full Name</label><input className="input" placeholder="Marcus Rivera" value={form.name} onChange={set('name')} /></div>
           <div><label className="label">Email Address</label><input className="input" type="email" placeholder="marcus@email.com" value={form.email} onChange={set('email')} /></div>
           <div><label className="label">Phone</label><input className="input" type="tel" placeholder="(555) 000-0000" value={form.phone} onChange={set('phone')} /></div>
+          <div><label className="label">Password</label><input className="input" type="password" placeholder="Create a password" value={form.password} onChange={set('password')} /></div>
           <div><label className="label">Coverage Area</label><input className="input" placeholder="e.g. Silver Spring, Bethesda, Rockville" value={form.coverage} onChange={set('coverage')} /></div>
           <button onClick={() => setStep(1)} className="btn-primary w-full py-3">Next: Upload Documents <ArrowRight size={16} /></button>
         </div>
