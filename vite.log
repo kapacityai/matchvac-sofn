@@ -1,7 +1,5 @@
 
-  VITE v5.4.21  ready in 128 ms
+  VITE v5.4.21  ready in 132 ms
 
   ➜  Local:   http://localhost:5173/
-  ➜  Network: http://172.20.0.10:5173/
-8:58:41 PM [vite] .env.local changed, restarting server...
-8:58:41 PM [vite] server restarted.
+  ➜  Network: http://172.20.0.11:5173/
