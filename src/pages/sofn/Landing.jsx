@@ -19,13 +19,12 @@ export default function SofnLanding() {
       {/* Header */}
       <header className="bg-white border-b border-[#DAD8D2] px-6 py-4 flex items-center justify-between">
         <SofnLogo size="md" />
-        <a href="/" className="text-[#0C6B5E] text-sm font-medium hover:underline">MatcHvac →</a>
       </header>
 
       {/* Hero */}
       <section className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <div className="w-20 h-20 rounded-full bg-[#0C6B5E]/10 flex items-center justify-center mx-auto mb-6">
-          <SofnLogo size="lg" showTagline={false} />
+        <div className="flex items-center justify-center mx-auto mb-8">
+          <SofnLogo size="xl" className="!h-32 md:!h-56" />
         </div>
         <h1 className="text-4xl md:text-5xl font-display font-black text-[#16202B] mb-4 leading-tight">
           Service-Obligation<br />
