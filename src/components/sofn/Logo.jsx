@@ -1,23 +1,33 @@
 export function SofnLogo({ size = 'md', showTagline = true, className = '' }) {
   const sizes = { sm: 'h-8', md: 'h-10', lg: 'h-12', xl: 'h-16' }
-  const taglineSizes = { sm: 'text-[10px]', md: 'text-xs', lg: 'text-sm', xl: 'text-base' }
+  const taglineSizes = { sm: 'text-[10px]', md: 'text-[11px]', lg: 'text-xs', xl: 'text-sm' }
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <svg viewBox="0 0 44 44" className={`${sizes[size]} aspect-square`} fill="none">
-        {/* Incomplete circle (teal) */}
-        <path d="M22 4 C34 4 40 12 40 22 C40 32 34 40 22 40"
-          stroke="#0C6B5E" strokeWidth="4" strokeLinecap="round" />
-        {/* Amber dot */}
-        <circle cx="4" cy="12" r="3.5" fill="#C9852A" />
+        <defs>
+          <radialGradient id="sofn-teal" cx="0.4" cy="0.35" r="0.65" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stopColor="#14B8A6" />
+            <stop offset="100%" stopColor="#0F4C47" />
+          </radialGradient>
+        </defs>
+        {/* Thick ring, 270° arc leaving gap at upper-left */}
+        <circle
+          cx="22" cy="22" r="18"
+          stroke="url(#sofn-teal)" strokeWidth="5"
+          strokeDasharray="255 36.4"
+          strokeLinecap="round"
+        />
+        {/* Amber dot rest inside the upper-left gap */}
+        <circle cx="11" cy="8" r="3.5" fill="#F5A623" />
       </svg>
       <div className="flex flex-col">
-        <span className={`tracking-[0.15em] leading-none text-[#16202B] ${
-          size === 'xl' ? 'text-2xl' : size === 'lg' ? 'text-xl' : 'text-lg'
+        <span className={`leading-none text-[#0C4640] ${
+          size === 'xl' ? 'text-[22px]' : size === 'lg' ? 'text-lg' : 'text-base'
         }`}>
-          <span className="font-black">SO</span><span className="font-semibold">FN</span>
+          <span className="font-extrabold tracking-tight">SO</span><span className="font-normal tracking-tight">FN</span>
         </span>
         {showTagline && (
-          <span className={`${taglineSizes[size]} font-semibold tracking-[0.2em] text-[#33485C] leading-tight`}>
+          <span className={`${taglineSizes[size]} font-bold tracking-[0.15em] text-[#0C4640] leading-none mt-0.5`}>
             COMPLETE. GUARANTEED.
           </span>
         )}
@@ -30,9 +40,19 @@ export function SofnLogoIcon({ size = 'sm', className = '' }) {
   const sizes = { sm: 'h-8', md: 'h-10', lg: 'h-12' }
   return (
     <svg viewBox="0 0 44 44" className={`${sizes[size]} aspect-square ${className}`} fill="none">
-      <path d="M22 4 C34 4 40 12 40 22 C40 32 34 40 22 40"
-        stroke="#0C6B5E" strokeWidth="4" strokeLinecap="round" />
-      <circle cx="4" cy="12" r="3.5" fill="#C9852A" />
+      <defs>
+        <radialGradient id="sofn-teal-i" cx="0.4" cy="0.35" r="0.65" gradientUnits="objectBoundingBox">
+          <stop offset="0%" stopColor="#14B8A6" />
+          <stop offset="100%" stopColor="#0F4C47" />
+        </radialGradient>
+      </defs>
+      <circle
+        cx="22" cy="22" r="18"
+        stroke="url(#sofn-teal-i)" strokeWidth="5"
+        strokeDasharray="255 36.4"
+        strokeLinecap="round"
+      />
+      <circle cx="11" cy="8" r="3.5" fill="#F5A623" />
     </svg>
   )
 }
