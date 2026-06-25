@@ -17,13 +17,13 @@ export default function SofnLanding() {
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
       {/* Header */}
-      <header className="bg-white border-b border-[#DAD8D2] px-6 py-4 flex items-center justify-center">
+      <header className="bg-white border-b border-[#DAD8D2] px-6 py-4 flex items-center justify-between">
         <SofnLogo size="sm" />
       </header>
 
       {/* Hero */}
       <section className="max-w-4xl mx-auto px-4 py-16 md:py-20 text-center">
-        <div className="flex items-center justify-center mx-auto mb-6">
+        <div className="flex items-center justify-center mx-auto mb-12">
           <SofnLogo size="xl" className="!h-24 md:!h-40" />
         </div>
         <h1 className="text-3xl md:text-4xl font-display font-black text-[#16202B] mb-3 leading-tight">
