@@ -17,8 +17,8 @@ export default function SofnLanding() {
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
       {/* Header */}
-      <header className="bg-white border-b border-[#DAD8D2] px-6 py-4 flex items-center justify-between">
-        <SofnLogo size="md" />
+      <header className="bg-white border-b border-[#DAD8D2] px-6 py-4 flex items-center justify-center">
+        <SofnLogo size="sm" />
       </header>
 
       {/* Hero */}

@@ -5,7 +5,7 @@ import { LogOut, User, Settings, DollarSign, Bell } from 'lucide-react'
 export function SofnHeader({ user, onLogout }) {
   return (
     <header className="bg-white border-b border-[#DAD8D2] px-6 py-3 flex items-center justify-between sticky top-0 z-40">
-      <Link to="/sofn/dashboard"><SofnLogo size="md" /></Link>
+      <Link to="/sofn/dashboard"><SofnLogo size="sm" /></Link>
       <div className="flex items-center gap-4">
         {user && (
           <>
