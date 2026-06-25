@@ -98,11 +98,11 @@ app.get('/api/openapi.json', (req, res) => {
   })
 })
 
-// ── Preview redirect: show SOFN instead of MatcHvac ────────
-app.get('/', (req, res) => res.redirect('/sofn'))
+// ── Serve dedicated SOFN landing at root (preview) ────────
+const distPath = path.resolve(__dirname, '../../dist')
+app.get('/', (req, res) => res.sendFile(path.join(distPath, 'sofn-root.html')))
 
 // ── Serve Built Frontend ──────────────────────────────────────
-const distPath = path.resolve(__dirname, '../../dist')
 app.use(express.static(distPath))
 app.use((req, res, next) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/health')) return next()
