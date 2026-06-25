@@ -4,6 +4,8 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import rateLimit from 'express-rate-limit'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 import authRoutes from './routes/auth.js'
 import jobRoutes from './routes/jobs.js'
@@ -13,6 +15,9 @@ import customerRoutes from './routes/customer.js'
 import adminRoutes from './routes/admin.js'
 import mcpRoutes from './mcp/server.js'
 import { supabase } from './lib/supabase.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -91,6 +96,14 @@ app.get('/api/openapi.json', (req, res) => {
       '/api/mcp/execute': { post: { summary: 'Execute an MCP tool', tags: ['MCP'] } },
     },
   })
+})
+
+// ── Serve Built Frontend ──────────────────────────────────────
+const distPath = path.resolve(__dirname, '../../dist')
+app.use(express.static(distPath))
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/health')) return next()
+  res.sendFile(path.join(distPath, 'index.html'))
 })
 
 // ── 404 ───────────────────────────────────────────────────────
