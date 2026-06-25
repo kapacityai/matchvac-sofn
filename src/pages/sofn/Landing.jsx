@@ -22,19 +22,19 @@ export default function SofnLanding() {
       </header>
 
       {/* Hero */}
-      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <div className="flex items-center justify-center mx-auto mb-8">
-          <SofnLogo size="xl" className="!h-32 md:!h-56" />
+      <section className="max-w-4xl mx-auto px-4 py-16 md:py-20 text-center">
+        <div className="flex items-center justify-center mx-auto mb-6">
+          <SofnLogo size="xl" className="!h-24 md:!h-40" />
         </div>
-        <h1 className="text-4xl md:text-5xl font-display font-black text-[#16202B] mb-4 leading-tight">
+        <h1 className="text-3xl md:text-4xl font-display font-black text-[#16202B] mb-3 leading-tight">
           Service-Obligation<br />
           <span className="text-[#0C6B5E]">Fulfillment Network</span>
         </h1>
-        <p className="text-lg text-[#33485C] max-w-2xl mx-auto mb-10">
+        <p className="text-base md:text-lg text-[#33485C] max-w-2xl mx-auto mb-8">
           SOFN connects certified HVAC technicians with service dispatches from lenders, lessors, and homeowners.
-          <span className="block mt-2 font-semibold text-[#0C6B5E]">You do the work. We handle the rest.</span>
+          <span className="block mt-1.5 font-semibold text-[#0C6B5E]">You do the work. We handle the rest.</span>
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button onClick={() => navigate('/sofn/register')} className="h-12 px-8 bg-[#0C6B5E] hover:bg-[#094A40] text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm">
             Sign Up as a Technician <ArrowRight size={18} />
           </button>
