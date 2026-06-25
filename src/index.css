@@ -10,7 +10,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  body.sofn-body {
+    @apply bg-[#F4F3EF] text-[#16202B];
+  }
   h1, h2, h3, h4, h5, h6 { font-family: 'Inter', system-ui, sans-serif; }
+  .sofn-body h1, .sofn-body h2, .sofn-body h3, .sofn-body h4 {
+    font-family: 'Archivo', 'Inter', system-ui, sans-serif;
+  }
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { @apply bg-surface-150; }
   ::-webkit-scrollbar-thumb { @apply bg-surface-300 rounded-full; }

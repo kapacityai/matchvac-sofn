@@ -127,15 +127,28 @@ export default {
           500: '#f97316',
           600: '#ea580c',
         },
+        // SOFN brand colors
+        sofn: {
+          teal:   '#0C6B5E',
+          teal2:  '#094A40',
+          teal3:  '#0A3D35',
+          slate:  '#33485C',
+          ink:    '#16202B',
+          paper:  '#F4F3EF',
+          hair:   '#DAD8D2',
+          amber:  '#C9852A',
+          amber2: '#A86B22',
+        },
       },
       fontFamily: {
         sans:    ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Archivo', 'Inter', 'system-ui', 'sans-serif'],
+        mono:    ['Space Mono', 'monospace'],
       },
       borderRadius: {
-        'card':    '16px',
-        'card-sm': '12px',
-        'btn':     '10px',
+        'card':    '12px',
+        'card-sm': '8px',
+        'btn':     '8px',
         'pill':    '100px',
       },
       backgroundImage: {

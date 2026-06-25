@@ -10,6 +10,9 @@ import ContractorsPage from './pages/ContractorsPage'
 import LendingPartners from './pages/LendingPartners'
 import TermsOfService from './pages/TermsOfService'
 
+import SofnRegister from './pages/sofn/Register'
+import SofnDashboard from './pages/sofn/Dashboard'
+
 import CustomerHome from './pages/customer/CustomerHome'
 import ServiceRequest from './pages/customer/ServiceRequest'
 import TrackJob from './pages/customer/TrackJob'
@@ -63,6 +66,8 @@ function AppRoutes() {
         <Route path="/contractors"     element={<ContractorsPage />} />
         <Route path="/lending-partners" element={<LendingPartners />} />
         <Route path="/terms"           element={<TermsOfService />} />
+        <Route path="/sofn/register"  element={<SofnRegister />} />
+        <Route path="/sofn/dashboard" element={<SofnDashboard />} />
         <Route path="*"                element={<Navigate to="/" replace />} />
       </Routes>
     )
@@ -79,6 +84,8 @@ function AppRoutes() {
         <Route path="/contractors"     element={<ContractorsPage />} />
         <Route path="/lending-partners" element={<LendingPartners />} />
         <Route path="/terms"           element={<TermsOfService />} />
+        <Route path="/sofn/register"  element={<SofnRegister />} />
+        <Route path="/sofn/dashboard" element={<SofnDashboard />} />
 
         {/* Customer */}
         <Route path="/customer"         element={user.role==='customer' ? <CustomerHome />   : <Navigate to={home} replace />} />
