@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { User, Shield, MapPin, CreditCard, Crown, AlertTriangle, Edit3, Upload, Check } from 'lucide-react'
 
 export default function SofnProfile({ profile }) {
+  useEffect(() => { document.body.classList.add('sofn-body'); return () => document.body.classList.remove('sofn-body') }, [])
   const p = profile || { name: '', email: '', phone: '', serviceZips: [], paymentMethod: '', licenseExp: '', insuranceExp: '', subscriptionTier: '', subscriptionPrice: 0 }
   const [editModal, setEditModal] = useState(false)
   const [editName, setEditName] = useState(p.name)

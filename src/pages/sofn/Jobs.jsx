@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Wrench, Thermometer, Droplets, AlertTriangle, MapPin, Clock, DollarSign, ChevronRight, X, Check, Camera, FileText } from 'lucide-react'
 
 const CATEGORY_ICONS = {
@@ -7,6 +7,7 @@ const CATEGORY_ICONS = {
 }
 
 export default function SofnJobs({ availableJobs = [], myJobs = [], onAccept, onStart, onComplete, showMyJobsOnly = false }) {
+  useEffect(() => { document.body.classList.add('sofn-body'); return () => document.body.classList.remove('sofn-body') }, [])
   const [filter, setFilter] = useState('All')
   const [detailJob, setDetailJob] = useState(null)
   const [workModal, setWorkModal] = useState(null)

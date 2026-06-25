@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { DollarSign, TrendingUp, Clock, Wallet, Calendar } from 'lucide-react'
 
 export default function SofnEarnings({ earnings }) {
+  useEffect(() => { document.body.classList.add('sofn-body'); return () => document.body.classList.remove('sofn-body') }, [])
   const data = earnings || { week: 0, month: 0, total: 0, pending: 0, nextPayout: '', history: [] }
 
   const cards = [

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SofnLogo } from '../../components/sofn/Logo'
 import {
@@ -39,6 +39,8 @@ export default function SofnRegister() {
   const [tier, setTier] = useState('free')
   // Auth token
   const [token, setToken] = useState(localStorage.getItem('sofn_token') || '')
+
+  useEffect(() => { document.body.classList.add('sofn-body'); return () => document.body.classList.remove('sofn-body') }, [])
 
   const setA = k => e => setAccount(f => ({ ...f, [k]: e.target.value }))
   const setL = k => e => setLicense(f => ({ ...f, [k]: e.target.value }))

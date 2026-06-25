@@ -62,6 +62,8 @@ export default function SofnDashboard() {
   const [profile, setProfile] = useState(DEMO_PROFILE)
   const [loading, setLoading] = useState(true)
 
+  useEffect(() => { document.body.classList.add('sofn-body'); return () => document.body.classList.remove('sofn-body') }, [])
+
   useEffect(() => {
     async function fetchData() {
       setLoading(true)

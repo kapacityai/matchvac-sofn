@@ -6,19 +6,18 @@ export function SofnLogo({ size = 'md', showTagline = true, className = '' }) {
       <svg viewBox="0 0 44 44" className={`${sizes[size]} aspect-square`} fill="none">
         {/* Incomplete circle (teal) */}
         <path d="M22 4 C34 4 40 12 40 22 C40 32 34 40 22 40"
-          stroke="#0C6B5E" strokeWidth="4" strokeLinecap="round"
-          strokeDasharray="0 0" />
+          stroke="#0C6B5E" strokeWidth="4" strokeLinecap="round" />
         {/* Amber dot */}
         <circle cx="4" cy="12" r="3.5" fill="#C9852A" />
       </svg>
       <div className="flex flex-col">
-        <span className={`font-bold tracking-tight leading-none text-[#0C6B5E] ${
+        <span className={`tracking-[0.15em] leading-none text-[#16202B] ${
           size === 'xl' ? 'text-2xl' : size === 'lg' ? 'text-xl' : 'text-lg'
         }`}>
-          SOFN
+          <span className="font-black">SO</span><span className="font-semibold">FN</span>
         </span>
         {showTagline && (
-          <span className={`${taglineSizes[size]} font-semibold tracking-wider text-[#33485C] leading-tight`}>
+          <span className={`${taglineSizes[size]} font-semibold tracking-[0.2em] text-[#33485C] leading-tight`}>
             COMPLETE. GUARANTEED.
           </span>
         )}
