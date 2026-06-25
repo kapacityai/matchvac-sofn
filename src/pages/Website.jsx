@@ -49,6 +49,7 @@ function Nav({ onLogin }) {
           ))}
           <button onClick={() => navigate('/financing')} className="px-3 py-2 text-surface-600 hover:text-surface-900 rounded-lg hover:bg-surface-150 transition-all">Financing</button>
           <button onClick={() => navigate('/contractors')} className="px-3 py-2 text-surface-600 hover:text-surface-900 rounded-lg hover:bg-surface-150 transition-all">Contractors</button>
+          <button onClick={() => navigate('/sofn')} className="px-3 py-2 bg-[#0C6B5E]/10 text-[#0C6B5E] font-bold rounded-lg hover:bg-[#0C6B5E]/20 transition-all text-xs tracking-wider">SOFN</button>
         </div>
         <div className="hidden md:flex items-center gap-3">
           <button onClick={onLogin} className="px-4 py-2 text-surface-600 hover:text-surface-900 text-sm font-medium transition-colors">Sign In</button>

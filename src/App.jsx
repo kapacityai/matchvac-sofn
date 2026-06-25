@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import Sidebar from './components/Sidebar'
 import Website from './pages/Website'
@@ -52,86 +52,69 @@ function AppShell({ children }) {
   )
 }
 
+/** Wraps children in AppShell only for non-SOFN, logged-in users */
+function Layout({ children }) {
+  const { user } = useAuth()
+  const location = useLocation()
+  if (location.pathname.startsWith('/sofn') || !user) return <>{children}</>
+  return <AppShell>{children}</AppShell>
+}
+
 function AppRoutes() {
   const { user } = useAuth()
   const home = user ? `/${user.role}` : null
 
-  // SOFN routes are always rendered — standalone, no AppShell
-  const sofnRoutes = (
-    <Routes>
-      <Route path="/sofn"          element={<SofnLanding />} />
-      <Route path="/sofn/register" element={<SofnRegister />} />
-      <Route path="/sofn/dashboard" element={<SofnDashboard />} />
-    </Routes>
-  )
-
-  // ── Not logged in: public routes only ───────────────────────────────────
-  if (!user) {
-    return (
-      <>
-        <Routes>
-          <Route path="/"                element={<Website />} />
-          <Route path="/login"           element={<LoginPage />} />
-          <Route path="/comfort-connect" element={<ComfortConnect />} />
-          <Route path="/financing"       element={<FinancingPage />} />
-          <Route path="/contractors"     element={<ContractorsPage />} />
-          <Route path="/lending-partners" element={<LendingPartners />} />
-          <Route path="/terms"           element={<TermsOfService />} />
-          <Route path="*"                element={<Navigate to="/" replace />} />
-        </Routes>
-        {sofnRoutes}
-      </>
-    )
-  }
-
-  // ── Logged in: app routes ────────────────────────────────────────────────
   return (
-    <>
-      <AppShell>
-        <Routes>
-          <Route path="/"                element={<Navigate to={home} replace />} />
-          <Route path="/login"           element={<Navigate to={home} replace />} />
-          <Route path="/comfort-connect" element={<ComfortConnect />} />
-          <Route path="/financing"       element={<FinancingPage />} />
-          <Route path="/contractors"     element={<ContractorsPage />} />
-          <Route path="/lending-partners" element={<LendingPartners />} />
-          <Route path="/terms"           element={<TermsOfService />} />
+    <Layout>
+      <Routes>
+        {/* ── Public (authed users get redirected) ── */}
+        <Route path="/"                element={!user ? <Website /> : <Navigate to={home} replace />} />
+        <Route path="/login"           element={!user ? <LoginPage /> : <Navigate to={home} replace />} />
+        <Route path="/comfort-connect" element={<ComfortConnect />} />
+        <Route path="/financing"       element={<FinancingPage />} />
+        <Route path="/contractors"     element={<ContractorsPage />} />
+        <Route path="/lending-partners" element={<LendingPartners />} />
+        <Route path="/terms"           element={<TermsOfService />} />
 
-          {/* Customer */}
-          <Route path="/customer"         element={user.role==='customer' ? <CustomerHome />   : <Navigate to={home} replace />} />
-          <Route path="/customer/request" element={user.role==='customer' ? <ServiceRequest /> : <Navigate to={home} replace />} />
-          <Route path="/customer/track"   element={user.role==='customer' ? <TrackJob />       : <Navigate to={home} replace />} />
-          <Route path="/customer/store"   element={user.role==='customer' ? <Store />          : <Navigate to={home} replace />} />
-          <Route path="/customer/jobs"    element={user.role==='customer' ? <CustomerJobs />   : <Navigate to={home} replace />} />
-          <Route path="/customer/reviews" element={user.role==='customer' ? <CustomerReviews /> : <Navigate to={home} replace />} />
-          <Route path="/customer/billing" element={user.role==='customer' ? <CustomerBilling /> : <Navigate to={home} replace />} />
-          <Route path="/customer/profile" element={user.role==='customer' ? <CustomerProfile /> : <Navigate to={home} replace />} />
+        {/* ── SOFN — always standalone, no sidebar ── */}
+        <Route path="/sofn"          element={<SofnLanding />} />
+        <Route path="/sofn/register" element={<SofnRegister />} />
+        <Route path="/sofn/dashboard" element={<SofnDashboard />} />
 
-          {/* Tech */}
-          <Route path="/tech"               element={user.role==='tech' ? <TechDashboard />   : <Navigate to={home} replace />} />
-          <Route path="/tech/jobs"          element={user.role==='tech' ? <AvailableJobs />   : <Navigate to={home} replace />} />
-          <Route path="/tech/myjobs"        element={user.role==='tech' ? <TechMyJobs />      : <Navigate to={home} replace />} />
-          <Route path="/tech/earnings"      element={user.role==='tech' ? <TechEarnings />    : <Navigate to={home} replace />} />
-          <Route path="/tech/subscription"  element={user.role==='tech' ? <TechSubscription />: <Navigate to={home} replace />} />
-          <Route path="/tech/tax"           element={user.role==='tech' ? <TaxCenter />       : <Navigate to={home} replace />} />
-          <Route path="/tech/reviews"       element={user.role==='tech' ? <TechReviews />    : <Navigate to={home} replace />} />
-          <Route path="/tech/docs"          element={user.role==='tech' ? <TechDocuments />  : <Navigate to={home} replace />} />
+        {/* ── Customer (role-gated) ── */}
+        <Route path="/customer"         element={user?.role==='customer' ? <CustomerHome />   : <Navigate to={home || '/'} replace />} />
+        <Route path="/customer/request" element={user?.role==='customer' ? <ServiceRequest /> : <Navigate to={home || '/'} replace />} />
+        <Route path="/customer/track"   element={user?.role==='customer' ? <TrackJob />       : <Navigate to={home || '/'} replace />} />
+        <Route path="/customer/store"   element={user?.role==='customer' ? <Store />          : <Navigate to={home || '/'} replace />} />
+        <Route path="/customer/jobs"    element={user?.role==='customer' ? <CustomerJobs />   : <Navigate to={home || '/'} replace />} />
+        <Route path="/customer/reviews" element={user?.role==='customer' ? <CustomerReviews /> : <Navigate to={home || '/'} replace />} />
+        <Route path="/customer/billing" element={user?.role==='customer' ? <CustomerBilling /> : <Navigate to={home || '/'} replace />} />
+        <Route path="/customer/profile" element={user?.role==='customer' ? <CustomerProfile /> : <Navigate to={home || '/'} replace />} />
 
-          {/* Admin */}
-          <Route path="/admin"               element={user.role==='admin' ? <AdminOverview />  : <Navigate to={home} replace />} />
-          <Route path="/admin/users"         element={user.role==='admin' ? <AdminUsers />     : <Navigate to={home} replace />} />
-          <Route path="/admin/jobs"          element={user.role==='admin' ? <AdminJobs />      : <Navigate to={home} replace />} />
-          <Route path="/admin/reports"       element={user.role==='admin' ? <AdminReports />   : <Navigate to={home} replace />} />
-          <Route path="/admin/ads"           element={user.role==='admin' ? <AdminAds />       : <Navigate to={home} replace />} />
-          <Route path="/admin/inventory"     element={user.role==='admin' ? <AdminInventory /> : <Navigate to={home} replace />} />
-          <Route path="/admin/notifications" element={user.role==='admin' ? <AdminNotifications /> : <Navigate to={home} replace />} />
-          <Route path="/admin/settings"      element={user.role==='admin' ? <AdminSettings />     : <Navigate to={home} replace />} />
+        {/* ── Tech (role-gated) ── */}
+        <Route path="/tech"               element={user?.role==='tech' ? <TechDashboard />   : <Navigate to={home || '/'} replace />} />
+        <Route path="/tech/jobs"          element={user?.role==='tech' ? <AvailableJobs />   : <Navigate to={home || '/'} replace />} />
+        <Route path="/tech/myjobs"        element={user?.role==='tech' ? <TechMyJobs />      : <Navigate to={home || '/'} replace />} />
+        <Route path="/tech/earnings"      element={user?.role==='tech' ? <TechEarnings />    : <Navigate to={home || '/'} replace />} />
+        <Route path="/tech/subscription"  element={user?.role==='tech' ? <TechSubscription />: <Navigate to={home || '/'} replace />} />
+        <Route path="/tech/tax"           element={user?.role==='tech' ? <TaxCenter />       : <Navigate to={home || '/'} replace />} />
+        <Route path="/tech/reviews"       element={user?.role==='tech' ? <TechReviews />    : <Navigate to={home || '/'} replace />} />
+        <Route path="/tech/docs"          element={user?.role==='tech' ? <TechDocuments />  : <Navigate to={home || '/'} replace />} />
 
-          <Route path="*" element={<Navigate to={home} replace />} />
-        </Routes>
-      </AppShell>
-      {sofnRoutes}
-    </>
+        {/* ── Admin (role-gated) ── */}
+        <Route path="/admin"               element={user?.role==='admin' ? <AdminOverview />  : <Navigate to={home || '/'} replace />} />
+        <Route path="/admin/users"         element={user?.role==='admin' ? <AdminUsers />     : <Navigate to={home || '/'} replace />} />
+        <Route path="/admin/jobs"          element={user?.role==='admin' ? <AdminJobs />      : <Navigate to={home || '/'} replace />} />
+        <Route path="/admin/reports"       element={user?.role==='admin' ? <AdminReports />   : <Navigate to={home || '/'} replace />} />
+        <Route path="/admin/ads"           element={user?.role==='admin' ? <AdminAds />       : <Navigate to={home || '/'} replace />} />
+        <Route path="/admin/inventory"     element={user?.role==='admin' ? <AdminInventory /> : <Navigate to={home || '/'} replace />} />
+        <Route path="/admin/notifications" element={user?.role==='admin' ? <AdminNotifications /> : <Navigate to={home || '/'} replace />} />
+        <Route path="/admin/settings"      element={user?.role==='admin' ? <AdminSettings />     : <Navigate to={home || '/'} replace />} />
+
+        {/* ── Fallback ── */}
+        <Route path="*" element={<Navigate to={home || '/'} replace />} />
+      </Routes>
+    </Layout>
   )
 }
 
