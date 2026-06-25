@@ -1,10 +1,10 @@
-export function SofnLogo({ size = 'md', showTagline = true, className = '' }) {
-  const sizes = { sm: 32, md: 40, lg: 48, xl: 64 }
-  const px = sizes[size] || 40
+export function SofnLogo({ size = 'md', className = '' }) {
+  const sizes = { sm: 40, md: 52, lg: 64, xl: 80 }
+  const px = sizes[size] || 52
   return (
     <img
       src="/sofn-logo.png"
-      alt="SOFN"
+      alt="SOFN — Complete. Guaranteed."
       className={className}
       style={{ height: px, width: 'auto' }}
     />
@@ -12,8 +12,8 @@ export function SofnLogo({ size = 'md', showTagline = true, className = '' }) {
 }
 
 export function SofnLogoIcon({ size = 'sm', className = '' }) {
-  const sizes = { sm: 32, md: 40, lg: 48 }
-  const px = sizes[size] || 32
+  const sizes = { sm: 40, md: 52, lg: 64 }
+  const px = sizes[size] || 40
   return (
     <img
       src="/sofn-logo.png"
