@@ -38,7 +38,7 @@ export default function SofnLanding() {
           <button onClick={() => navigate('/sofn/register')} className="h-12 px-8 bg-[#0C6B5E] hover:bg-[#094A40] text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm">
             Sign Up as a Technician <ArrowRight size={18} />
           </button>
-          <button onClick={() => navigate('/sofn/dashboard')} className="h-12 px-8 border border-[#DAD8D2] bg-white hover:bg-white text-[#33485C] font-semibold rounded-lg transition-colors text-sm">
+          <button onClick={() => navigate('/sofn/login')} className="h-12 px-8 border border-[#DAD8D2] bg-white hover:bg-white text-[#33485C] font-semibold rounded-lg transition-colors text-sm">
             Tech Dashboard Login
           </button>
         </div>

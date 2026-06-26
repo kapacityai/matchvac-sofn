@@ -152,7 +152,7 @@ export default function SofnRegister() {
       {/* Header */}
       <header className="bg-white border-b border-[#DAD8D2] px-6 py-4 flex items-center justify-between">
         <SofnLogo size="sm" />
-        <a href="/" className="text-[#0C6B5E] text-sm font-medium hover:underline">← Back to site</a>
+        <button onClick={() => window.history.length > 1 ? window.history.back() : navigate('/sofn')} className="text-[#0C6B5E] text-sm font-medium hover:underline">← Back</button>
       </header>
 
       <div className="max-w-2xl mx-auto px-4 py-8">

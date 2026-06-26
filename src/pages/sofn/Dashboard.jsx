@@ -91,7 +91,8 @@ export default function SofnDashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem('sofn_token')
-    window.location.href = '/sofn/register'
+    localStorage.removeItem('sofn_user')
+    window.location.href = '/sofn/login'
   }
 
   const handleAcceptJob = async (jobId) => {

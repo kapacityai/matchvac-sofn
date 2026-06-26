@@ -13,6 +13,7 @@ import TermsOfService from './pages/TermsOfService'
 import SofnRegister from './pages/sofn/Register'
 import SofnDashboard from './pages/sofn/Dashboard'
 import SofnLanding from './pages/sofn/Landing'
+import SofnLogin from './pages/sofn/Login'
 
 import CustomerHome from './pages/customer/CustomerHome'
 import ServiceRequest from './pages/customer/ServiceRequest'
@@ -78,6 +79,7 @@ function AppRoutes() {
 
         {/* ── SOFN — always standalone, no sidebar ── */}
         <Route path="/sofn"          element={<SofnLanding />} />
+        <Route path="/sofn/login"    element={<SofnLogin />} />
         <Route path="/sofn/register" element={<SofnRegister />} />
         <Route path="/sofn/dashboard" element={<SofnDashboard />} />
 
