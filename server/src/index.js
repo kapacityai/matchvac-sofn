@@ -13,6 +13,7 @@ import paymentRoutes from './routes/payments.js'
 import techRoutes from './routes/tech.js'
 import customerRoutes from './routes/customer.js'
 import adminRoutes from './routes/admin.js'
+import notificationRoutes from './routes/notifications.js'
 import mcpRoutes from './mcp/server.js'
 import { supabase } from './lib/supabase.js'
 
@@ -49,6 +50,7 @@ app.use('/api/payments', paymentRoutes)
 app.use('/api/tech', techRoutes)
 app.use('/api/customer', customerRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/notifications', notificationRoutes)
 app.use('/api/mcp', mcpRoutes)
 
 // ── Health Check ──────────────────────────────────────────────

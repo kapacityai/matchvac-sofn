@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { SofnHeader } from '../../components/sofn/Header'
 import { SofnLogo } from '../../components/sofn/Logo'
 import SofnJobs from './Jobs'
 import SofnEarnings from './Earnings'
 import SofnProfile from './Profile'
-import { LayoutDashboard, Briefcase, DollarSign, User } from 'lucide-react'
+import { LayoutDashboard, Briefcase, DollarSign, User, Bell } from 'lucide-react'
 
 const TABS = [
   { id: 'dispatches', label: 'Available Dispatches', icon: LayoutDashboard },
@@ -53,6 +53,30 @@ const DEMO_PROFILE = {
   subscriptionTier: 'pro', subscriptionPrice: 49,
 }
 
+// ── Demo notifications ──
+const DEMO_NOTIFICATIONS = [
+  { id: 'n1', type: 'new_job_available', title: 'New Job in 22202', message: 'Spring Tune-Up — Arlington • $75', read: false, created_at: new Date().toISOString() },
+  { id: 'n2', type: 'new_job_available', title: 'New Job in 22301', message: 'Filter Swap — Alexandria • $40', read: false, created_at: new Date(Date.now() - 60000).toISOString() },
+]
+
+// Simple notification sound using Web Audio API
+function playAlertSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)()
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+    osc.connect(gain)
+    gain.connect(ctx.destination)
+    osc.type = 'sine'
+    osc.frequency.setValueAtTime(880, ctx.currentTime)
+    osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.1)
+    gain.gain.setValueAtTime(0.3, ctx.currentTime)
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3)
+    osc.start(ctx.currentTime)
+    osc.stop(ctx.currentTime + 0.3)
+  } catch {}
+}
+
 export default function SofnDashboard() {
   const [activeTab, setActiveTab] = useState('dispatches')
   const [user, setUser] = useState(DEMO_USER)
@@ -62,8 +86,16 @@ export default function SofnDashboard() {
   const [profile, setProfile] = useState(DEMO_PROFILE)
   const [loading, setLoading] = useState(true)
 
+  // Notification state
+  const [notifications, setNotifications] = useState(DEMO_NOTIFICATIONS)
+  const [unreadCount, setUnreadCount] = useState(2)
+  const prevJobCountRef = useRef(DEMO_JOBS_AVAILABLE.length)
+  const pollingRef = useRef(null)
+  const notifPollingRef = useRef(null)
+
   useEffect(() => { document.body.classList.add('sofn-body'); return () => document.body.classList.remove('sofn-body') }, [])
 
+  // ── Initial data fetch ──
   useEffect(() => {
     async function fetchData() {
       setLoading(true)
@@ -78,15 +110,136 @@ export default function SofnDashboard() {
           fetch(`${apiUrl}/api/jobs?status=available&limit=10`, { headers }).then(r => r.json()).catch(() => null),
           fetch(`${apiUrl}/api/jobs?limit=50`, { headers }).then(r => r.json()).catch(() => null),
           fetch(`${apiUrl}/api/tech/earnings`, { headers }).then(r => r.json()).catch(() => null),
+          fetch(`${apiUrl}/api/notifications`, { headers }).then(r => r.json()).catch(() => null),
         ])
         if (meRes?.user) setUser({ ...meRes.user, earnings_week: earnRes?.summary?.totalNet || 0 })
-        if (availRes?.jobs) setAvailableJobs(availRes.jobs)
+        if (availRes?.jobs) {
+          setAvailableJobs(availRes.jobs)
+          prevJobCountRef.current = availRes.jobs.length
+        }
         if (jobsRes?.jobs) setMyJobs(jobsRes.jobs)
         if (earnRes?.summary) setEarnings(prev => ({ ...prev, ...earnRes.summary, history: earnRes.payments || prev.history }))
+        if (meRes?.notifications) {
+          setNotifications(meRes.notifications)
+          setUnreadCount(meRes.unread)
+        }
       } catch {}
       setLoading(false)
     }
     fetchData()
+  }, [])
+
+  // ── Job polling (every 15s) — checks for new available jobs ──
+  useEffect(() => {
+    const pollJobs = async () => {
+      try {
+        const token = localStorage.getItem('sofn_token')
+        const apiUrl = import.meta.env.VITE_API_URL || ''
+        if (!apiUrl) {
+          // Demo mode: simulate new jobs appearing
+          return
+        }
+
+        const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+        const res = await fetch(`${apiUrl}/api/jobs?status=available&limit=10`, { headers })
+        const data = await res.json()
+        if (data?.jobs) {
+          const prevCount = prevJobCountRef.current
+          const newCount = data.jobs.length
+          if (newCount > prevCount) {
+            playAlertSound()
+            // Update page title with badge
+            document.title = `(${newCount - prevCount}) SOFN Dashboard`
+            setTimeout(() => { document.title = 'SOFN Dashboard' }, 5000)
+          }
+          prevJobCountRef.current = newCount
+          setAvailableJobs(data.jobs)
+        }
+      } catch {}
+    }
+
+    // Start polling
+    pollingRef.current = setInterval(pollJobs, 15000)
+    return () => {
+      if (pollingRef.current) clearInterval(pollingRef.current)
+    }
+  }, [])
+
+  // ── Notification polling (every 30s) — scan for ZIP-matched jobs ──
+  useEffect(() => {
+    const pollNotifications = async () => {
+      try {
+        const token = localStorage.getItem('sofn_token')
+        const apiUrl = import.meta.env.VITE_API_URL || ''
+        if (!apiUrl) return // demo mode — use static data
+
+        const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+
+        // 1. Scan for new ZIP-matched jobs
+        await fetch(`${apiUrl}/api/notifications/scan`, { method: 'POST', headers }).catch(() => {})
+
+        // 2. Fetch updated notifications
+        const notifRes = await fetch(`${apiUrl}/api/notifications`, { headers }).then(r => r.json()).catch(() => null)
+        if (notifRes?.notifications) {
+          setNotifications(notifRes.notifications)
+          setUnreadCount(notifRes.unread)
+        }
+      } catch {}
+    }
+
+    notifPollingRef.current = setInterval(pollNotifications, 30000)
+
+    // Keep unread count ref for sound comparison without re-creating interval
+    const unreadRef = { current: unreadCount }
+    const soundCheckId = setInterval(async () => {
+      try {
+        const token = localStorage.getItem('sofn_token')
+        const apiUrl = import.meta.env.VITE_API_URL || ''
+        if (!apiUrl) return
+        const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+        const res = await fetch(`${apiUrl}/api/notifications`, { headers }).then(r => r.json()).catch(() => null)
+        if (res?.unread !== undefined && res.unread > unreadRef.current) {
+          playAlertSound()
+          document.title = `(${res.unread - unreadRef.current}) SOFN Dashboard`
+          setTimeout(() => { document.title = 'SOFN Dashboard' }, 5000)
+        }
+        if (res?.unread !== undefined) unreadRef.current = res.unread
+      } catch {}
+    }, 15000)
+
+    return () => {
+      if (notifPollingRef.current) clearInterval(notifPollingRef.current)
+      clearInterval(soundCheckId)
+    }
+  }, [])
+
+  // ── Mark single notification as read ──
+  const markRead = useCallback(async (id) => {
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n))
+    setUnreadCount(prev => Math.max(0, prev - 1))
+    const apiUrl = import.meta.env.VITE_API_URL || ''
+    if (apiUrl) {
+      const token = localStorage.getItem('sofn_token')
+      await fetch(`${apiUrl}/api/notifications/read`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: [id] })
+      }).catch(() => {})
+    }
+  }, [])
+
+  // ── Mark all notifications as read ──
+  const markAllRead = useCallback(async () => {
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })))
+    setUnreadCount(0)
+    const apiUrl = import.meta.env.VITE_API_URL || ''
+    if (apiUrl) {
+      const token = localStorage.getItem('sofn_token')
+      await fetch(`${apiUrl}/api/notifications/read`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      }).catch(() => {})
+    }
   }, [])
 
   const handleLogout = () => {
@@ -134,7 +287,32 @@ export default function SofnDashboard() {
 
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
-      <SofnHeader user={user} onLogout={handleLogout} />
+      <SofnHeader
+        user={user}
+        onLogout={handleLogout}
+        notifications={notifications}
+        unreadCount={unreadCount}
+        onMarkRead={markRead}
+        onMarkAllRead={markAllRead}
+      />
+
+      {/* Alert banner when unread notifications */}
+      {unreadCount > 0 && activeTab !== 'dispatches' && (
+        <div className="bg-emerald-50 border-b border-emerald-200 px-6 py-2">
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
+            <p className="text-xs text-emerald-700 font-medium flex items-center gap-1.5">
+              <Bell size={12} />
+              {unreadCount} new job{unreadCount !== 1 ? 's' : ''} available in your service zones
+            </p>
+            <button
+              onClick={() => setActiveTab('dispatches')}
+              className="text-xs text-emerald-700 font-semibold underline hover:no-underline"
+            >
+              View Dispatches
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="bg-white border-b border-[#DAD8D2] px-6">
@@ -145,6 +323,9 @@ export default function SofnDashboard() {
             }`}>
               <tab.icon size={16} />
               {tab.label}
+              {tab.id === 'dispatches' && unreadCount > 0 && (
+                <span className="w-2 h-2 bg-emerald-500 rounded-full" />
+              )}
             </button>
           ))}
         </div>
