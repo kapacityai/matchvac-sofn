@@ -22,6 +22,37 @@ router.get('/manifest', (req, res) => {
         description: 'Get all available HVAC and home services with pricing tiers',
         parameters: {},
       },
+      // ── SOFN-specific tools ──
+      {
+        name: 'get_tech_profile',
+        description: '[SOFN] Get the authenticated tech profile including license, insurance, service zones, and subscription tier',
+        parameters: {},
+      },
+      {
+        name: 'update_service_zones',
+        description: '[SOFN] Update the ZIP codes a tech serves (max 5)',
+        parameters: {
+          zip_codes: { type: 'array', items: { type: 'string' }, description: 'Array of ZIP codes (max 5)' },
+        },
+        required: ['zip_codes'],
+      },
+      {
+        name: 'get_subscription_tier',
+        description: '[SOFN] Get tech subscription plan and benefits',
+        parameters: {},
+      },
+      {
+        name: 'list_available_dispatches',
+        description: '[SOFN] List available dispatches for a tech (SOFN-branded equivalent of get_available_jobs)',
+        parameters: {
+          limit: { type: 'number', description: 'Max results (default 20)' },
+        },
+      },
+      {
+        name: 'complete_tech_onboarding',
+        description: '[SOFN] Check tech onboarding status — which steps are done (account, license, payment, subscription)',
+        parameters: {},
+      },
       {
         name: 'create_job',
         description: 'Book a service job for a customer',
@@ -169,6 +200,78 @@ router.post('/execute', requireAuth, async (req, res) => {
         const { data, error } = await supabase.from('jobs').select('id, service_name, tier, price, address_city, urgent, created_at').eq('status', 'available').order('urgent', { ascending: false }).order('created_at', { ascending: true }).limit(limit)
         if (error) throw error
         return res.json({ result: data })
+      }
+
+      // ── SOFN tools ──
+      case 'get_tech_profile': {
+        if (req.user.role !== 'tech') return res.status(403).json({ error: 'Only techs can view their profile' })
+        const [userRes, profileRes, subRes] = await Promise.all([
+          supabase.from('users').select('id, name, email, phone').eq('id', req.user.id).single(),
+          supabase.from('tech_profiles').select('*').eq('user_id', req.user.id).single(),
+          supabase.from('tech_subscriptions').select('*').eq('user_id', req.user.id).maybeSingle(),
+        ])
+        return res.json({
+          result: {
+            user: userRes.data || {},
+            profile: profileRes.data || {},
+            subscription: subRes.data || { tier: 'free' },
+          }
+        })
+      }
+
+      case 'update_service_zones': {
+        if (req.user.role !== 'tech') return res.status(403).json({ error: 'Only techs can update service zones' })
+        const { zip_codes } = parameters
+        if (!zip_codes || !Array.isArray(zip_codes)) return res.status(400).json({ error: 'zip_codes array required' })
+        if (zip_codes.length > 5) return res.status(400).json({ error: 'Max 5 ZIP codes' })
+        const { error } = await supabase.from('tech_profiles').upsert({
+          user_id: req.user.id, service_zips: zip_codes,
+        }).eq('user_id', req.user.id)
+        if (error) throw error
+        return res.json({ result: { message: `Service zones updated to: ${zip_codes.join(', ')}`, zip_codes } })
+      }
+
+      case 'get_subscription_tier': {
+        if (req.user.role !== 'tech') return res.status(403).json({ error: 'Only techs can view subscriptions' })
+        const { data } = await supabase.from('tech_subscriptions').select('*').eq('user_id', req.user.id).maybeSingle()
+        const tier = data?.tier || 'free'
+        const benefits = {
+          free: { jobsPerMonth: 15, feeRate: '15%', support: 'Basic' },
+          pro: { jobsPerMonth: 30, feeRate: '11%', support: 'Email + Chat' },
+          elite: { jobsPerMonth: -1, feeRate: '8%', support: 'Dedicated manager' },
+        }
+        return res.json({ result: { tier, status: data?.status || 'active', benefits: benefits[tier], nextBilling: data?.current_period_end } })
+      }
+
+      case 'list_available_dispatches': {
+        if (req.user.role !== 'tech') return res.status(403).json({ error: 'Only techs can view dispatches' })
+        const { limit = 20 } = parameters
+        const { data, error } = await supabase.from('jobs').select('id, service_name, tier, price, address_street, address_city, address_zip, urgent, estimated_time, created_at').eq('status', 'available').order('urgent', { ascending: false }).order('created_at', { ascending: true }).limit(limit)
+        if (error) throw error
+        return res.json({ result: { dispatches: data, count: data?.length || 0, message: `${data?.length || 0} dispatches available` } })
+      }
+
+      case 'complete_tech_onboarding': {
+        if (req.user.role !== 'tech') return res.status(403).json({ error: 'Only techs' })
+        const [userRes, profileRes, subRes] = await Promise.all([
+          supabase.from('users').select('id').eq('id', req.user.id).single(),
+          supabase.from('tech_profiles').select('license_number, insurance_company, service_zips, bank_account').eq('user_id', req.user.id).maybeSingle(),
+          supabase.from('tech_subscriptions').select('tier').eq('user_id', req.user.id).maybeSingle(),
+        ])
+        const p = profileRes.data || {}
+        return res.json({
+          result: {
+            steps: {
+              account_created: !!userRes.data,
+              license_provided: !!p.license_number,
+              insurance_provided: !!p.insurance_company,
+              service_zones_set: !!(p.service_zips?.length > 0),
+              bank_account_set: !!p.bank_account,
+              subscription_chosen: !!subRes.data,
+            },
+            all_complete: !!(userRes.data && p.license_number && p.insurance_company && p.service_zips?.length > 0 && p.bank_account),
+          }
+        })
       }
 
       case 'assign_job': {
