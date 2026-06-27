@@ -111,7 +111,16 @@ export default function SofnLanding() {
         </div>
       </section>
 
-      {/* For Companies / Partners */}
+      {/* CTA */}
+      <section className="max-w-3xl mx-auto px-4 py-16 text-center">
+        <h2 className="text-2xl font-display font-bold text-[#16202B] mb-4">Ready to Start Accepting Dispatches?</h2>
+        <p className="text-[#33485C] mb-8">Join the network that connects certified techs with guaranteed work.</p>
+        <button onClick={() => navigate('/sofn/register')} className="h-12 px-10 bg-[#0C6B5E] hover:bg-[#094A40] text-white font-semibold rounded-lg transition-colors flex items-center gap-2 mx-auto text-sm">
+          Get Started <ArrowRight size={18} />
+        </button>
+      </section>
+
+      {/* For Companies / Partners — always last before footer */}
       <section className="bg-white border-t border-[#DAD8D2] py-16">
         <div className="max-w-5xl mx-auto px-4">
           <div className="text-center mb-10">
@@ -166,15 +175,6 @@ export default function SofnLanding() {
             </a>
           </div>
         </div>
-      </section>
-
-      {/* CTA */}
-      <section className="max-w-3xl mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-display font-bold text-[#16202B] mb-4">Ready to Start Accepting Dispatches?</h2>
-        <p className="text-[#33485C] mb-8">Join the network that connects certified techs with guaranteed work.</p>
-        <button onClick={() => navigate('/sofn/register')} className="h-12 px-10 bg-[#0C6B5E] hover:bg-[#094A40] text-white font-semibold rounded-lg transition-colors flex items-center gap-2 mx-auto text-sm">
-          Get Started <ArrowRight size={18} />
-        </button>
       </section>
 
       {/* Footer */}
