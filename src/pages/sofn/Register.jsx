@@ -77,7 +77,7 @@ export default function SofnRegister() {
     setLoading(true)
     await apiFetch('/api/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ email: account.email, password: account.password, name: account.name, phone: account.phone, role: 'tech' })
+      body: JSON.stringify({ email: account.email, password: account.password, name: account.name, phone: account.phone, role: 'tech', source: 'sofn_tech' })
     }).catch(() => {})
     setToken('demo-token')
     localStorage.setItem('sofn_token', 'demo-token')

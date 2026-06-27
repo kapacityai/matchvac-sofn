@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
   role          TEXT NOT NULL CHECK (role IN ('customer', 'tech', 'admin')),
   avatar        TEXT,
   email_verified BOOLEAN DEFAULT FALSE,
+  source        TEXT,
   created_at    TIMESTAMPTZ DEFAULT NOW(),
   updated_at    TIMESTAMPTZ DEFAULT NOW()
 );

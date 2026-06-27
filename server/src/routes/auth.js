@@ -17,7 +17,7 @@ function generateRefreshToken(userId) {
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
   try {
-    const { email, password, name, phone, role = 'customer' } = req.body
+    const { email, password, name, phone, role = 'customer', source } = req.body
     if (!email || !password || !name) {
       return res.status(400).json({ error: 'Email, password, and name are required' })
     }
@@ -41,8 +41,8 @@ router.post('/register', async (req, res) => {
 
     const { data: user, error } = await supabase
       .from('users')
-      .insert({ email: email.toLowerCase(), password_hash, name, phone, role, avatar })
-      .select('id, email, name, role, phone, avatar')
+      .insert({ email: email.toLowerCase(), password_hash, name, phone, role, avatar, source: source || null })
+      .select('id, email, name, role, phone, avatar, source')
       .single()
 
     if (error) throw error

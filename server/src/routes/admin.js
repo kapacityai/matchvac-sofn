@@ -8,7 +8,7 @@ const router = Router()
 router.get('/users', requireAuth, requireRole('admin'), async (req, res) => {
   try {
     const { role, limit = 100 } = req.query
-    let query = supabase.from('users').select('id, email, name, role, phone, avatar, created_at').order('created_at', { ascending: false }).limit(limit)
+    let query = supabase.from('users').select('id, email, name, role, phone, avatar, source, created_at').order('created_at', { ascending: false }).limit(limit)
     if (role) query = query.eq('role', role)
     const { data, error } = await query
     if (error) throw error

@@ -51,10 +51,10 @@ async function apiFetch(path, options = {}) {
 
 // ── Auth ──────────────────────────────────────────────────────
 export const auth = {
-  async register({ email, password, name, phone, role }) {
+  async register({ email, password, name, phone, role, source }) {
     const data = await apiFetch('/api/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ email, password, name, phone, role }),
+      body: JSON.stringify({ email, password, name, phone, role, source }),
     })
     if (data.token) { setToken(data.token); setRefresh(data.refreshToken) }
     return data

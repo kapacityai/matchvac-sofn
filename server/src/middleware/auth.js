@@ -11,7 +11,7 @@ export async function requireAuth(req, res, next) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     const { data: user, error } = await supabase
       .from('users')
-      .select('id, email, name, role, phone, avatar')
+      .select('id, email, name, role, phone, avatar, source')
       .eq('id', decoded.userId)
       .single()
     if (error || !user) return res.status(401).json({ error: 'Invalid token' })
