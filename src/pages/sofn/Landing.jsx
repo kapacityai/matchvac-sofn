@@ -117,7 +117,7 @@ export default function SofnLanding() {
           <div className="text-center mb-10">
             <h2 className="text-2xl font-display font-bold text-[#16202B] mb-3">Built for Service Obligation Partners</h2>
             <p className="text-[#33485C] max-w-2xl mx-auto">
-              You sell the service contract. We fulfill the service obligation. SOFN is the dispatch layer between
+              You sell the service contract. We fulfill the service obligation. SOFN is the dispatch layer bridging
               your promise and the homeowner's front door.
             </p>
           </div>
