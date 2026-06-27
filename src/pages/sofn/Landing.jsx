@@ -111,6 +111,63 @@ export default function SofnLanding() {
         </div>
       </section>
 
+      {/* For Companies / Partners */}
+      <section className="bg-white border-t border-[#DAD8D2] py-16">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-display font-bold text-[#16202B] mb-3">Built for Service Obligation Partners</h2>
+            <p className="text-[#33485C] max-w-2xl mx-auto">
+              You sell the service contract. We fulfill the service obligation. SOFN is the dispatch layer between
+              your promise and the homeowner's front door.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {[
+              {
+                title: 'HVAC Lease & Rental Companies',
+                desc: 'You lease HVAC equipment with maintenance included. SOFN dispatches certified techs for every tune-up, filter swap, and repair — so your leased units stay under warranty and tenants stay comfortable.',
+                highlights: ['Scheduled maintenance fulfillment', 'Emergency repair dispatch', 'Filter supply chain integration'],
+              },
+              {
+                title: 'Home Warranty Providers',
+                desc: 'American Home Shield, First American, Choice Home Warranty, and others spend millions sourcing service techs. SOFN gives you a pre-vetted, on-demand pool of certified technicians in the DMV — ready to dispatch on your claims.',
+                highlights: ['48-hr claim-to-dispatch SLA', 'Certified, insured techs only', 'Digital completion reports for audit'],
+              },
+              {
+                title: 'Property Managers & REITs',
+                desc: 'Multifamily and commercial properties carry standing service obligations. SOFN ensures every unit has a qualified tech assigned — no more scrambling when a tenant files a work order.',
+                highlights: ['Bulk dispatch for portfolio units', 'Preventative maintenance scheduling', 'Monthly service compliance reports'],
+              },
+            ].map(p => (
+              <div key={p.title} className="bg-[#F4F3EF] rounded-xl border border-[#DAD8D2] p-6">
+                <h3 className="font-display font-bold text-[#16202B] text-sm mb-3">{p.title}</h3>
+                <p className="text-xs text-[#33485C]/80 leading-relaxed mb-4">{p.desc}</p>
+                <ul className="space-y-1.5">
+                  {p.highlights.map((h, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-[#33485C]">
+                      <Check size={12} className="text-[#0C6B5E] mt-0.5 flex-shrink-0" />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-[#0C6B5E] rounded-xl p-8 text-center text-white">
+            <p className="text-lg font-display font-bold mb-2">Partner with SOFN</p>
+            <p className="text-sm text-white/80 mb-6 max-w-xl mx-auto">
+              We handle the dispatch so you can focus on growing your book of business.
+              Certified techs, GPS-tracked arrivals, escrow payments, and digital audit trails.
+            </p>
+            <a href="mailto:partners@sofn.io" className="inline-flex h-11 px-8 bg-white text-[#0C6B5E] font-semibold rounded-lg items-center gap-2 text-sm hover:bg-white/90 transition-colors">
+              partners@sofn.io <ArrowRight size={16} />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="max-w-3xl mx-auto px-4 py-16 text-center">
         <h2 className="text-2xl font-display font-bold text-[#16202B] mb-4">Ready to Start Accepting Dispatches?</h2>
