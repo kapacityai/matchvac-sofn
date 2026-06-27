@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
     if (role === 'customer') {
       await supabase.from('customer_profiles').insert({ user_id: user.id })
     } else if (role === 'tech') {
-      await supabase.from('tech_profiles').insert({ user_id: user.id })
+      await supabase.from('tech_profiles').insert({ user_id: user.id, phone: phone || null })
       await supabase.from('tech_subscriptions').insert({
         tech_id: user.id,
         tier: 'free',

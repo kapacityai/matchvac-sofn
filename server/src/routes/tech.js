@@ -19,7 +19,14 @@ router.get('/profile', requireAuth, requireRole('tech'), async (req, res) => {
 // PUT /api/tech/profile
 router.put('/profile', requireAuth, requireRole('tech'), async (req, res) => {
   try {
-    const allowed = ['license_number', 'license_state', 'epa608_certified']
+    const allowed = [
+      'license_number', 'license_state', 'license_expiry',
+      'epa608_certified', 'epa608_number',
+      'insurance_company', 'insurance_policy_number', 'insurance_expiry', 'insurance_file',
+      'service_zips', 'phone',
+      'preferred_payment_method',
+      'bank_account_holder', 'bank_routing', 'bank_account', 'bank_account_type', 'bank_account_confirmed',
+    ]
     const updates = {}
     allowed.forEach(k => { if (req.body[k] !== undefined) updates[k] = req.body[k] })
 
