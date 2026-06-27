@@ -53,6 +53,7 @@ app.use('/api/admin', adminRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/mcp', mcpRoutes)
 
+
 // ── Health Check ──────────────────────────────────────────────
 app.get('/health', async (req, res) => {
   try {
