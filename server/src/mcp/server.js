@@ -208,7 +208,7 @@ router.post('/execute', requireAuth, async (req, res) => {
         const [userRes, profileRes, subRes] = await Promise.all([
           supabase.from('users').select('id, name, email, phone').eq('id', req.user.id).single(),
           supabase.from('tech_profiles').select('*').eq('user_id', req.user.id).single(),
-          supabase.from('tech_subscriptions').select('*').eq('user_id', req.user.id).maybeSingle(),
+          supabase.from('tech_subscriptions').select('*').eq('tech_id', req.user.id).maybeSingle(),
         ])
         return res.json({
           result: {
@@ -233,7 +233,7 @@ router.post('/execute', requireAuth, async (req, res) => {
 
       case 'get_subscription_tier': {
         if (req.user.role !== 'tech') return res.status(403).json({ error: 'Only techs can view subscriptions' })
-        const { data } = await supabase.from('tech_subscriptions').select('*').eq('user_id', req.user.id).maybeSingle()
+        const { data } = await supabase.from('tech_subscriptions').select('*').eq('tech_id', req.user.id).maybeSingle()
         const tier = data?.tier || 'free'
         const benefits = {
           free: { jobsPerMonth: 15, feeRate: '15%', support: 'Basic' },
@@ -256,7 +256,7 @@ router.post('/execute', requireAuth, async (req, res) => {
         const [userRes, profileRes, subRes] = await Promise.all([
           supabase.from('users').select('id').eq('id', req.user.id).single(),
           supabase.from('tech_profiles').select('license_number, insurance_company, service_zips, bank_account').eq('user_id', req.user.id).maybeSingle(),
-          supabase.from('tech_subscriptions').select('tier').eq('user_id', req.user.id).maybeSingle(),
+          supabase.from('tech_subscriptions').select('tier').eq('tech_id', req.user.id).maybeSingle(),
         ])
         const p = profileRes.data || {}
         return res.json({

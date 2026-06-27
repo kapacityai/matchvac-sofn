@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS jobs (
   customer_review  TEXT,
   notes            TEXT,
   urgent           BOOLEAN DEFAULT FALSE,
+  estimated_time   TEXT,
   created_at       TIMESTAMPTZ DEFAULT NOW(),
   updated_at       TIMESTAMPTZ DEFAULT NOW()
 );
