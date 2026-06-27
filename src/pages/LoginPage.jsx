@@ -314,7 +314,7 @@ function TechSignup({ onBack }) {
               <div><p className="text-sm font-medium text-navy-700">Service Areas</p><p className="text-xs text-surface-600">{serviceZips.join(', ') || 'DMV area'}</p></div>
             </div>
           </div>
-          <button onClick={() => navigate('/sofn/dashboard')} className="btn-primary mx-auto">Go to Dashboard <ArrowRight size={18} /></button>
+          <button onClick={() => navigate('/tech')} className="btn-primary mx-auto">Go to Dashboard <ArrowRight size={18} /></button>
         </div>
       )}
     </div>

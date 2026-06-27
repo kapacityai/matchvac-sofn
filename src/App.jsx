@@ -1,6 +1,7 @@
 import React from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { isSofnDomain } from './lib/domain'
 import Sidebar from './components/Sidebar'
 import Website from './pages/Website'
 import LoginPage from './pages/LoginPage'
@@ -63,13 +64,24 @@ function Layout({ children }) {
 
 function AppRoutes() {
   const { user } = useAuth()
-  const home = user ? `/${user.role}` : null
+  const sofnDomain = isSofnDomain()
+
+  // Route techs to the right dashboard based on source
+  const home = user
+    ? user.role === 'tech'
+      ? (user.source === 'matchvac_tech' ? '/tech' : '/sofn/dashboard')
+      : `/${user.role}`
+    : null
 
   return (
     <Layout>
       <Routes>
-        {/* ── Public (authed users get redirected) ── */}
-        <Route path="/"                element={!user ? <Website /> : <Navigate to={home} replace />} />
+        {/* ── Public — domain-aware root ── */}
+        <Route path="/" element={
+          !user
+            ? (sofnDomain ? <SofnLanding /> : <Website />)
+            : <Navigate to={home} replace />
+        } />
         <Route path="/login"           element={!user ? <LoginPage /> : <Navigate to={home} replace />} />
         <Route path="/comfort-connect" element={<ComfortConnect />} />
         <Route path="/financing"       element={<FinancingPage />} />

@@ -100,9 +100,15 @@ app.get('/api/openapi.json', (req, res) => {
   })
 })
 
-// ── Serve dedicated SOFN landing at root (preview) ────────
+// ── Serve domain-aware root page ──────────────────────────
 const distPath = path.resolve(__dirname, '../../dist')
-app.get('/', (req, res) => res.sendFile(path.join(distPath, 'sofn-root.html')))
+app.get('/', (req, res) => {
+  const host = req.headers.host || ''
+  if (host === 'sofn.io' || host.endsWith('.sofn.io') || host.includes('sofn')) {
+    return res.sendFile(path.join(distPath, 'sofn-root.html'))
+  }
+  res.sendFile(path.join(distPath, 'index.html'))
+})
 
 // ── Serve Built Frontend ──────────────────────────────────────
 app.use(express.static(distPath))
