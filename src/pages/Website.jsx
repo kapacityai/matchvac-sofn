@@ -47,7 +47,6 @@ function Nav({ onLogin }) {
           ].map(l => (
             <a key={l.label} href={l.href} className="px-3 py-2 text-surface-600 hover:text-surface-900 rounded-lg hover:bg-surface-150 transition-all">{l.label}</a>
           ))}
-          <button onClick={() => navigate('/financing')} className="px-3 py-2 text-surface-600 hover:text-surface-900 rounded-lg hover:bg-surface-150 transition-all">Financing</button>
           <button onClick={() => navigate('/contractors')} className="px-3 py-2 text-surface-600 hover:text-surface-900 rounded-lg hover:bg-surface-150 transition-all">Contractors</button>
           <button onClick={() => navigate('/sofn')} className="px-3 py-2 bg-[#0C6B5E]/10 text-[#0C6B5E] font-bold rounded-lg hover:bg-[#0C6B5E]/20 transition-all text-xs tracking-wider">SOFN</button>
         </div>
@@ -66,7 +65,6 @@ function Nav({ onLogin }) {
           {['How It Works','Services','Store','For Techs'].map(l => (
             <a key={l} href={`#${l.toLowerCase().replace(/ /g,'-')}`} className="block px-3 py-2.5 text-surface-700 hover:text-surface-900 rounded-lg hover:bg-surface-150 transition-all" onClick={() => setOpen(false)}>{l}</a>
           ))}
-          <button onClick={() => { navigate('/financing'); setOpen(false) }} className="block w-full text-left px-3 py-2.5 text-surface-700 hover:text-surface-900 rounded-lg hover:bg-surface-150 transition-all">Financing</button>
           <button onClick={() => { navigate('/contractors'); setOpen(false) }} className="block w-full text-left px-3 py-2.5 text-surface-700 hover:text-surface-900 rounded-lg hover:bg-surface-150 transition-all">For Contractors</button>
           <div className="flex gap-2 pt-3 border-t border-surface-200 mt-2">
             <button onClick={onLogin} className="btn-secondary flex-1 text-sm py-2.5">Sign In</button>
@@ -596,7 +594,6 @@ export default function Website() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-6">
             <Logo size="sm" />
             <div className="flex flex-wrap justify-center gap-5 text-surface-500 text-sm">
-              <button onClick={() => navigate('/financing')} className="hover:text-surface-900 transition-colors">Financing</button>
               <button onClick={() => navigate('/contractors')} className="hover:text-surface-900 transition-colors">For Contractors</button>
               <button onClick={() => navigate('/lending-partners')} className="hover:text-surface-900 transition-colors">Lending Partners</button>
               <button onClick={() => navigate('/terms')} className="hover:text-surface-900 transition-colors">Terms of Service</button>

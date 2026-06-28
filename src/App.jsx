@@ -6,7 +6,6 @@ import Sidebar from './components/Sidebar'
 import Website from './pages/Website'
 import LoginPage from './pages/LoginPage'
 import ComfortConnect from './pages/ComfortConnect'
-import FinancingPage from './pages/FinancingPage'
 import ContractorsPage from './pages/ContractorsPage'
 import LendingPartners from './pages/LendingPartners'
 import TermsOfService from './pages/TermsOfService'
@@ -84,7 +83,7 @@ function AppRoutes() {
         } />
         <Route path="/login"           element={!user ? <LoginPage /> : <Navigate to={home} replace />} />
         <Route path="/comfort-connect" element={<ComfortConnect />} />
-        <Route path="/financing"       element={<FinancingPage />} />
+        <Route path="/financing"       element={<Navigate to="/" replace />} />
         <Route path="/contractors"     element={<ContractorsPage />} />
         <Route path="/lending-partners" element={<LendingPartners />} />
         <Route path="/terms"           element={<TermsOfService />} />
