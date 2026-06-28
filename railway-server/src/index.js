@@ -30,6 +30,11 @@ app.use(cors({
     process.env.FRONTEND_URL,
     'http://localhost:5173',
     'https://servicetechconnect.netlify.app',
+    'https://www.matchvac.com',
+    'https://matchvac.com',
+    'https://matchvac.vercel.app',
+    'https://www.sofn.io',
+    'https://sofn.io',
   ],
   credentials: true,
 }))
