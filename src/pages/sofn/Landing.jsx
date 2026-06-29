@@ -21,48 +21,66 @@ export default function SofnLanding() {
         <SofnLogo size="sm" />
       </header>
 
-      {/* Hero */}
-      <section className="max-w-4xl mx-auto px-4 py-16 md:py-20 text-center">
-        <div className="flex items-center justify-center mx-auto mb-12">
-          <SofnLogo size="xl" className="!h-24 md:!h-40" />
-        </div>
-        <h1 className="text-3xl md:text-4xl font-display font-black text-[#16202B] mb-3 leading-tight">
-          Service-Obligation<br />
-          <span className="text-[#0C6B5E]">Fulfillment Network</span>
-        </h1>
-        <p className="text-base md:text-lg text-[#33485C] max-w-2xl mx-auto mb-8">
-          SOFN connects certified HVAC technicians with service dispatches from lenders, lessors, and homeowners.
-          <span className="block mt-1.5 font-semibold text-[#0C6B5E]">You do the work. We handle the rest.</span>
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <button onClick={() => navigate('/sofn/register')} className="h-12 px-8 bg-[#0C6B5E] hover:bg-[#094A40] text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm">
-            Sign Up as a Technician <ArrowRight size={18} />
-          </button>
-          <button onClick={() => navigate('/sofn/login')} className="h-12 px-8 border border-[#DAD8D2] bg-white hover:bg-white text-[#33485C] font-semibold rounded-lg transition-colors text-sm">
-            Tech Dashboard Login
-          </button>
+      {/* Hero — split layout */}
+      <section className="max-w-6xl mx-auto px-4 py-12 md:py-16">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          <div className="text-center md:text-left">
+            <SofnLogo size="xl" className="!h-20 mb-8 mx-auto md:mx-0" />
+            <h1 className="text-3xl md:text-4xl font-display font-black text-[#16202B] mb-3 leading-tight">
+              Service-Obligation<br />
+              <span className="text-[#0C6B5E]">Fulfillment Network</span>
+            </h1>
+            <p className="text-base md:text-lg text-[#33485C] max-w-xl mb-8">
+              SOFN connects certified HVAC technicians with service dispatches from lenders, lessors, and homeowners.
+              <span className="block mt-1.5 font-semibold text-[#0C6B5E]">You do the work. We handle the rest.</span>
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+              <button onClick={() => navigate('/sofn/register')} className="h-12 px-8 bg-[#0C6B5E] hover:bg-[#094A40] text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm">
+                Sign Up as a Technician <ArrowRight size={18} />
+              </button>
+              <button onClick={() => navigate('/sofn/login')} className="h-12 px-8 border border-[#DAD8D2] bg-white hover:bg-white text-[#33485C] font-semibold rounded-lg transition-colors text-sm">
+                Tech Dashboard Login
+              </button>
+            </div>
+          </div>
+          <div className="hidden md:block">
+            <img
+              src="https://images.unsplash.com/photo-1676274299226-9b687b55e169?w=700&q=80&fit=crop&auto=format"
+              alt="HVAC technician servicing a furnace"
+              className="rounded-2xl shadow-xl w-full h-[460px] object-cover"
+            />
+          </div>
         </div>
       </section>
 
       {/* How It Works */}
       <section className="bg-white border-t border-[#DAD8D2] py-16">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-2xl font-display font-bold text-[#16202B] text-center mb-12">How It Works</h2>
-          <div className="grid md:grid-cols-4 gap-6">
-            {[
-              { num: '01', title: 'Sign Up', desc: 'Create your account, upload credentials, set service areas.' },
-              { num: '02', title: 'Get Dispatched', desc: 'Available jobs appear in your dashboard. Accept the ones you want.' },
-              { num: '03', title: 'Complete Work', desc: 'Arrive on site, do the job, upload photos as proof.' },
-              { num: '04', title: 'Get Paid', desc: 'Customer confirms, payment released. Weekly direct deposits.' },
-            ].map(s => (
-              <div key={s.num} className="text-center">
-                <div className="w-12 h-12 rounded-full bg-[#0C6B5E]/10 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#0C6B5E] font-bold text-sm">{s.num}</span>
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div className="grid grid-cols-2 gap-6">
+              {[
+                { num: '01', title: 'Sign Up', desc: 'Create your account, upload credentials, set service areas.' },
+                { num: '02', title: 'Get Dispatched', desc: 'Available jobs appear in your dashboard. Accept the ones you want.' },
+                { num: '03', title: 'Complete Work', desc: 'Arrive on site, do the job, upload photos as proof.' },
+                { num: '04', title: 'Get Paid', desc: 'Customer confirms, payment released. Weekly direct deposits.' },
+              ].map(s => (
+                <div key={s.num} className="text-center">
+                  <div className="w-12 h-12 rounded-full bg-[#0C6B5E]/10 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-[#0C6B5E] font-bold text-sm">{s.num}</span>
+                  </div>
+                  <h3 className="font-bold text-[#16202B] text-sm mb-2">{s.title}</h3>
+                  <p className="text-xs text-[#33485C]/70 leading-relaxed">{s.desc}</p>
                 </div>
-                <h3 className="font-bold text-[#16202B] text-sm mb-2">{s.title}</h3>
-                <p className="text-xs text-[#33485C]/70 leading-relaxed">{s.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="hidden md:block">
+              <img
+                src="https://images.unsplash.com/photo-1682094562282-f73d092c2bcc?w=700&q=80&fit=crop&auto=format"
+                alt="Technician explaining service to a homeowner"
+                className="rounded-2xl shadow-lg w-full h-[400px] object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -83,6 +101,15 @@ export default function SofnLanding() {
           ))}
         </div>
       </section>
+
+      {/* Visual break — maintenance in action */}
+      <div className="max-w-5xl mx-auto px-4 pb-8">
+        <img
+          src="https://images.unsplash.com/photo-1682126012378-859ca7a9f4cf?w=1200&q=80&fit=crop&auto=format"
+          alt="HVAC technician performing AC maintenance and filter cleaning"
+          className="rounded-2xl shadow-md w-full h-[300px] md:h-[400px] object-cover"
+        />
+      </div>
 
       {/* Pricing Preview */}
       <section className="bg-white border-t border-[#DAD8D2] py-16">
@@ -162,6 +189,15 @@ export default function SofnLanding() {
                 </ul>
               </div>
             ))}
+          </div>
+
+          {/* Partner visual — team working together */}
+          <div className="mb-10">
+            <img
+              src="https://images.unsplash.com/photo-1558382689-c1c29cc9b37e?w=1200&q=80&fit=crop&auto=format"
+              alt="Two technicians working together on HVAC equipment"
+              className="rounded-2xl shadow-md w-full h-[280px] md:h-[360px] object-cover"
+            />
           </div>
 
           <div className="bg-[#0C6B5E] rounded-xl p-8 text-center text-white">
