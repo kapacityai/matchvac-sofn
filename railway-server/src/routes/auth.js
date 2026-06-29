@@ -69,6 +69,25 @@ router.post('/register', async (req, res) => {
   }
 })
 
+// POST /api/auth/create-admin — one-time setup (safe: only works if no admin exists)
+router.post('/create-admin', async (req, res) => {
+  try {
+    const { data: existing } = await supabase.from('users').select('id').eq('role', 'admin').maybeSingle()
+    if (existing) return res.status(400).json({ error: 'Admin already exists' })
+
+    const password_hash = await bcrypt.hash('admin123', 12)
+    const { data: user, error } = await supabase
+      .from('users')
+      .insert({ email: 'admin@matchvac.com', password_hash, name: 'Admin', role: 'admin', avatar: 'AD' })
+      .select('id, email, name, role')
+      .single()
+    if (error) throw error
+    res.json({ message: 'Admin created', user })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
   try {
