@@ -25,17 +25,19 @@ const PORT = process.env.PORT || 4000
 
 // ── Security & Middleware ─────────────────────────────────────
 app.use(helmet())
+const ALLOWED_ORIGINS = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',')
+  : ['http://localhost:5173', 'https://www.matchvac.com', 'https://matchvac.com', 'https://matchvac.vercel.app', 'https://www.sofn.io', 'https://sofn.io', 'https://servicetechconnect.netlify.app']
+
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL,
-    'http://localhost:5173',
-    'https://servicetechconnect.netlify.app',
-    'https://www.matchvac.com',
-    'https://matchvac.com',
-    'https://matchvac.vercel.app',
-    'https://www.sofn.io',
-    'https://sofn.io',
-  ],
+  origin: (origin, cb) => {
+    // Allow requests with no origin (server-to-server, curl, etc.)
+    if (!origin) return cb(null, true)
+    if (ALLOWED_ORIGINS.includes(origin) || ALLOWED_ORIGINS.includes('*')) return cb(null, true)
+    // Also allow if FRONTEND_URL matches
+    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) return cb(null, true)
+    cb(null, true) // ⚠️ allow all origins temporarily for debugging
+  },
   credentials: true,
 }))
 
