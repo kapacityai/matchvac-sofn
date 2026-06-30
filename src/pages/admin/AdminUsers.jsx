@@ -1,14 +1,64 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
+import { admin } from '../../lib/api'
 import { MOCK_TECHS, MOCK_CUSTOMERS } from '../../data/mockData'
 import { UserCheck, User, CheckCircle, Clock, XCircle, Star, ChevronDown, ChevronUp, FileText } from 'lucide-react'
 
 export default function AdminUsers() {
   const [tab, setTab] = useState('techs')
   const [expanded, setExpanded] = useState(null)
-  const [techStatuses, setTechStatuses] = useState(
-    Object.fromEntries(MOCK_TECHS.map(t => [t.id, t.status]))
-  )
+  const [techs, setTechs] = useState([])
+  const [customers, setCustomers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [techStatuses, setTechStatuses] = useState({})
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      try {
+        const [techData, custData] = await Promise.all([
+          admin.users({ role: 'tech' }).catch(() => null),
+          admin.users({ role: 'customer' }).catch(() => null),
+        ])
+        if (cancelled) return
+        if (techData && techData.users) {
+          const enriched = techData.users.map(u => ({
+            id: u.id,
+            name: u.name || u.email,
+            email: u.email,
+            status: 'active',
+            location: '',
+            certifications: [],
+            rating: 5.0,
+            jobs: 0,
+          }))
+          setTechs(enriched)
+          setTechStatuses(Object.fromEntries(enriched.map(t => [t.id, t.status])))
+        }
+        if (custData && custData.users) {
+          setCustomers(custData.users.map(u => ({
+            id: u.id,
+            name: u.name || u.email,
+            email: u.email,
+            jobs: 0,
+            spent: 0,
+            joinDate: u.created_at ? new Date(u.created_at).toLocaleDateString() : '—',
+            status: 'active',
+          })))
+        }
+      } catch {
+        // fallback to mock
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+    load()
+    return () => { cancelled = true }
+  }, [])
+
+  // Fallback to mock data if API not available
+  const displayTechs = techs.length > 0 ? techs : MOCK_TECHS
+  const displayCustomers = customers.length > 0 ? customers : MOCK_CUSTOMERS
 
   const approve = (id) => setTechStatuses(s => ({ ...s, [id]: 'active' }))
   const reject = (id) => setTechStatuses(s => ({ ...s, [id]: 'rejected' }))
@@ -26,15 +76,20 @@ export default function AdminUsers() {
               onClick={() => setTab(t)}
               className={`px-4 py-2.5 text-sm font-semibold capitalize -mb-px transition-all ${tab === t ? 'text-brand-400 border-b-2 border-brand-400' : 'text-surface-400 hover:text-white'}`}
             >
-              {t === 'techs' ? `HVAC Technicians (${MOCK_TECHS.length})` : `Customers (${MOCK_CUSTOMERS.length})`}
+              {t === 'techs' ? `HVAC Technicians (${displayTechs.length})` : `Customers (${displayCustomers.length})`}
             </button>
           ))}
         </div>
 
         {tab === 'techs' && (
           <div className="space-y-3">
-            {MOCK_TECHS.map(tech => {
-              const status = techStatuses[tech.id]
+            {loading && techs.length === 0 && (
+              <div className="card text-center py-8">
+                <p className="text-surface-400">Loading technicians...</p>
+              </div>
+            )}
+            {displayTechs.map(tech => {
+              const status = techStatuses[tech.id] || tech.status || 'active'
               const isPending = status === 'pending'
               return (
                 <div key={tech.id} className={`card ${isPending ? 'border-amber-500/30 bg-amber-500/5' : ''}`}>
@@ -49,9 +104,9 @@ export default function AdminUsers() {
                           {status === 'active' ? 'Active' : status === 'pending' ? 'Pending Review' : 'Rejected'}
                         </span>
                       </div>
-                      <p className="text-surface-400 text-sm">{tech.email} · {tech.location}</p>
+                      <p className="text-surface-400 text-sm">{tech.email} · {tech.location || '—'}</p>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {tech.certifications.map(c => (
+                        {(tech.certifications || []).map(c => (
                           <span key={c} className="badge badge-purple">{c}</span>
                         ))}
                       </div>
@@ -61,9 +116,9 @@ export default function AdminUsers() {
                         <div className="text-right hidden sm:block">
                           <div className="flex items-center gap-1">
                             <Star size={13} className="text-amber-400 fill-amber-400" />
-                            <span className="text-white text-sm font-semibold">{tech.rating}</span>
+                            <span className="text-white text-sm font-semibold">{tech.rating || '—'}</span>
                           </div>
-                          <p className="text-surface-500 text-xs">{tech.jobs} jobs</p>
+                          <p className="text-surface-500 text-xs">{tech.jobs || 0} jobs</p>
                         </div>
                       )}
                       {isPending && (
@@ -108,38 +163,44 @@ export default function AdminUsers() {
 
         {tab === 'customers' && (
           <div className="card overflow-hidden p-0">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-surface-200">
-                  <th className="text-left px-5 py-3 text-surface-400 font-medium">Customer</th>
-                  <th className="text-right px-5 py-3 text-surface-400 font-medium">Jobs</th>
-                  <th className="text-right px-5 py-3 text-surface-400 font-medium">Total Spent</th>
-                  <th className="text-right px-5 py-3 text-surface-400 font-medium hidden sm:table-cell">Member Since</th>
-                  <th className="text-right px-5 py-3 text-surface-400 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {MOCK_CUSTOMERS.map((c, i) => (
-                  <tr key={c.id} className={`${i < MOCK_CUSTOMERS.length - 1 ? 'border-b border-surface-150' : ''} hover:bg-white/5 transition-colors`}>
-                    <td className="px-5 py-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
-                          {c.name.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        <div>
-                          <p className="text-white font-medium">{c.name}</p>
-                          <p className="text-surface-500 text-xs">{c.email}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-5 py-3 text-right text-surface-900">{c.jobs}</td>
-                    <td className="px-5 py-3 text-right text-emerald-400 font-semibold">${c.spent.toLocaleString()}</td>
-                    <td className="px-5 py-3 text-right text-surface-400 hidden sm:table-cell">{c.joinDate}</td>
-                    <td className="px-5 py-3 text-right"><span className="badge badge-green">Active</span></td>
+            {loading && customers.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-surface-400">Loading customers...</p>
+              </div>
+            ) : (
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-surface-200">
+                    <th className="text-left px-5 py-3 text-surface-400 font-medium">Customer</th>
+                    <th className="text-right px-5 py-3 text-surface-400 font-medium">Jobs</th>
+                    <th className="text-right px-5 py-3 text-surface-400 font-medium">Total Spent</th>
+                    <th className="text-right px-5 py-3 text-surface-400 font-medium hidden sm:table-cell">Member Since</th>
+                    <th className="text-right px-5 py-3 text-surface-400 font-medium">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {displayCustomers.map((c, i) => (
+                    <tr key={c.id} className={`${i < displayCustomers.length - 1 ? 'border-b border-surface-150' : ''} hover:bg-white/5 transition-colors`}>
+                      <td className="px-5 py-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400 to-navy-700 flex items-center justify-center text-xs font-bold text-surface-900 flex-shrink-0">
+                            {c.name.split(' ').map(n => n[0]).join('')}
+                          </div>
+                          <div>
+                            <p className="text-white font-medium">{c.name}</p>
+                            <p className="text-surface-500 text-xs">{c.email}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-5 py-3 text-right text-surface-900">{c.jobs || 0}</td>
+                      <td className="px-5 py-3 text-right text-emerald-400 font-semibold">${(c.spent || 0).toLocaleString()}</td>
+                      <td className="px-5 py-3 text-right text-surface-400 hidden sm:table-cell">{c.joinDate || '—'}</td>
+                      <td className="px-5 py-3 text-right"><span className="badge badge-green">Active</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         )}
       </div>

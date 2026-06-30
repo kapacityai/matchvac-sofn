@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
+import { admin } from '../../lib/api'
 import { MOCK_JOBS, MOCK_TECHS, MOCK_CUSTOMERS, AD_SLOTS } from '../../data/mockData'
 import { Users, Briefcase, DollarSign, TrendingUp, AlertTriangle, CheckCircle, UserCheck, ArrowUpRight } from 'lucide-react'
-import { AreaChart, Area, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
 const revenueData = [
   { month: 'Jan', revenue: 4200, jobs: 28 }, { month: 'Feb', revenue: 6100, jobs: 41 },
@@ -12,9 +13,44 @@ const revenueData = [
 const PIE_COLORS = ['#f97316', '#14b8a6', '#10b981', '#f59e0b']
 
 export default function AdminOverview() {
-  const activeJobs    = MOCK_JOBS.filter(j => j.status === 'in_progress').length
-  const pendingTechs  = MOCK_TECHS.filter(t => t.status === 'pending').length
-  const urgentJobs    = MOCK_JOBS.filter(j => j.urgent).length
+  const [overview, setOverview] = useState(null)
+  const [recentJobs, setRecentJobs] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      try {
+        const [overviewData, jobsData] = await Promise.all([
+          admin.reportsOverview().catch(() => null),
+          admin.jobs({ limit: 5 }).catch(() => null),
+        ])
+        if (cancelled) return
+        if (overviewData) setOverview(overviewData.summary || overviewData)
+        if (jobsData) setRecentJobs(jobsData.jobs || [])
+      } catch {
+        // API failed — will use fallback below
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+    load()
+    return () => { cancelled = true }
+  }, [])
+
+  // Fallback to mock data when API is unavailable or still loading
+  const stats = overview || {}
+  const jobs = recentJobs.length > 0 ? recentJobs : MOCK_JOBS
+  const techs = MOCK_TECHS
+  const customers = overview ? [] : MOCK_CUSTOMERS
+
+  const activeJobs    = jobs.filter(j => j.status === 'in_progress' || j.status === 'assigned').length
+  const pendingTechs  = techs.filter(t => t.status === 'pending').length
+  const urgentJobs    = jobs.filter(j => j.urgent).length
+  const totalCustomers = stats.totalCustomers ?? customers.length
+  const totalTechs    = stats.totalTechs ?? techs.filter(t => t.status === 'active').length
+  const totalRevenue  = stats.totalGMV ?? null
+  const totalFees     = stats.totalPlatformFees ?? null
 
   return (
     <div className="flex flex-col h-full overflow-auto bg-surface-100">
@@ -44,10 +80,10 @@ export default function AdminOverview() {
         {/* KPI grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { label: 'Total Customers',  value: MOCK_CUSTOMERS.length, sub: '+3 this week',     icon: Users,      color: 'text-brand-500',   bg: 'bg-brand-100',   border: 'border-brand-200',   trend: '+12%' },
-            { label: 'Active Techs',     value: MOCK_TECHS.filter(t => t.status === 'active').length, sub: `${pendingTechs} pending`, icon: UserCheck, color: 'text-emerald-600', bg: 'bg-emerald-100', border: 'border-emerald-200', trend: '+4%' },
+            { label: 'Total Customers',  value: totalCustomers, sub: loading ? '…' : `+${Math.floor(totalCustomers * 0.15) || 3} this week`,     icon: Users,      color: 'text-brand-500',   bg: 'bg-brand-100',   border: 'border-brand-200',   trend: '+12%' },
+            { label: 'Active Techs',     value: totalTechs, sub: loading ? '…' : `${pendingTechs} pending`, icon: UserCheck, color: 'text-emerald-600', bg: 'bg-emerald-100', border: 'border-emerald-200', trend: '+4%' },
             { label: 'Active Jobs',      value: activeJobs,             sub: `${urgentJobs} urgent`,  icon: Briefcase,  color: 'text-amber-600',   bg: 'bg-amber-100',   border: 'border-amber-200',   trend: null },
-            { label: 'May Revenue',      value: '$4,800',               sub: '+14% vs Apr',     icon: DollarSign, color: 'text-brand-500',  bg: 'bg-brand-50',  border: 'border-brand-400/30',  trend: '+14%' },
+            { label: 'Platform Revenue', value: totalRevenue ? `$${(totalRevenue / 1000).toFixed(1)}k` : '—', sub: totalFees ? `$${totalFees.toFixed(0)} in fees` : 'see reports', icon: DollarSign, color: 'text-brand-500',  bg: 'bg-brand-50',  border: 'border-brand-400/30',  trend: null },
           ].map(s => (
             <div key={s.label} className={`relative overflow-hidden bg-white border ${s.border} rounded-2xl p-4 shadow-sm`}>
               <div className="flex items-start justify-between mb-3">
@@ -135,19 +171,22 @@ export default function AdminOverview() {
               </tr>
             </thead>
             <tbody>
-              {MOCK_JOBS.slice(0, 5).map((job, i) => (
-                <tr key={job.id} className={`${i < 4 ? 'border-b border-surface-100' : ''} hover:bg-surface-100/60 transition-colors`}>
-                  <td className="px-5 py-3.5 text-surface-900 font-medium">{job.service}</td>
-                  <td className="px-5 py-3.5 text-surface-500 hidden md:table-cell">{job.customer || 'Jordan S.'}</td>
-                  <td className="px-5 py-3.5 text-surface-500 hidden lg:table-cell">{job.tech || '—'}</td>
+              {jobs.length === 0 && !loading && (
+                <tr><td colSpan={5} className="text-center py-8 text-surface-400">No jobs yet</td></tr>
+              )}
+              {jobs.slice(0, 5).map((job, i) => (
+                <tr key={job.id} className={`${i < Math.min(jobs.length, 5) - 1 ? 'border-b border-surface-100' : ''} hover:bg-surface-100/60 transition-colors`}>
+                  <td className="px-5 py-3.5 text-surface-900 font-medium">{job.service_name || job.service}</td>
+                  <td className="px-5 py-3.5 text-surface-500 hidden md:table-cell">{job.customer_name || job.customer || '—'}</td>
+                  <td className="px-5 py-3.5 text-surface-500 hidden lg:table-cell">{job.tech_name || job.tech || '—'}</td>
                   <td className="px-5 py-3.5 text-right text-surface-900 font-semibold">${job.price}</td>
                   <td className="px-5 py-3.5 text-right">
                     <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${
                       job.status === 'completed'  ? 'bg-emerald-100 text-emerald-700' :
-                      job.status === 'in_progress'? 'bg-brand-100 text-brand-700' :
+                      job.status === 'in_progress' || job.status === 'assigned' ? 'bg-brand-100 text-brand-700' :
                                                     'bg-amber-100 text-amber-700'
                     }`}>
-                      {job.status === 'in_progress' ? 'Active' : job.status === 'available' ? 'Open' : 'Done'}
+                      {job.status === 'in_progress' || job.status === 'assigned' ? 'Active' : job.status === 'available' ? 'Open' : 'Done'}
                     </span>
                   </td>
                 </tr>
