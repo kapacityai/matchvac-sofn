@@ -408,27 +408,9 @@ export default function LoginPage() {
           <h2 className="text-2xl font-bold text-navy-700 mb-1">Welcome back</h2>
           <p className="text-surface-500 text-sm mb-6">Sign in to your MatcHvac account</p>
 
-          {/* One-click demo */}
-          <div className="mb-6">
-            <p className="text-surface-400 text-xs font-semibold uppercase tracking-wider mb-2">Quick Demo Access</p>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { role: 'Customer',  email: 'customer@demo.com', bg: 'bg-brand-500 hover:bg-brand-600' },
-                { role: 'HVAC Tech', email: 'tech@demo.com',     bg: 'bg-emerald-500 hover:bg-emerald-600' },
-                { role: 'Admin',     email: 'admin@demo.com',    bg: 'bg-navy-700 hover:bg-navy-800' },
-              ].map(c => (
-                <button key={c.role} onClick={() => doLogin(c.email, 'demo1234')} disabled={loading}
-                  className={`py-2.5 px-2 rounded-xl ${c.bg} text-white text-xs font-bold text-center active:scale-95 transition-all disabled:opacity-50`}>
-                  {loading ? '…' : c.role}
-                </button>
-              ))}
-            </div>
-            <p className="text-surface-400 text-xs text-center mt-2">Tap to instantly enter that role</p>
-          </div>
-
-          <div className="flex items-center gap-3 mb-5">
+          <div className="flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-surface-200" />
-            <span className="text-surface-400 text-xs">or sign in manually</span>
+            <span className="text-surface-400 text-xs">sign in</span>
             <div className="flex-1 h-px bg-surface-200" />
           </div>
 
