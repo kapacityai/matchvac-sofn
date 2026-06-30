@@ -27,9 +27,8 @@ const PORT = process.env.PORT || 4000
 app.use(helmet())
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', '*')
-  res.set('Access-Control-Allow-Credentials', 'true')
-  res.set('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE')
-  res.set('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  res.set('Access-Control-Expose-Headers', 'x-custom-test')
+  res.set('x-custom-test', 'hello-from-railway')
   if (req.method === 'OPTIONS') return res.sendStatus(204)
   next()
 })
