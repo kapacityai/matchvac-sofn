@@ -9,11 +9,15 @@ import ComfortConnect from './pages/ComfortConnect'
 import ContractorsPage from './pages/ContractorsPage'
 import LendingPartners from './pages/LendingPartners'
 import TermsOfService from './pages/TermsOfService'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
 import SofnRegister from './pages/sofn/Register'
 import SofnDashboard from './pages/sofn/Dashboard'
 import SofnLanding from './pages/sofn/Landing'
 import SofnLogin from './pages/sofn/Login'
+import SofnForgotPassword from './pages/sofn/ForgotPassword'
+import SofnResetPassword from './pages/sofn/ResetPassword'
 
 import CustomerHome from './pages/customer/CustomerHome'
 import ServiceRequest from './pages/customer/ServiceRequest'
@@ -81,7 +85,9 @@ function AppRoutes() {
             ? (sofnDomain ? <SofnLanding /> : <Website />)
             : <Navigate to={home} replace />
         } />
-        <Route path="/login"           element={!user ? <LoginPage /> : <Navigate to={home} replace />} />
+        <Route path="/login"            element={!user ? <LoginPage /> : <Navigate to={home} replace />} />
+        <Route path="/forgot-password"  element={<ForgotPassword />} />
+        <Route path="/reset-password"   element={<ResetPassword />} />
         <Route path="/comfort-connect" element={<ComfortConnect />} />
         <Route path="/financing"       element={<Navigate to="/" replace />} />
         <Route path="/contractors"     element={<ContractorsPage />} />
@@ -90,8 +96,10 @@ function AppRoutes() {
 
         {/* ── SOFN — always standalone, no sidebar ── */}
         <Route path="/sofn"          element={<SofnLanding />} />
-        <Route path="/sofn/login"    element={<SofnLogin />} />
-        <Route path="/sofn/register" element={<SofnRegister />} />
+        <Route path="/sofn/login"       element={<SofnLogin />} />
+        <Route path="/sofn/register"    element={<SofnRegister />} />
+        <Route path="/sofn/forgot-password" element={<SofnForgotPassword />} />
+        <Route path="/sofn/reset-password"  element={<SofnResetPassword />} />
         <Route path="/sofn/dashboard" element={<SofnDashboard />} />
 
         {/* ── Customer (role-gated) ── */}

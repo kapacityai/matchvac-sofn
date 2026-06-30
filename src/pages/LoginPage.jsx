@@ -164,6 +164,11 @@ export default function LoginPage() {
                 </button>
               </div>
             </div>
+            <div className="flex justify-end -mt-1">
+              <button type="button" onClick={() => navigate('/forgot-password')} className="text-brand-500 text-xs font-medium hover:underline">
+                Forgot password?
+              </button>
+            </div>
             {error && <div className="px-4 py-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-600 text-sm">{error}</div>}
             <button type="submit" disabled={loading} className="btn-primary w-full py-3 text-base">
               {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" /> : 'Sign In'}

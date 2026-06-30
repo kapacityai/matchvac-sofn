@@ -24,19 +24,8 @@ export default function SofnLogin() {
     if (!email || !password) return setError('Email and password required')
     setLoading(true)
 
-    const baseUrl = import.meta.env.VITE_API_URL || ''
-    if (!baseUrl) {
-      // Demo mode — auto-login
-      localStorage.setItem('sofn_token', 'demo-token')
-      localStorage.setItem('sofn_user', JSON.stringify({
-        name: 'Marcus Johnson', email, role: 'tech',
-        earnings_week: 340
-      }))
-      navigate('/sofn/dashboard', { replace: true })
-      return
-    }
-
     try {
+      const baseUrl = import.meta.env.VITE_API_URL || ''
       const res = await fetch(`${baseUrl}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -94,6 +83,11 @@ export default function SofnLogin() {
                 {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
+            <div className="flex justify-end">
+              <button type="button" onClick={() => navigate('/sofn/forgot-password')} className="text-[#0C6B5E] text-xs font-medium hover:underline">
+                Forgot password?
+              </button>
+            </div>
 
             <button type="submit" disabled={loading}
               className="w-full h-11 bg-[#0C6B5E] hover:bg-[#094A40] text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50">
@@ -112,11 +106,7 @@ export default function SofnLogin() {
             </button>
           </div>
 
-          {/* Demo mode hint */}
-          <p className="mt-4 text-[10px] text-[#33485C]/40 text-center">
-            No backend? Enter any email + password to preview in demo mode
-          </p>
-        </div>
+          </div>
       </div>
     </div>
   )

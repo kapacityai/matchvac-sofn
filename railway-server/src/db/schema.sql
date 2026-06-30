@@ -247,6 +247,19 @@ CREATE INDEX IF NOT EXISTS idx_payments_job ON payments(job_id);
 CREATE INDEX IF NOT EXISTS idx_notifications_user ON notifications(user_id, read);
 CREATE INDEX IF NOT EXISTS idx_gps_flags_tech ON gps_flags(tech_id, status);
 
+-- ── PASSWORD RESETS ─────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS password_resets (
+  id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id    UUID REFERENCES users(id) ON DELETE CASCADE,
+  token      TEXT NOT NULL UNIQUE,
+  expires_at TIMESTAMPTZ NOT NULL,
+  used       BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_password_resets_token ON password_resets(token);
+CREATE INDEX IF NOT EXISTS idx_password_resets_user ON password_resets(user_id);
+
 -- ── SEED SERVICES ─────────────────────────────────────────────
 INSERT INTO services (name, category, emergency, price_basic, price_standard, price_premium, description) VALUES
   ('Furnace Repair', 'Heating', false, 149, 249, 399, 'Diagnose and repair furnace issues'),
