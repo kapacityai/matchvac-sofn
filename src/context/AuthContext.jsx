@@ -3,13 +3,6 @@ import { auth as apiAuth } from '../lib/api.js'
 
 const AuthContext = createContext(null)
 
-// ── Demo users (used when VITE_API_URL is not set) ────────────
-const DEMO_USERS = {
-  'admin@demo.com':    { id: 'admin-1', role: 'admin',    name: 'Alex Admin',    email: 'admin@demo.com',    avatar: 'AA' },
-  'customer@demo.com': { id: 'cust-1',  role: 'customer', name: 'Jordan Smith',  email: 'customer@demo.com', avatar: 'JS' },
-  'tech@demo.com':     { id: 'tech-1',  role: 'tech',     name: 'Marcus Rivera', email: 'tech@demo.com',     avatar: 'MR' },
-}
-
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     try { return JSON.parse(localStorage.getItem('sc_user')) } catch { return null }
@@ -38,13 +31,8 @@ export function AuthProvider({ children }) {
         return null
       }
     }
-
-    // Demo mode
-    if (password !== 'demo1234') { setError('Incorrect password. Use: demo1234'); return null }
-    const u = DEMO_USERS[trimmed]
-    if (!u) { setError('No account found for that email.'); return null }
-    persistUser(u)
-    return u
+    setError('Server not configured. Set VITE_API_URL to enable login.')
+    return null
   }
 
   // ── REGISTER ─────────────────────────────────────────────────
@@ -58,11 +46,8 @@ export function AuthProvider({ children }) {
       return u
     }
 
-    // Demo mode
-    const avatar = name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'U'
-    const u = { id: `${role}-${Date.now()}`, role, name, email, avatar }
-    persistUser(u)
-    return u
+    setError('Server not configured. Set VITE_API_URL to enable registration.')
+    return null
   }
 
   // ── LOGOUT ───────────────────────────────────────────────────
@@ -83,13 +68,7 @@ export function AuthProvider({ children }) {
         return user
       }
     }
-    // Demo mode — local only
-    const updated = { ...user, ...fields }
-    if (fields.name) {
-      updated.avatar = fields.name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || updated.avatar
-    }
-    persistUser(updated)
-    return updated
+    return user
   }
 
   return (

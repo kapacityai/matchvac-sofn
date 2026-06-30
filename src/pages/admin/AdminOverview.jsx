@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import { admin } from '../../lib/api'
-import { MOCK_JOBS, MOCK_TECHS, MOCK_CUSTOMERS, AD_SLOTS } from '../../data/mockData'
 import { Users, Briefcase, DollarSign, TrendingUp, AlertTriangle, CheckCircle, UserCheck, ArrowUpRight } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
@@ -38,17 +37,12 @@ export default function AdminOverview() {
     return () => { cancelled = true }
   }, [])
 
-  // Fallback to mock data when API is unavailable or still loading
   const stats = overview || {}
-  const jobs = recentJobs.length > 0 ? recentJobs : MOCK_JOBS
-  const techs = MOCK_TECHS
-  const customers = overview ? [] : MOCK_CUSTOMERS
-
+  const jobs = recentJobs || []
   const activeJobs    = jobs.filter(j => j.status === 'in_progress' || j.status === 'assigned').length
-  const pendingTechs  = techs.filter(t => t.status === 'pending').length
   const urgentJobs    = jobs.filter(j => j.urgent).length
-  const totalCustomers = stats.totalCustomers ?? customers.length
-  const totalTechs    = stats.totalTechs ?? techs.filter(t => t.status === 'active').length
+  const totalCustomers = stats.totalCustomers ?? '—'
+  const totalTechs    = stats.totalTechs ?? '—'
   const totalRevenue  = stats.totalGMV ?? null
   const totalFees     = stats.totalPlatformFees ?? null
 
@@ -195,37 +189,7 @@ export default function AdminOverview() {
           </table>
         </div>
 
-        {/* Ad campaigns */}
-        <div>
-          <h3 className="text-xs font-bold text-surface-500 uppercase tracking-widest mb-3">Active Ad Campaigns</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {AD_SLOTS.map(ad => (
-              <div key={ad.id} className="bg-white border border-surface-200 rounded-2xl p-4 hover:border-surface-300 hover:shadow-sm transition-all shadow-sm">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-surface-900 text-sm font-bold truncate">{ad.partner}</p>
-                  <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${ad.active ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{ad.active ? 'Live' : 'Paused'}</span>
-                </div>
-                <p className="text-surface-500 text-xs mb-3 capitalize">{ad.type.replace('_', ' ')}</p>
-                <div className="grid grid-cols-3 gap-2 text-xs">
-                  <div className="bg-surface-100 rounded-lg p-2 text-center">
-                    <p className="text-surface-400">Impr.</p>
-                    <p className="text-surface-900 font-bold mt-0.5">{(ad.impressions / 1000).toFixed(1)}k</p>
-                  </div>
-                  <div className="bg-surface-100 rounded-lg p-2 text-center">
-                    <p className="text-surface-400">Clicks</p>
-                    <p className="text-brand-500 font-bold mt-0.5">{ad.clicks}</p>
-                  </div>
-                  <div className="bg-surface-100 rounded-lg p-2 text-center">
-                    <p className="text-surface-400">CTR</p>
-                    <p className="text-surface-900 font-bold mt-0.5">{ad.impressions ? ((ad.clicks / ad.impressions) * 100).toFixed(1) : 0}%</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
-
-      </div>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import { admin } from '../../lib/api'
-import { MOCK_JOBS } from '../../data/mockData'
 import { AlertTriangle, CheckCircle, Clock, Wrench, Filter } from 'lucide-react'
 
 const statusMap = {
@@ -34,8 +33,7 @@ export default function AdminJobs() {
     return () => { cancelled = true }
   }, [])
 
-  // Fallback to mock data if API not available
-  const displayJobs = jobs.length > 0 ? jobs : MOCK_JOBS
+  const displayJobs = jobs
 
   const allowedFilters = ['all', 'in_progress', 'available', 'completed', 'urgent']
   const filtered = filter === 'all'

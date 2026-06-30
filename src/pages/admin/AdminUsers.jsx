@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import { admin } from '../../lib/api'
-import { MOCK_TECHS, MOCK_CUSTOMERS } from '../../data/mockData'
 import { UserCheck, User, CheckCircle, Clock, XCircle, Star, ChevronDown, ChevronUp, FileText } from 'lucide-react'
 
 export default function AdminUsers() {
@@ -56,9 +55,8 @@ export default function AdminUsers() {
     return () => { cancelled = true }
   }, [])
 
-  // Fallback to mock data if API not available
-  const displayTechs = techs.length > 0 ? techs : MOCK_TECHS
-  const displayCustomers = customers.length > 0 ? customers : MOCK_CUSTOMERS
+  const displayTechs = techs
+  const displayCustomers = customers
 
   const approve = (id) => setTechStatuses(s => ({ ...s, [id]: 'active' }))
   const reject = (id) => setTechStatuses(s => ({ ...s, [id]: 'rejected' }))
