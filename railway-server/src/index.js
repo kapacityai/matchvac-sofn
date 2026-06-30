@@ -25,13 +25,13 @@ const PORT = process.env.PORT || 4000
 
 // ── Security & Middleware ─────────────────────────────────────
 app.use(helmet())
-app.use((req, res, next) => {
-  res.set('Access-Control-Allow-Origin', '*')
-  res.set('Access-Control-Expose-Headers', 'x-custom-test')
-  res.set('x-custom-test', 'hello-from-railway')
-  if (req.method === 'OPTIONS') return res.sendStatus(204)
-  next()
-})
+// ── CORS ──────────────────────────────────────────────
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+}))
 
 // Raw body for Stripe webhooks
 app.use('/api/payments/webhook', express.raw({ type: 'application/json' }))
