@@ -75,13 +75,18 @@ export default function SofnRegister() {
     if (account.password.length < 8) return setError('Password must be at least 8 characters')
     if (account.password !== account.confirmPw) return setError('Passwords do not match')
     setLoading(true)
-    await apiFetch('/api/auth/register', {
-      method: 'POST',
-      body: JSON.stringify({ email: account.email, password: account.password, name: account.name, phone: account.phone, role: 'tech', source: 'sofn_tech' })
-    }).catch(() => {})
-    setToken('demo-token')
-    localStorage.setItem('sofn_token', 'demo-token')
-    setStep(1)
+    try {
+      const data = await apiFetch('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({ email: account.email, password: account.password, name: account.name, phone: account.phone, role: 'tech', source: 'sofn_tech' })
+      })
+      if (!data.token) throw new Error('No token returned')
+      setToken(data.token)
+      localStorage.setItem('sofn_token', data.token)
+      setStep(1)
+    } catch (e) {
+      setError(e.message)
+    }
     setLoading(false)
   }
 
@@ -90,21 +95,25 @@ export default function SofnRegister() {
     if (!license.licenseNum || !license.licenseExp || !license.insuranceName || !license.insurancePolicy || !license.insuranceExp)
       return setError('License number, expiration, and insurance info required')
     setLoading(true)
-    await apiFetch('/api/tech/profile', {
-      method: 'PUT',
-      body: JSON.stringify({
-        license_number: license.licenseNum,
-        license_state: 'VA',
-        license_expiry: license.licenseExp,
-        epa608_certified: license.epa608,
-        epa608_number: license.epa608Num,
-        insurance_company: license.insuranceName,
-        insurance_policy_number: license.insurancePolicy,
-        insurance_expiry: license.insuranceExp,
+    try {
+      await apiFetch('/api/tech/profile', {
+        method: 'PUT',
+        body: JSON.stringify({
+          license_number: license.licenseNum,
+          license_state: 'VA',
+          license_expiry: license.licenseExp,
+          epa608_certified: license.epa608,
+          epa608_number: license.epa608Num,
+          insurance_company: license.insuranceName,
+          insurance_policy_number: license.insurancePolicy,
+          insurance_expiry: license.insuranceExp,
+        })
       })
-    }).catch(() => {})
-    if (license.insuranceFile) setUploadedFile(license.insuranceFile.name)
-    setStep(2)
+      if (license.insuranceFile) setUploadedFile(license.insuranceFile.name)
+      setStep(2)
+    } catch (e) {
+      setError(e.message)
+    }
     setLoading(false)
   }
 
@@ -114,30 +123,39 @@ export default function SofnRegister() {
     if (!bank.holder || bank.routing.length !== 9 || !bank.account) return setError('Complete bank account info')
     if (!bank.confirm) return setError('Confirm the bank account is yours')
     setLoading(true)
-    await apiFetch('/api/tech/profile', {
-      method: 'PUT',
-      body: JSON.stringify({
-        service_zips: serviceZips,
-        preferred_payment_method: payMethod,
-        bank_account_holder: bank.holder,
-        bank_routing: bank.routing,
-        bank_account: bank.account,
-        bank_account_type: bank.type,
+    try {
+      await apiFetch('/api/tech/profile', {
+        method: 'PUT',
+        body: JSON.stringify({
+          service_zips: serviceZips,
+          preferred_payment_method: payMethod,
+          bank_account_holder: bank.holder,
+          bank_routing: bank.routing,
+          bank_account: bank.account,
+          bank_account_type: bank.type,
+          bank_account_confirmed: true,
+        })
       })
-    }).catch(() => {})
-    setStep(3)
+      setStep(3)
+    } catch (e) {
+      setError(e.message)
+    }
     setLoading(false)
   }
 
   const step4Submit = async () => {
     setLoading(true)
-    if (tier !== 'free') {
-      await apiFetch('/api/tech/subscription/upgrade', {
-        method: 'POST',
-        body: JSON.stringify({ tier })
-      }).catch(() => {})
+    try {
+      if (tier !== 'free') {
+        await apiFetch('/api/tech/subscription/upgrade', {
+          method: 'POST',
+          body: JSON.stringify({ tier })
+        })
+      }
+      setStep(4)
+    } catch (e) {
+      setError(e.message)
     }
-    setStep(4)
     setLoading(false)
   }
 
