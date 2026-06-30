@@ -197,7 +197,7 @@ export default function Website() {
               <button onClick={() => navigate('/login?signup=customer')} className="btn-primary py-4 px-8 text-base glow-brand">
                 Book a Technician <ArrowRight size={18} />
               </button>
-              <button onClick={() => navigate('/login?signup=tech')} className="btn-navy py-4 px-8 text-base">
+              <button onClick={() => navigate('/sofn/register')} className="btn-navy py-4 px-8 text-base">
                 Apply as a Tech <ArrowRight size={18} />
               </button>
               <button onClick={goLogin} className="btn-secondary py-4 px-8 text-base">
@@ -455,7 +455,7 @@ export default function Website() {
                 </div>
               ))}
             </div>
-            <button onClick={() => navigate('/login?signup=tech')} className="btn-primary py-3.5 px-7 text-base">
+            <button onClick={() => navigate('/sofn/register')} className="btn-primary py-3.5 px-7 text-base">
               Apply as a Tech <ArrowRight size={18} />
             </button>
           </div>
