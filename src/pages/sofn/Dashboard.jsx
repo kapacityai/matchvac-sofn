@@ -13,52 +13,6 @@ const TABS = [
   { id: 'profile', label: 'Profile', icon: User },
 ]
 
-// ── Demo data fallbacks ──
-const DEMO_USER = {
-  id: 'tech-1', name: 'Marcus Johnson', email: 'marcus@example.com',
-  phone: '(703) 555-0123', role: 'tech', avatar: 'MJ',
-  earnings_week: 340,
-}
-
-const DEMO_JOBS_AVAILABLE = [
-  { id: 'j1', service_name: 'Spring Tune-Up', address_street: '123 Oak St', address_city: 'Arlington', address_zip: '22202', tier: 'basic', price: 75, estimated_time: '45 min', distance: '2.3 mi', status: 'available', category: 'Tune-up' },
-  { id: 'j2', service_name: 'Filter Swap', address_street: '456 Elm Ave', address_city: 'Alexandria', address_zip: '22301', tier: 'basic', price: 40, estimated_time: '20 min', distance: '4.1 mi', status: 'available', category: 'Tune-up' },
-  { id: 'j3', service_name: 'Furnace Repair', address_street: '789 Pine Rd', address_city: 'Falls Church', address_zip: '22042', tier: 'standard', price: 150, estimated_time: '2 hrs', distance: '1.8 mi', status: 'available', category: 'Repair' },
-  { id: 'j4', service_name: 'Emergency No Heat', address_street: '321 Maple Dr', address_city: 'McLean', address_zip: '22102', tier: 'premium', price: 299, estimated_time: '30 min', distance: '0.9 mi', status: 'available', category: 'Emergency' },
-  { id: 'j5', service_name: 'A/C Tune-Up', address_street: '555 Birch Ln', address_city: 'Arlington', address_zip: '22204', tier: 'standard', price: 110, estimated_time: '1 hr', distance: '3.5 mi', status: 'available', category: 'Tune-up' },
-]
-
-const DEMO_MY_JOBS = [
-  { id: 'm1', service_name: 'Thermostat Install', address_street: '111 Cedar Ct', address_city: 'Alexandria', address_zip: '22302', price: 125, status: 'assigned', customer_name: 'Sarah', assigned_at: new Date().toISOString() },
-  { id: 'm2', service_name: 'Water Heater Repair', address_street: '222 Walnut Way', address_city: 'Arlington', address_zip: '22205', price: 175, status: 'in_progress', customer_name: 'David', started_at: new Date().toISOString() },
-  { id: 'm3', service_name: 'Spring Tune-Up', address_street: '333 Cherry St', address_city: 'Falls Church', address_zip: '22044', price: 75, status: 'tech_complete', customer_name: 'Lisa', completed_at: new Date(Date.now() - 2*60*60*1000).toISOString() },
-]
-
-const DEMO_EARNINGS = {
-  week: 340, month: 1280, total: 4850, pending: 200,
-  nextPayout: '2026-06-30',
-  history: [
-    { date: '2026-06-23', job: 'Spring Tune-Up', amount: 75, status: 'paid' },
-    { date: '2026-06-22', job: 'Filter Swap', amount: 40, status: 'paid' },
-    { date: '2026-06-21', job: 'System Repair', amount: 125, status: 'paid' },
-    { date: '2026-06-20', job: 'Furnace Repair', amount: 150, status: 'pending' },
-    { date: '2026-06-19', job: 'Thermostat Install', amount: 125, status: 'pending' },
-  ]
-}
-
-const DEMO_PROFILE = {
-  name: 'Marcus Johnson', email: 'marcus@example.com', phone: '(703) 555-0123',
-  serviceZips: ['20109', '22153', '22301'], paymentMethod: 'flat_fee',
-  licenseExp: '2027-06-30', insuranceExp: '2026-12-31',
-  subscriptionTier: 'pro', subscriptionPrice: 49,
-}
-
-// ── Demo notifications ──
-const DEMO_NOTIFICATIONS = [
-  { id: 'n1', type: 'new_job_available', title: 'New Job in 22202', message: 'Spring Tune-Up — Arlington • $75', read: false, created_at: new Date().toISOString() },
-  { id: 'n2', type: 'new_job_available', title: 'New Job in 22301', message: 'Filter Swap — Alexandria • $40', read: false, created_at: new Date(Date.now() - 60000).toISOString() },
-]
-
 // Simple notification sound using Web Audio API
 function playAlertSound() {
   try {
@@ -79,17 +33,15 @@ function playAlertSound() {
 
 export default function SofnDashboard() {
   const [activeTab, setActiveTab] = useState('dispatches')
-  const [user, setUser] = useState(DEMO_USER)
-  const [availableJobs, setAvailableJobs] = useState(DEMO_JOBS_AVAILABLE)
-  const [myJobs, setMyJobs] = useState(DEMO_MY_JOBS)
-  const [earnings, setEarnings] = useState(DEMO_EARNINGS)
-  const [profile, setProfile] = useState(DEMO_PROFILE)
+  const [user, setUser] = useState(null)
+  const [availableJobs, setAvailableJobs] = useState([])
+  const [myJobs, setMyJobs] = useState([])
+  const [earnings, setEarnings] = useState(null)
+  const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
-
-  // Notification state
-  const [notifications, setNotifications] = useState(DEMO_NOTIFICATIONS)
-  const [unreadCount, setUnreadCount] = useState(2)
-  const prevJobCountRef = useRef(DEMO_JOBS_AVAILABLE.length)
+  const [notifications, setNotifications] = useState([])
+  const [unreadCount, setUnreadCount] = useState(0)
+  const prevJobCountRef = useRef(0)
   const pollingRef = useRef(null)
   const notifPollingRef = useRef(null)
 
@@ -105,23 +57,23 @@ export default function SofnDashboard() {
         const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
         const apiUrl = import.meta.env.VITE_API_URL || ''
 
-        const [meRes, availRes, jobsRes, earnRes] = await Promise.all([
+        const [meRes, availRes, jobsRes, earnRes, notifRes] = await Promise.all([
           fetch(`${apiUrl}/api/auth/me`, { headers }).then(r => r.json()).catch(() => null),
           fetch(`${apiUrl}/api/jobs?status=available&limit=10`, { headers }).then(r => r.json()).catch(() => null),
           fetch(`${apiUrl}/api/jobs?limit=50`, { headers }).then(r => r.json()).catch(() => null),
           fetch(`${apiUrl}/api/tech/earnings`, { headers }).then(r => r.json()).catch(() => null),
           fetch(`${apiUrl}/api/notifications`, { headers }).then(r => r.json()).catch(() => null),
         ])
-        if (meRes?.user) setUser({ ...meRes.user, earnings_week: earnRes?.summary?.totalNet || 0 })
+        if (meRes?.user) setUser(meRes.user)
         if (availRes?.jobs) {
           setAvailableJobs(availRes.jobs)
           prevJobCountRef.current = availRes.jobs.length
         }
         if (jobsRes?.jobs) setMyJobs(jobsRes.jobs)
-        if (earnRes?.summary) setEarnings(prev => ({ ...prev, ...earnRes.summary, history: earnRes.payments || prev.history }))
-        if (meRes?.notifications) {
-          setNotifications(meRes.notifications)
-          setUnreadCount(meRes.unread)
+        if (earnRes) setEarnings(earnRes)
+        if (notifRes?.notifications) {
+          setNotifications(notifRes.notifications)
+          setUnreadCount(notifRes.unread || 0)
         }
       } catch {}
       setLoading(false)
@@ -129,16 +81,13 @@ export default function SofnDashboard() {
     fetchData()
   }, [])
 
-  // ── Job polling (every 15s) — checks for new available jobs ──
+  // ── Job polling (every 15s) ──
   useEffect(() => {
     const pollJobs = async () => {
       try {
         const token = localStorage.getItem('sofn_token')
         const apiUrl = import.meta.env.VITE_API_URL || ''
-        if (!apiUrl) {
-          // Demo mode: simulate new jobs appearing
-          return
-        }
+        if (!apiUrl || !token) return
 
         const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
         const res = await fetch(`${apiUrl}/api/jobs?status=available&limit=10`, { headers })
@@ -148,7 +97,6 @@ export default function SofnDashboard() {
           const newCount = data.jobs.length
           if (newCount > prevCount) {
             playAlertSound()
-            // Update page title with badge
             document.title = `(${newCount - prevCount}) SOFN Dashboard`
             setTimeout(() => { document.title = 'SOFN Dashboard' }, 5000)
           }
@@ -158,44 +106,40 @@ export default function SofnDashboard() {
       } catch {}
     }
 
-    // Start polling
     pollingRef.current = setInterval(pollJobs, 15000)
     return () => {
       if (pollingRef.current) clearInterval(pollingRef.current)
     }
   }, [])
 
-  // ── Notification polling (every 30s) — scan for ZIP-matched jobs ──
+  // ── Notification polling (every 30s) ──
   useEffect(() => {
     const pollNotifications = async () => {
       try {
         const token = localStorage.getItem('sofn_token')
         const apiUrl = import.meta.env.VITE_API_URL || ''
-        if (!apiUrl) return // demo mode — use static data
+        if (!apiUrl || !token) return
 
         const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
 
-        // 1. Scan for new ZIP-matched jobs
         await fetch(`${apiUrl}/api/notifications/scan`, { method: 'POST', headers }).catch(() => {})
 
-        // 2. Fetch updated notifications
         const notifRes = await fetch(`${apiUrl}/api/notifications`, { headers }).then(r => r.json()).catch(() => null)
         if (notifRes?.notifications) {
           setNotifications(notifRes.notifications)
-          setUnreadCount(notifRes.unread)
+          setUnreadCount(notifRes.unread || 0)
         }
       } catch {}
     }
 
     notifPollingRef.current = setInterval(pollNotifications, 30000)
 
-    // Keep unread count ref for sound comparison without re-creating interval
     const unreadRef = { current: unreadCount }
     const soundCheckId = setInterval(async () => {
       try {
         const token = localStorage.getItem('sofn_token')
         const apiUrl = import.meta.env.VITE_API_URL || ''
-        if (!apiUrl) return
+        if (!apiUrl || !token) return
         const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
         const res = await fetch(`${apiUrl}/api/notifications`, { headers }).then(r => r.json()).catch(() => null)
         if (res?.unread !== undefined && res.unread > unreadRef.current) {
