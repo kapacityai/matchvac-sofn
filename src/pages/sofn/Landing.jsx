@@ -45,8 +45,8 @@ export default function SofnLanding() {
           </div>
           <div className="hidden md:block">
             <img
-              src="https://images.unsplash.com/photo-1676274299226-9b687b55e169?w=700&q=80&fit=crop&auto=format"
-              alt="HVAC technician servicing a furnace"
+              src="/sofn/hvac-4.png"
+              alt="HVAC technician at customer's front door with SOFN service van"
               className="rounded-2xl shadow-xl w-full h-[460px] object-cover"
             />
           </div>
@@ -76,8 +76,8 @@ export default function SofnLanding() {
             </div>
             <div className="hidden md:block">
               <img
-                src="https://images.unsplash.com/photo-1682094562282-f73d092c2bcc?w=700&q=80&fit=crop&auto=format"
-                alt="Technician explaining service to a homeowner"
+                src="/sofn/hvac-3.png"
+                alt="Technician servicing outdoor air conditioning condenser"
                 className="rounded-2xl shadow-lg w-full h-[400px] object-cover"
               />
             </div>
@@ -105,8 +105,8 @@ export default function SofnLanding() {
       {/* Visual break — maintenance in action */}
       <div className="max-w-5xl mx-auto px-4 pb-8">
         <img
-          src="https://images.unsplash.com/photo-1682126012378-859ca7a9f4cf?w=1200&q=80&fit=crop&auto=format"
-          alt="HVAC technician performing AC maintenance and filter cleaning"
+          src="/sofn/hvac-5.png"
+          alt="HVAC technician working on indoor furnace and electrical panel"
           className="rounded-2xl shadow-md w-full h-[300px] md:h-[400px] object-cover"
         />
       </div>
@@ -194,8 +194,8 @@ export default function SofnLanding() {
           {/* Partner visual — team working together */}
           <div className="mb-10">
             <img
-              src="https://images.unsplash.com/photo-1558382689-c1c29cc9b37e?w=1200&q=80&fit=crop&auto=format"
-              alt="Two technicians working together on HVAC equipment"
+              src="/sofn/hvac-tech-1.png"
+              alt="Technicians shaking hands — SOFN partnership"
               className="rounded-2xl shadow-md w-full h-[280px] md:h-[360px] object-cover"
             />
           </div>
