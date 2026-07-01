@@ -219,9 +219,13 @@ export default function Website() {
             </div>
           </div>
 
-          {/* Right — animated mock */}
+          {/* Right — app visual */}
           <div className={`transition-all duration-700 delay-200 ${heroIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <MockJobCard />
+            <img
+              src="/matchvac/app-gps-tracking.png"
+              alt="MatcHvac mobile app — GPS tracking showing tech en route with 18-minute ETA"
+              className="rounded-2xl shadow-xl w-full max-w-sm mx-auto"
+            />
           </div>
         </div>
 
@@ -461,6 +465,12 @@ export default function Website() {
           </div>
 
           <div className={`space-y-3 transition-all duration-700 delay-200 ${techIn ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
+            {/* Tech in action */}
+            <img
+              src="/matchvac/tech-condenser.png"
+              alt="MatcHvac certified technician servicing outdoor condenser unit"
+              className="rounded-2xl shadow-md w-full h-[240px] object-cover"
+            />
             {[
               { label: 'Standard', detail: 'Free · 15% platform fee per job · Standard dispatch', badge: '', highlight: false },
               { label: 'Pro',      detail: '$49/mo · 11% fee · Priority dispatch queue', badge: 'Most Popular', highlight: true },
