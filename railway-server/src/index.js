@@ -80,6 +80,7 @@ app.get('/health', async (req, res) => {
       database: error ? 'error' : 'connected',
       timestamp: new Date().toISOString(),
       version: '1.0.0',
+      commit: '007a1c4f',
     })
   } catch {
     res.status(500).json({ status: 'error' })
