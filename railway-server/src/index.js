@@ -38,6 +38,16 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }))
+
+// Fallback CORS: ensure access-control-allow-origin is always set
+app.use((req, res, next) => {
+  const origin = req.headers.origin
+  const allowed = ['https://www.matchvac.com','https://matchvac.com','https://www.sofn.io','https://sofn.io','https://matchvac.vercel.app','http://localhost:5173','http://localhost:4000']
+  if (origin && allowed.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
+  next()
+})
 // ── Security ────────────────────────────────────────────────
 app.use(helmet())
 
