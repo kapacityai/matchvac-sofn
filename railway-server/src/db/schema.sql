@@ -300,6 +300,15 @@ ALTER TABLE password_resets              ENABLE ROW LEVEL SECURITY;
 -- service role key, which bypasses RLS. These policies protect
 -- against any direct client access.
 
+-- Drop existing policies first (safe for re-run)
+DROP POLICY IF EXISTS "services_public_read" ON services;
+DROP POLICY IF EXISTS "users_own_read" ON users;
+DROP POLICY IF EXISTS "jobs_customer_read" ON jobs;
+DROP POLICY IF EXISTS "jobs_tech_read" ON jobs;
+DROP POLICY IF EXISTS "notifications_own" ON notifications;
+DROP POLICY IF EXISTS "ad_slots_public_read" ON ad_slots;
+DROP POLICY IF EXISTS "password_resets_own" ON password_resets;
+
 -- Services are public read
 CREATE POLICY "services_public_read" ON services
   FOR SELECT USING (true);
