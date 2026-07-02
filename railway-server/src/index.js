@@ -23,15 +23,15 @@ const __dirname = path.dirname(__filename)
 const app = express()
 const PORT = process.env.PORT || 4000
 
-// ── Security & Middleware ─────────────────────────────────────
-app.use(helmet())
-// ── CORS ──────────────────────────────────────────────
+// ── CORS (must come before helmet) ──────────────────────────
 app.use(cors({
   origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }))
+// ── Security ────────────────────────────────────────────────
+app.use(helmet())
 
 // Raw body for Stripe webhooks
 app.use('/api/payments/webhook', express.raw({ type: 'application/json' }))
