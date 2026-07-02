@@ -4,8 +4,10 @@
  * Falls back to mock data when VITE_API_URL is not set (demo mode).
  */
 
-const API_URL = import.meta.env.VITE_API_URL || null
-const IS_LIVE = !!API_URL
+// When VITE_API_URL is set, API calls go directly to that URL.
+// When unset, relative URLs are used (proxied by Vite dev server or Vercel rewrites).
+const API_URL = import.meta.env.VITE_API_URL || ''
+const IS_LIVE = true
 
 // ── Token management ──────────────────────────────────────────
 function getToken() { return localStorage.getItem('sc_token') }
