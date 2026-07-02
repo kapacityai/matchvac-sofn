@@ -47,19 +47,21 @@ router.post('/register', async (req, res) => {
       .select('id, email, name, role, phone, avatar, source')
       .single()
 
-    if (error) throw error
+    if (error) return res.status(500).json({ error: error.message || 'User creation failed' })
 
     // Create profile
     if (role === 'customer') {
       await supabase.from('customer_profiles').insert({ user_id: user.id })
     } else if (role === 'tech') {
-      await supabase.from('tech_profiles').insert({ user_id: user.id, phone: phone || null })
-      await supabase.from('tech_subscriptions').insert({
+      const { error: tpErr } = await supabase.from('tech_profiles').insert({ user_id: user.id, phone: phone || null })
+      if (tpErr) return res.status(500).json({ error: 'Tech profile: ' + tpErr.message })
+      const { error: tsErr } = await supabase.from('tech_subscriptions').insert({
         tech_id: user.id,
         tier: 'free',
         platform_fee_rate: 0.15,
         current_period_end: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
       })
+      if (tsErr) return res.status(500).json({ error: 'Tech sub: ' + tsErr.message })
     }
 
     const token = generateToken(user.id)
@@ -81,7 +83,7 @@ router.post('/register', async (req, res) => {
     res.status(201).json({ user, token, refreshToken })
   } catch (err) {
     console.error('Register error:', err)
-    res.status(500).json({ error: 'Registration failed' })
+    res.status(500).json({ error: err.message || 'Registration failed' })
   }
 })
 
