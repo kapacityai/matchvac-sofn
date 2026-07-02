@@ -136,8 +136,14 @@ app.use((req, res) => {
 
 // ── Error Handler ─────────────────────────────────────────────
 app.use((err, req, res, next) => {
-  console.error('ERROR:', err)
-  res.status(500).json({ error: err?.message || err?.stack || 'Internal server error' })
+  console.error('=== GLOBAL ERROR HANDLER ===')
+  console.error('Message:', err?.message)
+  console.error('Stack:', err?.stack)
+  console.error('URL:', req?.originalUrl || req?.url)
+  console.error('Method:', req?.method)
+  console.error('Body:', JSON.stringify(req?.body || {}).slice(0, 200))
+  const msg = err?.message || err?.stack || 'Internal server error'
+  res.status(500).json({ error: msg })
 })
 
 // ── Start ─────────────────────────────────────────────────────

@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import { supabase } from '../lib/supabase.js'
-import { requireAuth } from '../middleware/auth.js'
+import { requireAuth, wrapAsync } from '../middleware/auth.js'
 import { sendEmail, resetPasswordEmail, sofnResetPasswordEmail, verificationEmail, sofnVerificationEmail } from '../lib/email.js'
 
 const router = Router()
@@ -17,109 +17,99 @@ function generateRefreshToken(userId) {
 }
 
 // POST /api/auth/register
-router.post('/register', async (req, res) => {
-  try {
-    const { email, password, name, phone, role = 'customer', source } = req.body
-    if (!email || !password || !name) {
-      return res.status(400).json({ error: 'Email, password, and name are required' })
-    }
-    if (password.length < 8) {
-      return res.status(400).json({ error: 'Password must be at least 8 characters' })
-    }
-    if (!['customer', 'tech'].includes(role)) {
-      return res.status(400).json({ error: 'Invalid role' })
-    }
-
-    // Check existing
-    const { data: existing, error: checkErr } = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', email.toLowerCase())
-      .maybeSingle()
-    if (checkErr) return res.status(500).json({ error: 'Check user: ' + checkErr.message })
-    if (existing) return res.status(409).json({ error: 'Email already registered' })
-
-    const password_hash = await bcrypt.hash(password, 12)
-    const avatar = (name.trim().split(/\s+/)[0]?.[0] || 'U') + (name.trim().split(/\s+/)[1]?.[0] || 'S')
-
-    // Insert user
-    const insertResult = await supabase
-      .from('users')
-      .insert({ email: email.toLowerCase(), password_hash, name, phone, role, avatar, source: source || null })
-      .select()
-
-    const { data: users, error: insertErr } = insertResult
-    if (insertErr) return res.status(500).json({ error: 'User insert: ' + insertErr.message })
-    if (!users || users.length === 0) return res.status(500).json({ error: 'User insert returned no rows' })
-
-    const user = users[0]
-    if (!user.id) return res.status(500).json({ error: 'User has no id' })
-
-    // Create profiles
-    if (role === 'customer') {
-      const { error: cpErr } = await supabase.from('customer_profiles').insert({ user_id: user.id })
-      if (cpErr) return res.status(500).json({ error: 'Customer profile: ' + cpErr.message })
-    } else if (role === 'tech') {
-      const { error: tpErr } = await supabase.from('tech_profiles').insert({ user_id: user.id, phone: phone || null })
-      if (tpErr) return res.status(500).json({ error: 'Tech profile: ' + tpErr.message })
-      const { error: tsErr } = await supabase.from('tech_subscriptions').insert({
-        tech_id: user.id,
-        tier: 'free',
-        platform_fee_rate: 0.15,
-        current_period_end: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
-      })
-      if (tsErr) return res.status(500).json({ error: 'Tech sub: ' + tsErr.message })
-    }
-
-    const token = generateToken(user.id)
-    const refreshToken = generateRefreshToken(user.id)
-
-    // Verification email (fire-and-forget)
-    const isSofn = source === 'sofn_tech'
-    const verifToken = crypto.randomBytes(32).toString('hex')
-    await supabase.from('password_resets').insert({
-      user_id: user.id,
-      token: verifToken,
-      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-    }).catch(() => {})
-    const { subject, html } = isSofn
-      ? sofnVerificationEmail(user.name, verifToken)
-      : verificationEmail(user.name, verifToken)
-    sendEmail(user.email, subject, html).catch(() => {})
-
-    res.status(201).json({ user, token, refreshToken })
-  } catch (err) {
-    console.error('Register error:', err)
-    res.status(500).json({ error: err?.message || err?.stack || 'Registration failed' })
+router.post('/register', wrapAsync(async (req, res) => {
+  const { email, password, name, phone, role = 'customer', source } = req.body
+  if (!email || !password || !name) {
+    return res.status(400).json({ error: 'Email, password, and name are required' })
   }
-})
+  if (password.length < 8) {
+    return res.status(400).json({ error: 'Password must be at least 8 characters' })
+  }
+  if (!['customer', 'tech'].includes(role)) {
+    return res.status(400).json({ error: 'Invalid role' })
+  }
+
+  // Check existing
+  const { data: existing, error: checkErr } = await supabase
+    .from('users')
+    .select('id')
+    .eq('email', email.toLowerCase())
+    .maybeSingle()
+  if (checkErr) return res.status(500).json({ error: 'Check user: ' + checkErr.message })
+  if (existing) return res.status(409).json({ error: 'Email already registered' })
+
+  const password_hash = await bcrypt.hash(password, 12)
+  const avatar = (name.trim().split(/\s+/)[0]?.[0] || 'U') + (name.trim().split(/\s+/)[1]?.[0] || 'S')
+
+  // Insert user
+  const insertResult = await supabase
+    .from('users')
+    .insert({ email: email.toLowerCase(), password_hash, name, phone, role, avatar, source: source || null })
+    .select()
+
+  const { data: users, error: insertErr } = insertResult
+  if (insertErr) return res.status(500).json({ error: 'User insert: ' + insertErr.message })
+  if (!users || users.length === 0) return res.status(500).json({ error: 'User insert returned no rows' })
+
+  const user = users[0]
+  if (!user.id) return res.status(500).json({ error: 'User has no id' })
+
+  // Create profiles
+  if (role === 'customer') {
+    const { error: cpErr } = await supabase.from('customer_profiles').insert({ user_id: user.id })
+    if (cpErr) return res.status(500).json({ error: 'Customer profile: ' + cpErr.message })
+  } else if (role === 'tech') {
+    const { error: tpErr } = await supabase.from('tech_profiles').insert({ user_id: user.id, phone: phone || null })
+    if (tpErr) return res.status(500).json({ error: 'Tech profile: ' + tpErr.message })
+    const { error: tsErr } = await supabase.from('tech_subscriptions').insert({
+      tech_id: user.id,
+      tier: 'free',
+      platform_fee_rate: 0.15,
+      current_period_end: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+    })
+    if (tsErr) return res.status(500).json({ error: 'Tech sub: ' + tsErr.message })
+  }
+
+  const token = generateToken(user.id)
+  const refreshToken = generateRefreshToken(user.id)
+
+  // Verification email (fire-and-forget)
+  const isSofn = source === 'sofn_tech'
+  const verifToken = crypto.randomBytes(32).toString('hex')
+  await supabase.from('password_resets').insert({
+    user_id: user.id,
+    token: verifToken,
+    expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+  }).catch(() => {})
+  const { subject, html } = isSofn
+    ? sofnVerificationEmail(user.name, verifToken)
+    : verificationEmail(user.name, verifToken)
+  sendEmail(user.email, subject, html).catch(() => {})
+
+  res.status(201).json({ user, token, refreshToken })
+}))
 
 // POST /api/auth/login
-router.post('/login', async (req, res) => {
-  try {
-    const { email, password } = req.body
-    if (!email || !password) return res.status(400).json({ error: 'Email and password required' })
+router.post('/login', wrapAsync(async (req, res) => {
+  const { email, password } = req.body
+  if (!email || !password) return res.status(400).json({ error: 'Email and password required' })
 
-    const { data: user, error } = await supabase
-      .from('users')
-      .select('id, email, name, role, phone, avatar, password_hash')
-      .eq('email', email.toLowerCase())
-      .single()
+  const { data: user, error } = await supabase
+    .from('users')
+    .select('id, email, name, role, phone, avatar, password_hash')
+    .eq('email', email.toLowerCase())
+    .single()
 
-    if (error || !user) return res.status(401).json({ error: 'Invalid email or password' })
+  if (error || !user) return res.status(401).json({ error: 'Invalid email or password' })
 
-    const valid = await bcrypt.compare(password, user.password_hash)
-    if (!valid) return res.status(401).json({ error: 'Invalid email or password' })
+  const valid = await bcrypt.compare(password, user.password_hash)
+  if (!valid) return res.status(401).json({ error: 'Invalid email or password' })
 
-    const { password_hash, ...safeUser } = user
-    const token = generateToken(user.id)
-    const refreshToken = generateRefreshToken(user.id)
-    res.json({ user: safeUser, token, refreshToken })
-  } catch (err) {
-    console.error('Login error:', err)
-    res.status(500).json({ error: 'Login failed' })
-  }
-})
+  const { password_hash, ...safeUser } = user
+  const token = generateToken(user.id)
+  const refreshToken = generateRefreshToken(user.id)
+  res.json({ user: safeUser, token, refreshToken })
+}))
 
 // POST /api/auth/refresh
 router.post('/refresh', async (req, res) => {

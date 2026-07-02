@@ -1,6 +1,15 @@
 import jwt from 'jsonwebtoken'
 import { supabase } from '../lib/supabase.js'
 
+// Express 5 catches async handler rejections automatically and sends them
+// to the error middleware. wrapAsync wraps an express handler so errors
+// thrown inside it are caught and forwarded properly.
+export function wrapAsync(fn) {
+  return (req, res, next) => {
+    Promise.resolve(fn(req, res, next)).catch(next)
+  }
+}
+
 export async function requireAuth(req, res, next) {
   const header = req.headers.authorization
   if (!header || !header.startsWith('Bearer ')) {
