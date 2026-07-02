@@ -62,7 +62,7 @@ export default function SofnRegister() {
     const headers = { 'Content-Type': 'application/json', ...opts.headers }
     if (token) headers['Authorization'] = `Bearer ${token}`
     const baseUrl = import.meta.env.VITE_API_URL || ''
-    if (!baseUrl) return {} // demo/preview mode
+    // When VITE_API_URL is not set, use relative URL (Vercel proxy handles /api/*)
     const res = await fetch(baseUrl + path, { ...opts, headers })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error || 'Request failed')
