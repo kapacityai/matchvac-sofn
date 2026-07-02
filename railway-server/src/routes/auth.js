@@ -30,30 +30,35 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Invalid role' })
     }
 
-    // Check existing — use maybeSingle to avoid throw on 0 rows
-    const { data: existing } = await supabase
+    // Check existing
+    const { data: existing, error: checkErr } = await supabase
       .from('users')
       .select('id')
       .eq('email', email.toLowerCase())
       .maybeSingle()
+    if (checkErr) return res.status(500).json({ error: 'Check user: ' + checkErr.message })
     if (existing) return res.status(409).json({ error: 'Email already registered' })
 
     const password_hash = await bcrypt.hash(password, 12)
-    const avatar = name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    const avatar = (name.trim().split(/\s+/)[0]?.[0] || 'U') + (name.trim().split(/\s+/)[1]?.[0] || 'S')
 
-    // Insert user — use maybeSingle to avoid throwing on PostgREST errors
-    const { data: user, error: insertErr } = await supabase
+    // Insert user
+    const insertResult = await supabase
       .from('users')
       .insert({ email: email.toLowerCase(), password_hash, name, phone, role, avatar, source: source || null })
-      .select('id, email, name, role, phone, avatar, source')
-      .maybeSingle()
+      .select()
 
+    const { data: users, error: insertErr } = insertResult
     if (insertErr) return res.status(500).json({ error: 'User insert: ' + insertErr.message })
-    if (!user) return res.status(500).json({ error: 'User insert returned no data' })
+    if (!users || users.length === 0) return res.status(500).json({ error: 'User insert returned no rows' })
 
-    // Create profile
+    const user = users[0]
+    if (!user.id) return res.status(500).json({ error: 'User has no id' })
+
+    // Create profiles
     if (role === 'customer') {
-      await supabase.from('customer_profiles').insert({ user_id: user.id })
+      const { error: cpErr } = await supabase.from('customer_profiles').insert({ user_id: user.id })
+      if (cpErr) return res.status(500).json({ error: 'Customer profile: ' + cpErr.message })
     } else if (role === 'tech') {
       const { error: tpErr } = await supabase.from('tech_profiles').insert({ user_id: user.id, phone: phone || null })
       if (tpErr) return res.status(500).json({ error: 'Tech profile: ' + tpErr.message })
@@ -69,7 +74,7 @@ router.post('/register', async (req, res) => {
     const token = generateToken(user.id)
     const refreshToken = generateRefreshToken(user.id)
 
-    // Send verification email (fire-and-forget — don't block registration)
+    // Verification email (fire-and-forget)
     const isSofn = source === 'sofn_tech'
     const verifToken = crypto.randomBytes(32).toString('hex')
     await supabase.from('password_resets').insert({
@@ -85,7 +90,7 @@ router.post('/register', async (req, res) => {
     res.status(201).json({ user, token, refreshToken })
   } catch (err) {
     console.error('Register error:', err)
-    res.status(500).json({ error: err.message || 'Registration failed' })
+    res.status(500).json({ error: err?.message || err?.stack || 'Registration failed' })
   }
 })
 
