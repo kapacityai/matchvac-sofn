@@ -76,11 +76,13 @@ router.post('/register', wrapAsync(async (req, res) => {
   // Verification email (fire-and-forget)
   const isSofn = source === 'sofn_tech'
   const verifToken = crypto.randomBytes(32).toString('hex')
-  await supabase.from('password_resets').insert({
-    user_id: user.id,
-    token: verifToken,
-    expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-  }).catch(() => {})
+  try {
+    await supabase.from('password_resets').insert({
+      user_id: user.id,
+      token: verifToken,
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    })
+  } catch (_) { /* fire-and-forget, ignore errors */ }
   const { subject, html } = isSofn
     ? sofnVerificationEmail(user.name, verifToken)
     : verificationEmail(user.name, verifToken)
