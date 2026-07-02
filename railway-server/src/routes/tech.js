@@ -1,43 +1,36 @@
 import { Router } from 'express'
 import { supabase } from '../lib/supabase.js'
-import { requireAuth, requireRole } from '../middleware/auth.js'
+import { requireAuth, requireRole, wrapAsync } from '../middleware/auth.js'
 
 const router = Router()
 
 // GET /api/tech/profile
-router.get('/profile', requireAuth, requireRole('tech'), async (req, res) => {
-  try {
-    const { data, error } = await supabase
-      .from('tech_profiles').select('*').eq('user_id', req.user.id).single()
-    if (error) throw error
-    res.json({ profile: data })
-  } catch {
-    res.status(500).json({ error: 'Failed to fetch tech profile' })
-  }
-})
+router.get('/profile', requireAuth, requireRole('tech'), wrapAsync(async (req, res) => {
+  const { data, error } = await supabase
+    .from('tech_profiles').select('*').eq('user_id', req.user.id).maybeSingle()
+  if (error) return res.status(500).json({ error: 'Fetch tech profile: ' + error.message })
+  res.json({ profile: data })
+}))
 
 // PUT /api/tech/profile
-router.put('/profile', requireAuth, requireRole('tech'), async (req, res) => {
-  try {
-    const allowed = [
-      'license_number', 'license_state', 'license_expiry',
-      'epa608_certified', 'epa608_number',
-      'insurance_company', 'insurance_policy_number', 'insurance_expiry', 'insurance_file',
-      'service_zips', 'phone',
-      'preferred_payment_method',
-      'bank_account_holder', 'bank_routing', 'bank_account', 'bank_account_type', 'bank_account_confirmed',
-    ]
-    const updates = {}
-    allowed.forEach(k => { if (req.body[k] !== undefined) updates[k] = req.body[k] })
+router.put('/profile', requireAuth, requireRole('tech'), wrapAsync(async (req, res) => {
+  const allowed = [
+    'license_number', 'license_state', 'license_expiry',
+    'epa608_certified', 'epa608_number',
+    'insurance_company', 'insurance_policy_number', 'insurance_expiry', 'insurance_file',
+    'service_zips', 'phone',
+    'preferred_payment_method',
+    'bank_account_holder', 'bank_routing', 'bank_account', 'bank_account_type', 'bank_account_confirmed',
+  ]
+  const updates = {}
+  allowed.forEach(k => { if (req.body[k] !== undefined) updates[k] = req.body[k] })
 
-    const { data, error } = await supabase
-      .from('tech_profiles').update(updates).eq('user_id', req.user.id).select().single()
-    if (error) throw error
-    res.json({ profile: data })
-  } catch {
-    res.status(500).json({ error: 'Failed to update tech profile' })
-  }
-})
+  const { data, error } = await supabase
+    .from('tech_profiles').update(updates).eq('user_id', req.user.id).select()
+  if (error) return res.status(500).json({ error: 'Update tech profile: ' + error.message })
+  if (!data || data.length === 0) return res.status(500).json({ error: 'Update returned no rows' })
+  res.json({ profile: data[0] })
+}))
 
 // PUT /api/tech/location — update GPS location
 router.put('/location', requireAuth, requireRole('tech'), async (req, res) => {
