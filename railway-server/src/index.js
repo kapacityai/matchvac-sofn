@@ -25,7 +25,15 @@ const PORT = process.env.PORT || 4000
 
 // ── CORS (must come before helmet) ──────────────────────────
 app.use(cors({
-  origin: true,
+  origin: [
+    'https://www.matchvac.com',
+    'https://matchvac.com',
+    'https://www.sofn.io',
+    'https://sofn.io',
+    'https://matchvac.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:4000',
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
