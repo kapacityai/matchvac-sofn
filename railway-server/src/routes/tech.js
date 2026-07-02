@@ -4,7 +4,7 @@ import { requireAuth, requireRole, wrapAsync } from '../middleware/auth.js'
 
 const router = Router()
 
-// GET /api/tech/profile
+// GET /api/tech/profile (fixed: .maybeSingle() instead of .single())
 router.get('/profile', requireAuth, requireRole('tech'), wrapAsync(async (req, res) => {
   const { data, error } = await supabase
     .from('tech_profiles').select('*').eq('user_id', req.user.id).maybeSingle()
