@@ -30,24 +30,26 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Invalid role' })
     }
 
-    // Check existing
+    // Check existing — use maybeSingle to avoid throw on 0 rows
     const { data: existing } = await supabase
       .from('users')
       .select('id')
       .eq('email', email.toLowerCase())
-      .single()
+      .maybeSingle()
     if (existing) return res.status(409).json({ error: 'Email already registered' })
 
     const password_hash = await bcrypt.hash(password, 12)
     const avatar = name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
 
-    const { data: user, error } = await supabase
+    // Insert user — use maybeSingle to avoid throwing on PostgREST errors
+    const { data: user, error: insertErr } = await supabase
       .from('users')
       .insert({ email: email.toLowerCase(), password_hash, name, phone, role, avatar, source: source || null })
       .select('id, email, name, role, phone, avatar, source')
-      .single()
+      .maybeSingle()
 
-    if (error) return res.status(500).json({ error: error.message || 'User creation failed' })
+    if (insertErr) return res.status(500).json({ error: 'User insert: ' + insertErr.message })
+    if (!user) return res.status(500).json({ error: 'User insert returned no data' })
 
     // Create profile
     if (role === 'customer') {
