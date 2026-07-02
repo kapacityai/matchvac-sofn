@@ -219,7 +219,7 @@ CREATE TABLE IF NOT EXISTS ad_slots (
   created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ── LENDING PARTNER APPLICATIONS ─────────────────────────────
+-- ── LENDING PARTNER APPLICATIONS ──────────────────────────────
 CREATE TABLE IF NOT EXISTS lending_partner_applications (
   id               UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   company          TEXT NOT NULL,
@@ -294,8 +294,9 @@ ALTER TABLE contractor_applications      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE lending_partner_applications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notifications                ENABLE ROW LEVEL SECURITY;
 ALTER TABLE ad_slots                     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE password_resets              ENABLE ROW LEVEL SECURITY;
 
--- NOTE: All data access goes through the backend API using the
+-- Note: All data access goes through the backend API using the
 -- service role key, which bypasses RLS. These policies protect
 -- against any direct client access.
 
@@ -307,10 +308,11 @@ CREATE POLICY "services_public_read" ON services
 CREATE POLICY "users_own_read" ON users
   FOR SELECT USING (auth.uid()::text = id::text);
 
--- Customers see their own jobs; techs see assigned or available jobs
+-- Customers see their own jobs
 CREATE POLICY "jobs_customer_read" ON jobs
   FOR SELECT USING (auth.uid()::text = customer_id::text);
 
+-- Techs see assigned or available jobs
 CREATE POLICY "jobs_tech_read" ON jobs
   FOR SELECT USING (
     auth.uid()::text = tech_id::text OR status = 'available'
@@ -323,3 +325,7 @@ CREATE POLICY "notifications_own" ON notifications
 -- Ad slots are public read
 CREATE POLICY "ad_slots_public_read" ON ad_slots
   FOR SELECT USING (active = true);
+
+-- Password resets: user can access own
+CREATE POLICY "password_resets_own" ON password_resets
+  FOR ALL USING (auth.uid()::text = user_id::text);
