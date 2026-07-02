@@ -112,169 +112,146 @@ router.post('/login', wrapAsync(async (req, res) => {
 }))
 
 // POST /api/auth/refresh
-router.post('/refresh', async (req, res) => {
+router.post('/refresh', wrapAsync(async (req, res) => {
+  const { refreshToken } = req.body
+  if (!refreshToken) return res.status(400).json({ error: 'Refresh token required' })
   try {
-    const { refreshToken } = req.body
-    if (!refreshToken) return res.status(400).json({ error: 'Refresh token required' })
     const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET)
     const token = generateToken(decoded.userId)
     res.json({ token })
   } catch {
     res.status(401).json({ error: 'Invalid refresh token' })
   }
-})
+}))
 
 // GET /api/auth/me
-router.get('/me', requireAuth, async (req, res) => {
+router.get('/me', requireAuth, (req, res) => {
   res.json({ user: req.user })
 })
 
 // PUT /api/auth/me
-router.put('/me', requireAuth, async (req, res) => {
-  try {
-    const { name, phone } = req.body
-    const updates = {}
-    if (name) {
-      updates.name = name
-      updates.avatar = name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
-    }
-    if (phone) updates.phone = phone
-    updates.updated_at = new Date().toISOString()
-
-    const { data: user, error } = await supabase
-      .from('users')
-      .update(updates)
-      .eq('id', req.user.id)
-      .select('id, email, name, role, phone, avatar')
-      .single()
-
-    if (error) throw error
-    res.json({ user })
-  } catch (err) {
-    res.status(500).json({ error: 'Update failed' })
+router.put('/me', requireAuth, wrapAsync(async (req, res) => {
+  const { name, phone } = req.body
+  const updates = {}
+  if (name) {
+    updates.name = name
+    updates.avatar = name.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
   }
-})
+  if (phone) updates.phone = phone
+  updates.updated_at = new Date().toISOString()
+
+  const { data: user, error } = await supabase
+    .from('users')
+    .update(updates)
+    .eq('id', req.user.id)
+    .select('id, email, name, role, phone, avatar')
+    .single()
+
+  if (error) throw error
+  res.json({ user })
+}))
 
 // PUT /api/auth/password
-router.put('/password', requireAuth, async (req, res) => {
-  try {
-    const { currentPassword, newPassword } = req.body
-    if (!currentPassword || !newPassword) return res.status(400).json({ error: 'Both passwords required' })
-    if (newPassword.length < 8) return res.status(400).json({ error: 'New password must be at least 8 characters' })
+router.put('/password', requireAuth, wrapAsync(async (req, res) => {
+  const { currentPassword, newPassword } = req.body
+  if (!currentPassword || !newPassword) return res.status(400).json({ error: 'Both passwords required' })
+  if (newPassword.length < 8) return res.status(400).json({ error: 'New password must be at least 8 characters' })
 
-    const { data: user } = await supabase
-      .from('users')
-      .select('password_hash')
-      .eq('id', req.user.id)
-      .single()
+  const { data: user } = await supabase
+    .from('users')
+    .select('password_hash')
+    .eq('id', req.user.id)
+    .single()
 
-    const valid = await bcrypt.compare(currentPassword, user.password_hash)
-    if (!valid) return res.status(401).json({ error: 'Current password is incorrect' })
+  const valid = await bcrypt.compare(currentPassword, user.password_hash)
+  if (!valid) return res.status(401).json({ error: 'Current password is incorrect' })
 
-    const password_hash = await bcrypt.hash(newPassword, 12)
-    await supabase.from('users').update({ password_hash }).eq('id', req.user.id)
-    res.json({ message: 'Password updated successfully' })
-  } catch (err) {
-    res.status(500).json({ error: 'Password update failed' })
-  }
-})
+  const password_hash = await bcrypt.hash(newPassword, 12)
+  await supabase.from('users').update({ password_hash }).eq('id', req.user.id)
+  res.json({ message: 'Password updated successfully' })
+}))
 
 export default router
 
 // ── Forgot Password ─────────────────────────────────────
-router.post('/forgot-password', async (req, res) => {
-  try {
-    const { email } = req.body
-    if (!email) return res.status(400).json({ error: 'Email is required' })
+router.post('/forgot-password', wrapAsync(async (req, res) => {
+  const { email } = req.body
+  if (!email) return res.status(400).json({ error: 'Email is required' })
 
-    const { data: user } = await supabase
-      .from('users')
-      .select('id, email, name, source')
-      .eq('email', email.toLowerCase())
-      .single()
+  const { data: user } = await supabase
+    .from('users')
+    .select('id, email, name, source')
+    .eq('email', email.toLowerCase())
+    .single()
 
-    // Always return success to prevent email enumeration
-    if (!user) return res.json({ message: 'If that email exists, a reset link has been sent.' })
+  // Always return success to prevent email enumeration
+  if (!user) return res.json({ message: 'If that email exists, a reset link has been sent.' })
 
-    // Generate reset token (valid 1 hour)
-    const token = crypto.randomBytes(32).toString('hex')
-    const expires_at = new Date(Date.now() + 60 * 60 * 1000).toISOString()
+  // Generate reset token (valid 1 hour)
+  const token = crypto.randomBytes(32).toString('hex')
+  const expires_at = new Date(Date.now() + 60 * 60 * 1000).toISOString()
 
-    await supabase.from('password_resets').insert({
-      user_id: user.id,
-      token,
-      expires_at,
-    })
+  await supabase.from('password_resets').insert({
+    user_id: user.id,
+    token,
+    expires_at,
+  })
 
-    // Send branded email based on user source
-    const isSofn = user.source === 'sofn_tech'
-    const { subject, html } = isSofn
-      ? sofnResetPasswordEmail(user.name, token)
-      : resetPasswordEmail(user.name, token)
+  // Send branded email based on user source
+  const isSofn = user.source === 'sofn_tech'
+  const { subject, html } = isSofn
+    ? sofnResetPasswordEmail(user.name, token)
+    : resetPasswordEmail(user.name, token)
 
-    await sendEmail(user.email, subject, html)
+  await sendEmail(user.email, subject, html)
 
-    res.json({ message: 'If that email exists, a reset link has been sent.' })
-  } catch (err) {
-    console.error('Forgot password error:', err)
-    res.status(500).json({ error: 'Failed to process request' })
-  }
-})
+  res.json({ message: 'If that email exists, a reset link has been sent.' })
+}))
 
 // ── Reset Password ──────────────────────────────────────
-router.post('/reset-password', async (req, res) => {
-  try {
-    const { token, password } = req.body
-    if (!token || !password) return res.status(400).json({ error: 'Token and new password required' })
-    if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' })
+router.post('/reset-password', wrapAsync(async (req, res) => {
+  const { token, password } = req.body
+  if (!token || !password) return res.status(400).json({ error: 'Token and new password required' })
+  if (password.length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' })
 
-    // Find valid token
-    const { data: reset } = await supabase
-      .from('password_resets')
-      .select('id, user_id, expires_at, used')
-      .eq('token', token)
-      .single()
+  // Find valid token
+  const { data: reset } = await supabase
+    .from('password_resets')
+    .select('id, user_id, expires_at, used')
+    .eq('token', token)
+    .single()
 
-    if (!reset) return res.status(400).json({ error: 'Invalid or expired reset token' })
-    if (reset.used) return res.status(400).json({ error: 'Reset token has already been used' })
-    if (new Date(reset.expires_at) < new Date()) return res.status(400).json({ error: 'Reset token has expired' })
+  if (!reset) return res.status(400).json({ error: 'Invalid or expired reset token' })
+  if (reset.used) return res.status(400).json({ error: 'Reset token has already been used' })
+  if (new Date(reset.expires_at) < new Date()) return res.status(400).json({ error: 'Reset token has expired' })
 
-    // Update password
-    const password_hash = await bcrypt.hash(password, 12)
-    await supabase.from('users').update({ password_hash }).eq('id', reset.user_id)
+  // Update password
+  const password_hash = await bcrypt.hash(password, 12)
+  await supabase.from('users').update({ password_hash }).eq('id', reset.user_id)
 
-    // Mark token as used
-    await supabase.from('password_resets').update({ used: true }).eq('id', reset.id)
+  // Mark token as used
+  await supabase.from('password_resets').update({ used: true }).eq('id', reset.id)
 
-    res.json({ message: 'Password has been reset successfully' })
-  } catch (err) {
-    console.error('Reset password error:', err)
-    res.status(500).json({ error: 'Failed to reset password' })
-  }
-})
+  res.json({ message: 'Password has been reset successfully' })
+}))
 
 // ── Verify Email ─────────────────────────────────────────
-router.post('/verify-email', async (req, res) => {
-  try {
-    const { token } = req.body
-    if (!token) return res.status(400).json({ error: 'Verification token required' })
+router.post('/verify-email', wrapAsync(async (req, res) => {
+  const { token } = req.body
+  if (!token) return res.status(400).json({ error: 'Verification token required' })
 
-    const { data: verif } = await supabase
-      .from('password_resets')
-      .select('id, user_id, expires_at, used')
-      .eq('token', token)
-      .single()
+  const { data: verif } = await supabase
+    .from('password_resets')
+    .select('id, user_id, expires_at, used')
+    .eq('token', token)
+    .single()
 
-    if (!verif) return res.status(400).json({ error: 'Invalid verification token' })
-    if (verif.used) return res.status(400).json({ error: 'Email already verified' })
-    if (new Date(verif.expires_at) < new Date()) return res.status(400).json({ error: 'Verification link expired — request a new one' })
+  if (!verif) return res.status(400).json({ error: 'Invalid verification token' })
+  if (verif.used) return res.status(400).json({ error: 'Email already verified' })
+  if (new Date(verif.expires_at) < new Date()) return res.status(400).json({ error: 'Verification link expired — request a new one' })
 
-    await supabase.from('users').update({ email_verified: true }).eq('id', verif.user_id)
-    await supabase.from('password_resets').update({ used: true }).eq('id', verif.id)
+  await supabase.from('users').update({ email_verified: true }).eq('id', verif.user_id)
+  await supabase.from('password_resets').update({ used: true }).eq('id', verif.id)
 
-    res.json({ message: 'Email verified successfully' })
-  } catch (err) {
-    console.error('Verify email error:', err)
-    res.status(500).json({ error: 'Verification failed' })
-  }
-})
+  res.json({ message: 'Email verified successfully' })
+}))
