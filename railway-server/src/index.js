@@ -136,8 +136,8 @@ app.use((req, res) => {
 
 // ── Error Handler ─────────────────────────────────────────────
 app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).json({ error: 'Internal server error' })
+  console.error('ERROR:', err)
+  res.status(500).json({ error: err?.message || err?.stack || 'Internal server error' })
 })
 
 // ── Start ─────────────────────────────────────────────────────
